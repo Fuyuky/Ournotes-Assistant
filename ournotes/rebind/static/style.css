@@ -1,0 +1,10 @@
+#email-rebind-panel #rebind-status{line-height:1.8;overflow-wrap:anywhere}
+#email-rebind-panel[data-state="error"] #rebind-status,#email-rebind-panel[data-state="waiting_email"] #rebind-status{color:#a3455c;font-weight:600;background:#fff0f3;border:1px solid #efd4dc;border-radius:8px;padding:12px;margin:12px 0}
+#email-rebind-panel #rebind-error-hint{color:#566279;line-height:1.8;overflow-wrap:anywhere}
+#email-rebind-panel #rebind-error-details{margin-top:14px;padding:12px;border:1px solid var(--line);border-radius:8px;background:#fafaff}
+#email-rebind-panel #rebind-error-details summary{color:var(--ink);font-size:12px;cursor:pointer}
+#email-rebind-panel #rebind-error-info{margin-top:10px;color:#566279;font-size:12px;line-height:1.8;overflow-wrap:anywhere}
+#email-rebind-panel .rebind-copy-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:center;margin:20px 0}
+#email-rebind-panel .rebind-copy-label{color:var(--muted);font-size:12px}
+#email-rebind-panel .rebind-copy-text{margin:6px 0 0;line-height:1.8;white-space:pre-wrap;overflow-wrap:anywhere;user-select:text}
+#email-rebind-panel .rebind-copy-row .button{padding:10px 14px;white-space:nowrap}

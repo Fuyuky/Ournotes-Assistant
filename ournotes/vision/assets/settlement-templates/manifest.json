@@ -1,0 +1,282 @@
+{
+  "schema_version": 1,
+  "templates": [
+    {
+      "id": "top-right-pressed-1764",
+      "kind": "result_button",
+      "file": "top-right-pressed.png",
+      "sha256": "236431e8f8d6181f2da3c86ea12d9f354b707e89c0ccf35a2274b62a6e5904a9",
+      "side": "top-right",
+      "state": "pressed",
+      "text": "招募TOP",
+      "source": "assets/reference/runtime-regressions/pressed-navigation/result-source.png",
+      "source_sha256": "1bdf0de035b306e85ae2730152387b387e66848d7867ed26249e1ecd5a5b1d7b",
+      "source_size": [
+        1600,
+        900
+      ],
+      "box": [
+        1280,
+        793,
+        1566,
+        861
+      ],
+      "verified": true,
+      "verification": "人工核对页面及按钮按下外观；同一事件另一时刻的独立采集帧验证，不以裁切来源自身作为验证。",
+      "verification_samples": [
+        {
+          "path": "assets/reference/runtime-regressions/pressed-navigation/result-validation.png",
+          "sha256": "26350059f22d8776262af486890c9caa55d18619b02ab7535582f6dd442ea1f2"
+        }
+      ]
+    },
+    {
+      "id": "top-left-pressed-20261001",
+      "kind": "result_button",
+      "file": "top-left-pressed.png",
+      "sha256": "22f51b4b82175b947b9ca6830b0329a0658d4da4eaf6742f648a81dc759fb3c1",
+      "source": "assets/reference/runtime-regressions/settlement-top-pressed/failed.png",
+      "source_sha256": "a81ad9be6233133fa3d132bfff802c34a6d02f3698fdc5965d5a1ee186131d88",
+      "source_size": [
+        1600,
+        900
+      ],
+      "box": [
+        943,
+        792,
+        1228,
+        861
+      ],
+      "verified": true,
+      "verification": "人工核对失败截图中的招募TOP文字、结算标题和已完整识别的原交易；独立失败帧交叉验证。",
+      "side": "top-left",
+      "state": "pressed",
+      "text": "招募TOP"
+    },
+    {
+      "id": "member-57-1202-reviewed",
+      "kind": "card",
+      "key": "member:57",
+      "file": "member-57.png",
+      "sha256": "3851c9f2bde20f3f2be1ab8e64dbda9c77a4bad4662a3b0f7fa8536821484875",
+      "source": "assets/reference/runtime-regressions/date-change/member-57-failed.png",
+      "source_sha256": "999c5ce086b6006308d839b16d72820a630fba826af84d17934d1dc1afdd8d03",
+      "source_size": [
+        1600,
+        900
+      ],
+      "box": [
+        968,
+        225,
+        1098,
+        450
+      ],
+      "catalog_card_sha256": "a03794dfac34d48c0435646f8508f877d8c98af7a463545d847a9c88eda4fa6d",
+      "verified": true,
+      "verification": "卡面姿态、服装、背景与固定BDON member:57逐项人工核对；独立历史素材验证结果见 validation.json",
+      "verification_samples": [
+        {
+          "path": "assets/reference/runtime-regressions/artwork-glow/member-57-single.png",
+          "sha256": "8575b71a0f8dd375650e1200f57a04c2be0b17d0f29d30f657558cbbb7608e82",
+          "status": "matched",
+          "key": "member:57"
+        },
+        {
+          "path": "assets/reference/runtime-regressions/artwork-glow/member-57-ten-a.png",
+          "sha256": "acd29ce00f064a87d8b8e76ce0de826be4873fc8eea42f8cb115be59c0cfbeb2",
+          "status": "matched",
+          "key": "member:57"
+        },
+        {
+          "path": "assets/reference/runtime-regressions/artwork-glow/member-57-ten-b.png",
+          "sha256": "a2e841238622687a7a77e0ecaefbaa33bf819e74636fe076aa23a25c32ce36bc",
+          "status": "matched",
+          "key": "member:57"
+        },
+        {
+          "path": "assets/reference/runtime-regressions/artwork-glow/member-54-ten.png",
+          "sha256": "1ca5a964d9eb58d7edae2011b0403d67f7b95ea186feac6778152786740b3db4",
+          "status": "matched",
+          "key": "member:54"
+        }
+      ]
+    },
+    {
+      "id": "member-45-1208-reviewed",
+      "kind": "card",
+      "key": "member:45",
+      "file": "member-45.png",
+      "sha256": "c2231c57105d66cc0b687e74fe3ab4d77e08e62736467db4267996999f0537c1",
+      "source": "assets/reference/runtime-regressions/member-45-reviewed/failed.png",
+      "source_sha256": "0330c3dee54f7a0330ef273b93282a619d62e6192484aa5bf1041f6a9ff46c14",
+      "source_size": [
+        1600,
+        900
+      ],
+      "box": [
+        1276,
+        225,
+        1406,
+        450
+      ],
+      "catalog_card_sha256": "4f2e8332a977c2d82addf42944438565f86a839e5653f4bc961a0dce2fdb678c",
+      "verified": true,
+      "verification": "人工比对原图与固定BDON素材的人物、姿势、服装、背景；独立另一账号十连第10槽验证，并验证其余九槽身份不变。",
+      "verification_samples": [
+        {
+          "path": "assets/reference/runtime-regressions/member-45-reviewed/independent.png",
+          "sha256": "9052c79af4b8ee96706ca37750a9dbf5950083d72811b4cb6f0402461cf6b740",
+          "slot": 10,
+          "key": "member:45"
+        }
+      ]
+    },
+    {
+      "id": "member-54-1371-reviewed",
+      "kind": "card",
+      "key": "member:54",
+      "file": "member-54.png",
+      "sha256": "8f2e8d98581fc2f0e58120eb90259e7a7345b3fffa0f347f28ba715cdaf38163",
+      "source": "assets/reference/runtime-regressions/member-54-reviewed/failed.png",
+      "source_sha256": "e1946ab25be5f30092364aeaf4f6415905b525b337431ac78dae21453ae76fcd",
+      "source_size": [
+        1600,
+        900
+      ],
+      "box": [
+        1430,
+        225,
+        1560,
+        450
+      ],
+      "catalog_card_sha256": "f221fd01083c7351a941010af01885e1118a4515298e1e91b0dab30342099f05",
+      "verified": true,
+      "verification": "人工对照账号固定 BDON member:54，核对长崎爽世卡面的头饰、回头姿态、服装与晚霞背景；独立历史单抽、十连截图交叉验证。",
+      "verification_samples": [
+        {
+          "path": "assets/reference/runtime-regressions/artwork-glow/member-54-ten.png",
+          "sha256": "1ca5a964d9eb58d7edae2011b0403d67f7b95ea186feac6778152786740b3db4",
+          "key": "member:54",
+          "format": "artwork"
+        },
+        {
+          "path": "assets/reference/gacha-workflow/results/04-ssr-member-1.png",
+          "sha256": "6058cf7d84fb070a147c14ff97b3922dbfe60be0505c9ac48ef7647a7557d21a",
+          "key": "member:54",
+          "format": "settlement"
+        }
+      ]
+    },
+    {
+      "id": "result-loading-member-2328",
+      "kind": "result_loading",
+      "file": "result-loading-member.png",
+      "sha256": "652887a22d1fd80f8f1753c3642186bd58ad2e3fa904780a928b94badcb2efbf",
+      "source": "assets/reference/runtime-regressions/settlement-loading-2328/failed.png",
+      "source_sha256": "60641e6f5c4eba12bce7d1c0860ef7765b310e257e1871358ae94f1410402242",
+      "source_size": [
+        1600,
+        900
+      ],
+      "box": [
+        1148,
+        403,
+        1233,
+        488
+      ],
+      "verified": true,
+      "verification": "人工确认加载圆圈而非卡面；另一笔交易的独立加载帧验证，完整结算帧与既有单抽/十连素材验证无误报。",
+      "verification_samples": [
+        {
+          "path": "assets/reference/runtime-regressions/settlement-loading-2328/independent-loading.png",
+          "sha256": "6f65784de2570e7ecdef102ba3e34bc402788b7f1e55b7470ac7f7a21ccc035b",
+          "expected": "loading"
+        },
+        {
+          "path": "assets/reference/runtime-regressions/settlement-loading-2328/independent-ready.png",
+          "sha256": "1fc4bb43c3a677c23069d162acf3020f706a658463df23cdfe63b8cf6eb1f613",
+          "expected": "ready"
+        },
+        {
+          "path": "assets/reference/runtime-regressions/settlement-loading-2328/independent-pending.png",
+          "sha256": "5dda32d4bca1e7aa961946cb888c0ceb9b47af81ee67cab03141dbffc9c97755",
+          "expected": "loading"
+        }
+      ]
+    },
+    {
+      "id": "result-loading-support-2328",
+      "kind": "result_loading",
+      "file": "result-loading-support.png",
+      "sha256": "40bdafdd55a59ec770d9fbed985c08e57fb967832f53df388399db224e88aa23",
+      "source": "assets/reference/runtime-regressions/settlement-loading-2328/failed.png",
+      "source_sha256": "60641e6f5c4eba12bce7d1c0860ef7765b310e257e1871358ae94f1410402242",
+      "source_size": [
+        1600,
+        900
+      ],
+      "box": [
+        839,
+        351,
+        924,
+        436
+      ],
+      "verified": true,
+      "verification": "人工确认加载圆圈而非卡面；另一笔交易的独立加载帧验证，完整结算帧与既有单抽/十连素材验证无误报。",
+      "verification_samples": [
+        {
+          "path": "assets/reference/runtime-regressions/settlement-loading-2328/independent-loading.png",
+          "sha256": "6f65784de2570e7ecdef102ba3e34bc402788b7f1e55b7470ac7f7a21ccc035b",
+          "expected": "loading"
+        },
+        {
+          "path": "assets/reference/runtime-regressions/settlement-loading-2328/independent-ready.png",
+          "sha256": "1fc4bb43c3a677c23069d162acf3020f706a658463df23cdfe63b8cf6eb1f613",
+          "expected": "ready"
+        },
+        {
+          "path": "assets/reference/runtime-regressions/settlement-loading-2328/independent-pending.png",
+          "sha256": "5dda32d4bca1e7aa961946cb888c0ceb9b47af81ee67cab03141dbffc9c97755",
+          "expected": "loading"
+        }
+      ]
+    },
+    {
+      "id": "result-loading-member-glow-2328",
+      "kind": "result_loading",
+      "file": "result-loading-member-glow.png",
+      "sha256": "a12081e1347d7e6fa1d97f19ca602c0a4e9af478b3367bfb8c48ed20221f56de",
+      "source": "assets/reference/runtime-regressions/settlement-loading-2328/failed.png",
+      "source_sha256": "60641e6f5c4eba12bce7d1c0860ef7765b310e257e1871358ae94f1410402242",
+      "source_size": [
+        1600,
+        900
+      ],
+      "box": [
+        685,
+        403,
+        770,
+        488
+      ],
+      "verified": true,
+      "verification": "人工确认加载圆圈而非卡面；另一笔交易的独立加载帧验证，完整结算帧与既有单抽/十连素材验证无误报。",
+      "verification_samples": [
+        {
+          "path": "assets/reference/runtime-regressions/settlement-loading-2328/independent-loading.png",
+          "sha256": "6f65784de2570e7ecdef102ba3e34bc402788b7f1e55b7470ac7f7a21ccc035b",
+          "expected": "loading"
+        },
+        {
+          "path": "assets/reference/runtime-regressions/settlement-loading-2328/independent-ready.png",
+          "sha256": "1fc4bb43c3a677c23069d162acf3020f706a658463df23cdfe63b8cf6eb1f613",
+          "expected": "ready"
+        },
+        {
+          "path": "assets/reference/runtime-regressions/settlement-loading-2328/independent-pending.png",
+          "sha256": "5dda32d4bca1e7aa961946cb888c0ceb9b47af81ee67cab03141dbffc9c97755",
+          "expected": "loading"
+        }
+      ]
+    }
+  ]
+}

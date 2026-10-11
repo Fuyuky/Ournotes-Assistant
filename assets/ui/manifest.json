@@ -1,0 +1,1834 @@
+{
+  "version": 1,
+  "elements": {
+    "a4-0": {
+      "area": [
+        647,
+        301,
+        742,
+        335
+      ],
+      "file": "a4-0.png",
+      "text": "邮箱登录",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790487844081009000-before-focus-email.png"
+    },
+    "a4-1": {
+      "area": [
+        858,
+        301,
+        953,
+        335
+      ],
+      "file": "a4-1.png",
+      "text": "密码登录",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790487844081009000-before-focus-email.png"
+    },
+    "a4-2": {
+      "area": [
+        749,
+        619,
+        852,
+        653
+      ],
+      "file": "a4-2.png",
+      "text": "登录/注册",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790487844081009000-before-focus-email.png"
+    },
+    "a4-3": {
+      "area": [
+        614,
+        367,
+        767,
+        396
+      ],
+      "file": "a4-3.png",
+      "text": "请输入邮箱地址",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790487844081009000-before-focus-email.png"
+    },
+    "login-option-logo": {
+      "area": [
+        740,
+        274,
+        870,
+        334
+      ],
+      "file": "login-option-logo.png",
+      "text": "",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790487839797947200-before-账号登录.png"
+    },
+    "a8-5": {
+      "area": [
+        748,
+        289,
+        854,
+        326
+      ],
+      "file": "a8-5.png",
+      "text": "用户中心",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790487892375603000-before-close-user-center.png"
+    },
+    "a8-6": {
+      "area": [
+        767,
+        602,
+        834,
+        629
+      ],
+      "file": "a8-6.png",
+      "text": "退出登录",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790487892375603000-before-close-user-center.png"
+    },
+    "a7-7": {
+      "area": [
+        756,
+        139,
+        843,
+        190
+      ],
+      "file": "a7-7.png",
+      "text": "菜单",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790487887535692000-before-用户中心.png"
+    },
+    "a7-8": {
+      "area": [
+        951,
+        452,
+        1049,
+        486
+      ],
+      "file": "a7-8.png",
+      "text": "清除缓存",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790487887535692000-before-用户中心.png"
+    },
+    "a7-9": {
+      "area": [
+        607,
+        357,
+        703,
+        390
+      ],
+      "file": "a7-9.png",
+      "text": "用户中心",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790487887535692000-before-用户中心.png"
+    },
+    "a7-10": {
+      "area": [
+        765,
+        693,
+        837,
+        737
+      ],
+      "file": "a7-10.png",
+      "text": "关闭",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790487887535692000-before-用户中心.png"
+    },
+    "a30-11": {
+      "area": [
+        756,
+        127,
+        843,
+        178
+      ],
+      "file": "a30-11.png",
+      "text": "菜单",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790488445331270500-before-标题画面.png"
+    },
+    "a30-12": {
+      "area": [
+        1032,
+        276,
+        1140,
+        310
+      ],
+      "file": "a30-12.png",
+      "text": "个人资料",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790488445331270500-before-标题画面.png"
+    },
+    "a30-13": {
+      "area": [
+        1061,
+        538,
+        1157,
+        572
+      ],
+      "file": "a30-13.png",
+      "text": "标题画面",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790488445331270500-before-标题画面.png"
+    },
+    "a30-14": {
+      "area": [
+        491,
+        537,
+        588,
+        572
+      ],
+      "file": "a30-14.png",
+      "text": "用户中心",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790488445331270500-before-标题画面.png"
+    },
+    "a30-15": {
+      "area": [
+        765,
+        693,
+        836,
+        736
+      ],
+      "file": "a30-15.png",
+      "text": "关闭",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790488445331270500-before-标题画面.png"
+    },
+    "a18-16": {
+      "area": [
+        689,
+        807,
+        756,
+        847
+      ],
+      "file": "a18-16.png",
+      "text": "招募",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790487972007582100-before-open-gifts.png",
+      "click": [
+        690,
+        745,
+        756,
+        800
+      ]
+    },
+    "a18-17": {
+      "area": [
+        832,
+        808,
+        897,
+        847
+      ],
+      "file": "a18-17.png",
+      "text": "商店",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790487972007582100-before-open-gifts.png"
+    },
+    "a18-18": {
+      "area": [
+        973,
+        805,
+        1041,
+        848
+      ],
+      "file": "a18-18.png",
+      "text": "故事",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790487972007582100-before-open-gifts.png"
+    },
+    "a18-19": {
+      "area": [
+        1115,
+        807,
+        1178,
+        847
+      ],
+      "file": "a18-19.png",
+      "text": "乐队",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790487972007582100-before-open-gifts.png"
+    },
+    "a19-20": {
+      "area": [
+        257,
+        34,
+        358,
+        79
+      ],
+      "file": "a19-20.png",
+      "text": "礼物盒",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790487979891231900-before-一键领取.png"
+    },
+    "a19-21": {
+      "area": [
+        109,
+        258,
+        226,
+        295
+      ],
+      "file": "a19-21.png",
+      "text": "领取记录",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790487979891231900-before-一键领取.png"
+    },
+    "a19-22": {
+      "area": [
+        914,
+        795,
+        1041,
+        836
+      ],
+      "file": "a19-22.png",
+      "text": "一键领取",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790487979891231900-before-一键领取.png"
+    },
+    "a19-23": {
+      "area": [
+        588,
+        793,
+        659,
+        837
+      ],
+      "file": "a19-23.png",
+      "text": "关闭",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790487979891231900-before-一键领取.png"
+    },
+    "gift-empty": {
+      "area": [
+        805,
+        413,
+        1042,
+        449
+      ],
+      "file": "gift-empty.png",
+      "text": "暂无可领取的礼物。",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790488002904815600-before-关闭.png"
+    },
+    "a21-25": {
+      "area": [
+        724,
+        129,
+        876,
+        176
+      ],
+      "file": "a21-25.png",
+      "text": "领取礼物",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790487987215243400-before-claim-gifts.png"
+    },
+    "a21-26": {
+      "area": [
+        675,
+        379,
+        916,
+        415
+      ],
+      "file": "a21-26.png",
+      "text": "是否一键领取礼物？",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790487987215243400-before-claim-gifts.png"
+    },
+    "a21-27": {
+      "area": [
+        947,
+        693,
+        1012,
+        737
+      ],
+      "file": "a21-27.png",
+      "text": "OK",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790487987215243400-before-claim-gifts.png"
+    },
+    "a21-28": {
+      "area": [
+        588,
+        693,
+        659,
+        736
+      ],
+      "file": "a21-28.png",
+      "text": "取消",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790487987215243400-before-claim-gifts.png"
+    },
+    "a22-29": {
+      "area": [
+        725,
+        25,
+        876,
+        69
+      ],
+      "file": "a22-29.png",
+      "text": "领取奖励",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790487995875530800-before-ack-gifts.png"
+    },
+    "a22-30": {
+      "area": [
+        689,
+        96,
+        900,
+        136
+      ],
+      "file": "a22-30.png",
+      "text": "已领取以下道具。",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790487995875530800-before-ack-gifts.png"
+    },
+    "a22-31": {
+      "area": [
+        768,
+        805,
+        835,
+        849
+      ],
+      "file": "a22-31.png",
+      "text": "OK",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790487995875530800-before-ack-gifts.png"
+    },
+    "a23-32": {
+      "area": [
+        280,
+        30,
+        348,
+        70
+      ],
+      "file": "a23-32.png",
+      "text": "招募",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790488024522232700-before-open-draw-confirmation.png"
+    },
+    "a23-33": {
+      "area": [
+        776,
+        826,
+        871,
+        859
+      ],
+      "file": "a23-33.png",
+      "text": "招募详情",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790488024522232700-before-open-draw-confirmation.png"
+    },
+    "a23-34": {
+      "area": [
+        1093,
+        683,
+        1207,
+        724
+      ],
+      "file": "a23-34.png",
+      "text": "招募1次",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790488024522232700-before-open-draw-confirmation.png"
+    },
+    "pool-ten": {
+      "area": [
+        1383,
+        685,
+        1513,
+        722
+      ],
+      "file": "pool-ten.png",
+      "text": "招募10次",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790488024522232700-before-open-draw-confirmation.png"
+    },
+    "pool-menu": {
+      "area": [
+        1523,
+        30,
+        1560,
+        70
+      ],
+      "file": "pool-menu.png",
+      "text": "",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790488024522232700-before-open-draw-confirmation.png",
+      "click": [
+        1515,
+        20,
+        1568,
+        80
+      ]
+    },
+    "ticket-pool-detail": {
+      "area": [
+        1170,
+        825,
+        1265,
+        859
+      ],
+      "file": "ticket-pool-detail.png",
+      "text": "招募详情",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790488123928131400-before-open-draw-confirmation.png"
+    },
+    "a24-38": {
+      "area": [
+        723,
+        81,
+        878,
+        129
+      ],
+      "file": "a24-38.png",
+      "text": "确认招募",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790488039545915600-before-OK.png"
+    },
+    "a24-39": {
+      "area": [
+        719,
+        337,
+        873,
+        370
+      ],
+      "file": "a24-39.png",
+      "text": "确定要招募吗？",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790488039545915600-before-OK.png"
+    },
+    "a24-40": {
+      "area": [
+        947,
+        773,
+        1012,
+        818
+      ],
+      "file": "a24-40.png",
+      "text": "OK",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790488039545915600-before-OK.png"
+    },
+    "a26-41": {
+      "area": [
+        723,
+        129,
+        877,
+        176
+      ],
+      "file": "a26-41.png",
+      "text": "确认招募",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790488131362330800-before-OK.png"
+    },
+    "a26-42": {
+      "area": [
+        724,
+        393,
+        874,
+        423
+      ],
+      "file": "a26-42.png",
+      "text": "确定要招募吗？",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790488131362330800-before-OK.png"
+    },
+    "a26-43": {
+      "area": [
+        947,
+        693,
+        1012,
+        737
+      ],
+      "file": "a26-43.png",
+      "text": "OK",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790488131362330800-before-OK.png"
+    },
+    "a29-44": {
+      "area": [
+        724,
+        82,
+        876,
+        127
+      ],
+      "file": "a29-44.png",
+      "text": "确认招募",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790488291726427600-before-OK.png"
+    },
+    "a29-45": {
+      "area": [
+        719,
+        367,
+        873,
+        400
+      ],
+      "file": "a29-45.png",
+      "text": "确定要招募吗？",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790488291726427600-before-OK.png"
+    },
+    "a29-46": {
+      "area": [
+        947,
+        773,
+        1012,
+        818
+      ],
+      "file": "a29-46.png",
+      "text": "OK",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790488291726427600-before-OK.png"
+    },
+    "a9-47": {
+      "area": [
+        704,
+        275,
+        896,
+        325
+      ],
+      "file": "a9-47.png",
+      "text": "登录奖励",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790487924940980600-before-advance-reward.png"
+    },
+    "a10-48": {
+      "area": [
+        685,
+        135,
+        916,
+        202
+      ],
+      "file": "a10-48.png",
+      "text": "获得奖励",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790487930957898000-before-dismiss-reward-OK.png"
+    },
+    "a10-49": {
+      "area": [
+        769,
+        804,
+        835,
+        847
+      ],
+      "file": "a10-49.png",
+      "text": "OK",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790487930957898000-before-dismiss-reward-OK.png"
+    },
+    "a12-50": {
+      "area": [
+        692,
+        352,
+        904,
+        406
+      ],
+      "file": "a12-50.png",
+      "text": "登录奖励",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790487941954324600-before-advance-reward.png"
+    },
+    "a15-51": {
+      "area": [
+        993,
+        775,
+        1158,
+        828
+      ],
+      "file": "a15-51.png",
+      "text": "TOUCH",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790487955807156600-before-advance-reward.png"
+    },
+    "a32-52": {
+      "area": [
+        667,
+        115,
+        935,
+        172
+      ],
+      "file": "a32-52.png",
+      "text": "RANK UP",
+      "source": "assets/reference/runtime-regressions/rank-up.png"
+    },
+    "a32-53": {
+      "area": [
+        771,
+        796,
+        833,
+        837
+      ],
+      "file": "a32-53.png",
+      "text": "OK",
+      "source": "assets/reference/runtime-regressions/rank-up.png"
+    },
+    "a31-54": {
+      "area": [
+        278,
+        23,
+        348,
+        66
+      ],
+      "file": "a31-54.png",
+      "text": "公告",
+      "source": "assets/reference/2026-09-27-game-walkthrough/14-retry-announcement.png"
+    },
+    "a31-55": {
+      "area": [
+        112,
+        248,
+        224,
+        285
+      ],
+      "file": "a31-55.png",
+      "text": "活动一览",
+      "source": "assets/reference/2026-09-27-game-walkthrough/14-retry-announcement.png"
+    },
+    "a31-56": {
+      "area": [
+        765,
+        799,
+        836,
+        842
+      ],
+      "file": "a31-56.png",
+      "text": "关闭",
+      "source": "assets/reference/2026-09-27-game-walkthrough/14-retry-announcement.png"
+    },
+    "new-song-heading": {
+      "area": [
+        608,
+        114,
+        961,
+        166
+      ],
+      "file": "new-song-heading.png",
+      "text": "追加翻唱乐曲",
+      "source": "assets/reference/runtime-regressions/new-song.png",
+      "light_tolerance": 40
+    },
+    "new-song-next": {
+      "area": [
+        665,
+        767,
+        935,
+        801
+      ],
+      "file": "new-song-next.png",
+      "text": "TAP TO NEXT",
+      "source": "assets/reference/runtime-regressions/new-song.png",
+      "light_tolerance": 70,
+      "similarity": 0.83
+    },
+    "title-loading": {
+      "area": [
+        1240,
+        794,
+        1485,
+        857
+      ],
+      "file": "title-loading.png",
+      "text": "NOW LOADING",
+      "source": "assets/reference/runtime-regressions/title-loading.png",
+      "similarity": 0.7,
+      "light_tolerance": 90
+    },
+    "comic-loading": {
+      "area": [
+        320,
+        738,
+        660,
+        780
+      ],
+      "file": "comic-loading.png",
+      "text": "NOW LOADING",
+      "source": "assets/reference/runtime-regressions/comic-loading.png"
+    },
+    "network-failure-heading": {
+      "area": [
+        724,
+        130,
+        877,
+        174
+      ],
+      "file": "network-failure-heading.png",
+      "text": "连接失败",
+      "source": "assets/reference/runtime-regressions/network-return-title.png"
+    },
+    "network-return-title": {
+      "area": [
+        710,
+        697,
+        890,
+        734
+      ],
+      "file": "network-return-title.png",
+      "text": "返回标题画面",
+      "source": "assets/reference/runtime-regressions/network-return-title.png"
+    },
+    "a33-63": {
+      "area": [
+        423,
+        611,
+        502,
+        658
+      ],
+      "file": "a33-63.png",
+      "text": "爱音",
+      "source": "assets/reference/runtime-regressions/character-dialogue.png"
+    },
+    "a33-64": {
+      "area": [
+        465,
+        675,
+        704,
+        711
+      ],
+      "file": "a33-64.png",
+      "text": "误嘿嘿，发个动态吧-",
+      "source": "assets/reference/runtime-regressions/character-dialogue.png"
+    },
+    "title-menu": {
+      "area": [
+        1518,
+        38,
+        1566,
+        81
+      ],
+      "file": "title-menu.png",
+      "text": "",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790487882574307500-before-verify-account-menu.png",
+      "click": [
+        1510,
+        30,
+        1570,
+        85
+      ]
+    },
+    "title-live2d": {
+      "area": [
+        1278,
+        26,
+        1338,
+        88
+      ],
+      "file": "title-live2d.png",
+      "text": "",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790487882574307500-before-verify-account-menu.png"
+    },
+    "title-start": {
+      "area": [
+        1020,
+        710,
+        1357,
+        754
+      ],
+      "file": "title-start.png",
+      "text": "TAP TO START",
+      "source": "state/runs/bf081873fa4f4a6e8144010145d4d0d2/screens/1790487882574307500-before-verify-account-menu.png",
+      "light_tolerance": 70,
+      "similarity": 0.8
+    },
+    "history-title": {
+      "area": [
+        747,
+        298,
+        853,
+        332
+      ],
+      "file": "history-title.png",
+      "text": "登录记录",
+      "source": "assets/login-history/history-initial.png"
+    },
+    "history-switch": {
+      "area": [
+        741,
+        638,
+        859,
+        668
+      ],
+      "file": "history-switch.png",
+      "text": "切换其他账号",
+      "source": "assets/login-history/history-initial.png"
+    },
+    "history-remove": {
+      "area": [
+        952,
+        401,
+        973,
+        422
+      ],
+      "file": "history-remove.png",
+      "text": "",
+      "source": "assets/login-history/history-expanded.png"
+    },
+    "history-confirm": {
+      "area": [
+        640,
+        393,
+        952,
+        424
+      ],
+      "file": "history-confirm.png",
+      "text": "是否确认删除该账号的登录记录",
+      "source": "assets/login-history/history-delete.png"
+    },
+    "history-delete-ok": {
+      "area": [
+        865,
+        472,
+        922,
+        507
+      ],
+      "file": "history-delete-ok.png",
+      "text": "确定",
+      "source": "assets/login-history/history-delete.png"
+    },
+    "review-title": {
+      "area": [
+        689,
+        46,
+        910,
+        82
+      ],
+      "file": "review-title.png",
+      "text": "邀请您撰写评价",
+      "source": "assets/reference/2026-09-27-gacha-both-run/screens/11-review-prompt.png"
+    },
+    "review-later": {
+      "area": [
+        560,
+        796,
+        686,
+        836
+      ],
+      "file": "review-later.png",
+      "text": "稍后再说",
+      "source": "assets/reference/2026-09-27-gacha-both-run/screens/11-review-prompt.png"
+    },
+    "animation-skip": {
+      "area": [
+        1482,
+        39,
+        1540,
+        77
+      ],
+      "file": "animation-skip.png",
+      "text": "SKIP",
+      "source": "assets/reference/2026-09-27-gacha-both-run/screens/05-mygo-animation-ready.png",
+      "offset": 10,
+      "light_tolerance": 55
+    },
+    "animation-ticket-skip": {
+      "area": [
+        1482,
+        39,
+        1540,
+        77
+      ],
+      "file": "animation-ticket-skip.png",
+      "text": "SKIP",
+      "source": "state/runs/4edcafdd62174b9f88a301ffa402a70c/screens/1790488528100648300-before-SKIP.png",
+      "offset": 10,
+      "light_tolerance": 35
+    },
+    "paid-shortage-warning": {
+      "area": [
+        721,
+        377,
+        879,
+        410
+      ],
+      "file": "paid-shortage-warning.png",
+      "text": "",
+      "source": "assets/reference/runtime-regressions/paid-shortage.png"
+    },
+    "paid-shortage-currency": {
+      "area": [
+        425,
+        444,
+        477,
+        472
+      ],
+      "file": "paid-shortage-currency.png",
+      "text": "",
+      "source": "assets/reference/runtime-regressions/paid-shortage.png"
+    },
+    "paid-shortage-close": {
+      "area": [
+        586,
+        691,
+        662,
+        739
+      ],
+      "file": "paid-shortage-close.png",
+      "text": "关闭",
+      "source": "assets/reference/runtime-regressions/paid-shortage.png"
+    },
+    "enable-prompt-logo": {
+      "area": [
+        742,
+        238,
+        859,
+        289
+      ],
+      "file": "enable-prompt-logo.png",
+      "text": "",
+      "source": "assets\\reference\\runtime-regressions\\enable-prompt-redacted.png"
+    },
+    "enable-prompt-button": {
+      "area": [
+        752,
+        608,
+        849,
+        644
+      ],
+      "file": "enable-prompt-button.png",
+      "text": "去开启",
+      "source": "assets\\reference\\runtime-regressions\\enable-prompt-redacted.png"
+    },
+    "enable-prompt-close": {
+      "area": [
+        967,
+        245,
+        999,
+        278
+      ],
+      "file": "enable-prompt-close.png",
+      "text": "关闭额外弹窗",
+      "source": "assets\\reference\\runtime-regressions\\enable-prompt-redacted.png"
+    },
+    "title-user-unavailable": {
+      "area": [
+        497,
+        350,
+        713,
+        394
+      ],
+      "file": "title-user-unavailable.png",
+      "text": "",
+      "source": "assets\\reference\\runtime-regressions\\title-menu-unavailable.png"
+    },
+    "rank-reward-title": {
+      "area": [
+        440,
+        142,
+        1166,
+        198
+      ],
+      "file": "rank-reward-title.png",
+      "text": "",
+      "source": "assets/reference/runtime-regressions/rank-up-reward.png"
+    },
+    "rank-reward-ok": {
+      "area": [
+        765,
+        801,
+        838,
+        845
+      ],
+      "file": "rank-reward-ok.png",
+      "text": "OK",
+      "source": "assets/reference/runtime-regressions/rank-up-reward.png"
+    },
+    "update-download-title": {
+      "area": [
+        723,
+        42,
+        878,
+        78
+      ],
+      "file": "update-download-title.png",
+      "text": "数据下载",
+      "source": "assets/reference/runtime-regressions/update-download-confirm.png"
+    },
+    "update-download-size": {
+      "area": [
+        638,
+        349,
+        751,
+        382
+      ],
+      "file": "update-download-size.png",
+      "text": "",
+      "source": "assets/reference/runtime-regressions/update-download-confirm.png"
+    },
+    "update-download-ok": {
+      "area": [
+        947,
+        801,
+        1009,
+        839
+      ],
+      "file": "update-download-ok.png",
+      "text": "OK",
+      "source": "assets/reference/runtime-regressions/update-download-confirm.png",
+      "click": [
+        825,
+        787,
+        1125,
+        852
+      ]
+    },
+    "update-downloading-label": {
+      "area": [
+        73,
+        763,
+        184,
+        788
+      ],
+      "file": "update-downloading-label.png",
+      "text": "数据下载中",
+      "source": "assets/reference/2026-09-27-game-walkthrough/02-download-confirmed.png"
+    },
+    "update-downloading-hint": {
+      "area": [
+        27,
+        823,
+        337,
+        845
+      ],
+      "file": "update-downloading-hint.png",
+      "text": "",
+      "source": "assets/reference/2026-09-27-game-walkthrough/02-download-confirmed.png"
+    },
+    "title-loading-glow": {
+      "area": [
+        1240,
+        794,
+        1485,
+        857
+      ],
+      "file": "title-loading-glow.png",
+      "text": "NOW LOADING",
+      "source": "assets/reference/runtime-regressions/title-loading-glow.png",
+      "similarity": 0.7,
+      "light_tolerance": 90
+    },
+    "opening-movie-icon": {
+      "area": [
+        1424,
+        36,
+        1472,
+        64
+      ],
+      "file": "opening-movie-icon.png",
+      "text": "",
+      "source": "assets/reference/runtime-regressions/opening-updates/promo-movie.png",
+      "click": [
+        1405,
+        30,
+        1571,
+        69
+      ]
+    },
+    "opening-movie-skip": {
+      "area": [
+        1494,
+        36,
+        1542,
+        64
+      ],
+      "file": "opening-movie-skip.png",
+      "text": "跳过",
+      "source": "assets/reference/runtime-regressions/opening-updates/promo-movie.png",
+      "click": [
+        1405,
+        30,
+        1571,
+        69
+      ]
+    },
+    "opening-skip-heading": {
+      "area": [
+        762,
+        135,
+        839,
+        169
+      ],
+      "file": "opening-skip-heading.png",
+      "text": "",
+      "source": "assets/reference/runtime-regressions/opening-updates/movie-skip-confirm.png"
+    },
+    "opening-skip-question": {
+      "area": [
+        672,
+        387,
+        928,
+        421
+      ],
+      "file": "opening-skip-question.png",
+      "text": "",
+      "source": "assets/reference/runtime-regressions/opening-updates/movie-skip-confirm.png"
+    },
+    "opening-skip-ok": {
+      "area": [
+        945,
+        696,
+        1007,
+        737
+      ],
+      "file": "opening-skip-ok.png",
+      "text": "OK",
+      "source": "assets/reference/runtime-regressions/opening-updates/movie-skip-confirm.png",
+      "click": [
+        825,
+        685,
+        1125,
+        746
+      ]
+    },
+    "opening-banner-skip": {
+      "area": [
+        1488,
+        35,
+        1548,
+        65
+      ],
+      "file": "opening-banner-skip.png",
+      "text": "SKIP",
+      "source": "assets/reference/runtime-regressions/opening-updates/event-banner.png",
+      "click": [
+        1405,
+        30,
+        1571,
+        69
+      ]
+    },
+    "required-update-title": {
+      "area": [
+        690,
+        132,
+        914,
+        170
+      ],
+      "file": "required-update-title.png",
+      "text": "",
+      "source": "assets/reference/runtime-regressions/required-update/instance-1.png"
+    },
+    "required-update-message": {
+      "area": [
+        648,
+        360,
+        942,
+        396
+      ],
+      "file": "required-update-message.png",
+      "text": "",
+      "source": "assets/reference/runtime-regressions/required-update/instance-1.png"
+    },
+    "server-maintenance-title": {
+      "area": [
+        744,
+        44,
+        857,
+        82
+      ],
+      "file": "server-maintenance-title.png",
+      "text": "",
+      "source": "assets/reference/runtime-regressions/server-maintenance/instance-1.png"
+    },
+    "server-maintenance-message": {
+      "area": [
+        896,
+        207,
+        1239,
+        238
+      ],
+      "file": "server-maintenance-message.png",
+      "text": "",
+      "source": "assets/reference/runtime-regressions/server-maintenance/instance-1.png"
+    },
+    "gift-close-pressed": {
+      "area": [
+        480,
+        782,
+        766,
+        851
+      ],
+      "file": "gift-close-pressed.png",
+      "text": "关闭（按下）",
+      "sha256": "10f2e97a4ba8f3d37d1af98d6be9d2868abf401d188d0f362592fc111d27ec06",
+      "source": "assets/reference/runtime-regressions/pressed-navigation/gift-source.png",
+      "source_sha256": "3d5c81dc052cd3b1d62a184888ce8cbfe17dbe4f7f990a1336f0ea1a4d42e437",
+      "source_size": [
+        1600,
+        900
+      ],
+      "box": [
+        480,
+        782,
+        766,
+        851
+      ],
+      "verified": true,
+      "verification": "人工核对页面及按钮按下外观；同一事件另一时刻的独立采集帧验证，不以裁切来源自身作为验证。",
+      "verification_samples": [
+        {
+          "path": "assets/reference/runtime-regressions/pressed-navigation/gift-validation.png",
+          "sha256": "f145a8f0216b1f629d35ae567f68812b34b89acbef48b57d03f142f85314cb07"
+        }
+      ]
+    },
+    "story-frame": {
+      "area": [
+        1170,
+        8,
+        1350,
+        68
+      ],
+      "file": "story-frame.png",
+      "text": "",
+      "source": "assets/reference/runtime-regressions/birthday-story/source1-story.png"
+    },
+    "story-menu-toggle": {
+      "area": [
+        1476,
+        101,
+        1527,
+        154
+      ],
+      "file": "story-menu-toggle.png",
+      "text": "剧情菜单",
+      "source": "assets/reference/runtime-regressions/birthday-story/source1-story.png",
+      "click": [
+        1463,
+        87,
+        1542,
+        170
+      ]
+    },
+    "story-menu-close": {
+      "area": [
+        1475,
+        101,
+        1528,
+        154
+      ],
+      "file": "story-menu-close.png",
+      "text": "",
+      "source": "assets/reference/runtime-regressions/birthday-story/source1-menu.png"
+    },
+    "story-menu-skip": {
+      "area": [
+        1471,
+        188,
+        1532,
+        237
+      ],
+      "file": "story-menu-skip.png",
+      "text": "SKIP",
+      "source": "assets/reference/runtime-regressions/birthday-story/source1-menu.png",
+      "click": [
+        1463,
+        173,
+        1540,
+        246
+      ]
+    },
+    "story-menu-auto": {
+      "area": [
+        1471,
+        259,
+        1532,
+        311
+      ],
+      "file": "story-menu-auto.png",
+      "text": "",
+      "source": "assets/reference/runtime-regressions/birthday-story/source1-menu.png"
+    },
+    "story-skip-question": {
+      "area": [
+        720,
+        376,
+        880,
+        408
+      ],
+      "file": "story-skip-question.png",
+      "text": "要跳过故事吗？",
+      "source": "assets/reference/runtime-regressions/birthday-story/source1-confirm.png"
+    },
+    "story-skip-confirm": {
+      "area": [
+        914,
+        647,
+        974,
+        678
+      ],
+      "file": "story-skip-confirm.png",
+      "text": "跳过",
+      "source": "assets/reference/runtime-regressions/birthday-story/source1-confirm.png",
+      "click": [
+        815,
+        632,
+        1071,
+        695
+      ],
+      "offset": 8
+    }
+  },
+  "pages": [
+    {
+      "scene": "server_maintenance",
+      "anchors": [
+        "server-maintenance-title",
+        "server-maintenance-message"
+      ],
+      "controls": []
+    },
+    {
+      "scene": "required_update",
+      "anchors": [
+        "required-update-title",
+        "required-update-message"
+      ],
+      "controls": []
+    },
+    {
+      "scene": "story_skip_confirm",
+      "anchors": [
+        "story-skip-question",
+        "story-skip-confirm"
+      ],
+      "controls": [
+        "story-skip-confirm"
+      ]
+    },
+    {
+      "scene": "story_menu",
+      "anchors": [
+        "story-frame",
+        "story-menu-close",
+        "story-menu-skip",
+        "story-menu-auto"
+      ],
+      "controls": [
+        "story-menu-skip"
+      ]
+    },
+    {
+      "scene": "story",
+      "anchors": [
+        "story-frame",
+        "story-menu-toggle"
+      ],
+      "controls": [
+        "story-menu-toggle"
+      ]
+    },
+    {
+      "scene": "opening_skip_confirm",
+      "anchors": [
+        "opening-skip-heading",
+        "opening-skip-question",
+        "opening-skip-ok"
+      ],
+      "controls": [
+        "opening-skip-ok"
+      ]
+    },
+    {
+      "scene": "opening_movie",
+      "anchors": [
+        "opening-movie-icon",
+        "opening-movie-skip"
+      ],
+      "controls": [
+        "opening-movie-skip"
+      ]
+    },
+    {
+      "scene": "download_confirm",
+      "anchors": [
+        "update-download-title",
+        "update-download-size"
+      ],
+      "controls": [
+        "update-download-ok"
+      ]
+    },
+    {
+      "scene": "downloading",
+      "anchors": [
+        "update-downloading-label",
+        "update-downloading-hint"
+      ],
+      "controls": []
+    },
+    {
+      "scene": "enable_prompt",
+      "anchors": [
+        "enable-prompt-logo",
+        "enable-prompt-button",
+        "enable-prompt-close"
+      ],
+      "controls": [
+        "enable-prompt-close"
+      ]
+    },
+    {
+      "scene": "startup_reward",
+      "anchors": [
+        "rank-reward-title",
+        "rank-reward-ok"
+      ],
+      "controls": [
+        "rank-reward-ok"
+      ]
+    },
+    {
+      "scene": "email_form",
+      "anchors": [
+        "a4-0",
+        "a4-1"
+      ],
+      "controls": [
+        "a4-0",
+        "a4-1",
+        "a4-2",
+        "a4-3"
+      ]
+    },
+    {
+      "scene": "login_options",
+      "anchors": [
+        "login-option-logo"
+      ],
+      "controls": [
+        "login-option-logo"
+      ],
+      "fixed_controls": [
+        {
+          "text": "账号登录",
+          "box": [
+            642,
+            535,
+            958,
+            574
+          ]
+        }
+      ]
+    },
+    {
+      "scene": "user_center",
+      "anchors": [
+        "a8-5",
+        "a8-6"
+      ],
+      "controls": [
+        "a8-5",
+        "a8-6"
+      ]
+    },
+    {
+      "scene": "title_menu_unavailable",
+      "anchors": [
+        "a7-7",
+        "a7-8",
+        "title-user-unavailable"
+      ],
+      "controls": [
+        "a7-10"
+      ]
+    },
+    {
+      "scene": "title_menu",
+      "anchors": [
+        "a7-7",
+        "a7-8",
+        "a7-9"
+      ],
+      "controls": [
+        "a7-7",
+        "a7-8",
+        "a7-9",
+        "a7-10"
+      ]
+    },
+    {
+      "scene": "home_menu",
+      "anchors": [
+        "a30-11",
+        "a30-12"
+      ],
+      "controls": [
+        "a30-11",
+        "a30-12",
+        "a30-13",
+        "a30-14",
+        "a30-15"
+      ]
+    },
+    {
+      "scene": "home",
+      "anchors": [
+        "a18-16",
+        "a18-17",
+        "a18-18"
+      ],
+      "controls": [
+        "a18-16",
+        "a18-17",
+        "a18-18",
+        "a18-19"
+      ]
+    },
+    {
+      "scene": "gift_box",
+      "anchors": [
+        "a19-20",
+        "a19-21"
+      ],
+      "controls": [
+        "a19-20",
+        "a19-21",
+        "a19-22",
+        "a19-23",
+        "gift-empty",
+        "gift-close-pressed"
+      ]
+    },
+    {
+      "scene": "gift_confirm",
+      "anchors": [
+        "a21-25",
+        "a21-26"
+      ],
+      "controls": [
+        "a21-25",
+        "a21-26",
+        "a21-27",
+        "a21-28"
+      ]
+    },
+    {
+      "scene": "gift_received",
+      "anchors": [
+        "a22-29",
+        "a22-30"
+      ],
+      "controls": [
+        "a22-29",
+        "a22-30",
+        "a22-31"
+      ]
+    },
+    {
+      "scene": "pool",
+      "anchors": [
+        "a23-32",
+        "a23-33"
+      ],
+      "controls": [
+        "a23-32",
+        "a23-33",
+        "a23-34",
+        "pool-ten"
+      ],
+      "guards": [
+        "pool-menu"
+      ]
+    },
+    {
+      "scene": "pool",
+      "anchors": [
+        "a23-32",
+        "ticket-pool-detail"
+      ],
+      "controls": [
+        "a23-32",
+        "ticket-pool-detail",
+        "a23-34"
+      ],
+      "guards": [
+        "pool-menu"
+      ]
+    },
+    {
+      "scene": "draw_confirm",
+      "anchors": [
+        "a24-38",
+        "a24-39"
+      ],
+      "controls": [
+        "a24-38",
+        "a24-39",
+        "a24-40"
+      ],
+      "field_layout": "stars"
+    },
+    {
+      "scene": "draw_confirm",
+      "anchors": [
+        "a26-41",
+        "a26-42"
+      ],
+      "controls": [
+        "a26-41",
+        "a26-42",
+        "a26-43"
+      ],
+      "field_layout": "single_ticket"
+    },
+    {
+      "scene": "draw_confirm",
+      "anchors": [
+        "a29-44",
+        "a29-45"
+      ],
+      "controls": [
+        "a29-44",
+        "a29-45",
+        "a29-46"
+      ],
+      "field_layout": "ten_ticket"
+    },
+    {
+      "scene": "startup_reward",
+      "anchors": [
+        "a9-47"
+      ],
+      "controls": [
+        "a9-47"
+      ]
+    },
+    {
+      "scene": "startup_reward",
+      "anchors": [
+        "a10-48"
+      ],
+      "controls": [
+        "a10-48",
+        "a10-49"
+      ]
+    },
+    {
+      "scene": "startup_reward",
+      "anchors": [
+        "a12-50"
+      ],
+      "controls": [
+        "a12-50"
+      ]
+    },
+    {
+      "scene": "startup_reward",
+      "anchors": [
+        "a15-51"
+      ],
+      "controls": [
+        "a15-51"
+      ]
+    },
+    {
+      "scene": "startup_reward",
+      "anchors": [
+        "a32-52"
+      ],
+      "controls": [
+        "a32-52",
+        "a32-53"
+      ]
+    },
+    {
+      "scene": "notice",
+      "anchors": [
+        "a31-54",
+        "a31-55"
+      ],
+      "controls": [
+        "a31-54",
+        "a31-55",
+        "a31-56"
+      ]
+    },
+    {
+      "scene": "startup_reward",
+      "anchors": [
+        "new-song-heading"
+      ],
+      "controls": [
+        "new-song-heading",
+        "new-song-next"
+      ]
+    },
+    {
+      "scene": "loading",
+      "anchors": [
+        "title-loading-glow"
+      ],
+      "controls": []
+    },
+    {
+      "scene": "loading",
+      "anchors": [
+        "title-loading"
+      ],
+      "controls": []
+    },
+    {
+      "scene": "loading",
+      "anchors": [
+        "comic-loading"
+      ],
+      "controls": []
+    },
+    {
+      "scene": "network_error",
+      "anchors": [
+        "network-failure-heading",
+        "network-return-title"
+      ],
+      "controls": [
+        "network-return-title"
+      ]
+    },
+    {
+      "scene": "character_dialogue",
+      "anchors": [
+        "a33-63",
+        "a33-64"
+      ],
+      "controls": [
+        "a33-63",
+        "a33-64"
+      ]
+    },
+    {
+      "scene": "title",
+      "anchors": [
+        "title-menu",
+        "title-live2d"
+      ],
+      "controls": [
+        "title-start"
+      ],
+      "guards": [
+        "title-menu",
+        "title-live2d"
+      ]
+    },
+    {
+      "scene": "login_history",
+      "anchors": [
+        "history-title",
+        "history-switch"
+      ],
+      "controls": [
+        "history-switch"
+      ]
+    },
+    {
+      "scene": "login_history_expanded",
+      "anchors": [
+        "history-title",
+        "history-remove"
+      ],
+      "controls": []
+    },
+    {
+      "scene": "login_history_confirm",
+      "anchors": [
+        "history-confirm",
+        "history-delete-ok"
+      ],
+      "controls": [
+        "history-delete-ok"
+      ]
+    },
+    {
+      "scene": "review",
+      "anchors": [
+        "review-title",
+        "review-later"
+      ],
+      "controls": [
+        "review-later"
+      ]
+    },
+    {
+      "scene": "animation",
+      "anchors": [
+        "animation-skip"
+      ],
+      "controls": [
+        "animation-skip"
+      ]
+    },
+    {
+      "scene": "animation",
+      "anchors": [
+        "animation-ticket-skip"
+      ],
+      "controls": [
+        "animation-ticket-skip"
+      ]
+    },
+    {
+      "scene": "paid_shortage",
+      "anchors": [
+        "paid-shortage-warning",
+        "paid-shortage-currency"
+      ],
+      "controls": [
+        "paid-shortage-close"
+      ]
+    },
+    {
+      "scene": "animation",
+      "anchors": [
+        "opening-movie-icon",
+        "opening-banner-skip"
+      ],
+      "controls": [
+        "opening-banner-skip"
+      ]
+    }
+  ],
+  "fields": {}
+}

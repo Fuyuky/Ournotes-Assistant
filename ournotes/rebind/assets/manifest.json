@@ -1,0 +1,395 @@
+[
+  {
+    "name": "user-center-title",
+    "source": "30-user-center.png",
+    "source_sha256": "71a153aeb1bdf7b42a643db1e859401015329db519b7bccc5a94529efae751e9",
+    "box": [
+      748,
+      290,
+      853,
+      323
+    ],
+    "crop": "crops\\user-center-title.png",
+    "crop_sha256": "301987c2bc06aa8749b2b23f8ee15ac0a04c289660ea1a4d5b6a75459b04cea1",
+    "native_size": [
+      1600,
+      900
+    ],
+    "game_version": "1.0.2 (50)",
+    "status": "research_candidate",
+    "positive": "68-b-login-uid-proof.png",
+    "positive_score": 1.0,
+    "cross_page_scores": {
+      "31-binding-info.png": 0.232318,
+      "32-rebind-a.png": 0.166802,
+      "39-new-email-form.png": 0.1773,
+      "45-b-verification.png": 0.212235,
+      "57-login-form-ready.png": 0.085747
+    },
+    "file": "user-center-title.png"
+  },
+  {
+    "name": "binding-tile",
+    "source": "30-user-center.png",
+    "source_sha256": "71a153aeb1bdf7b42a643db1e859401015329db519b7bccc5a94529efae751e9",
+    "box": [
+      748,
+      433,
+      851,
+      510
+    ],
+    "crop": "crops\\binding-tile.png",
+    "crop_sha256": "ea8dd394d1cae269419f79e5f109abc0647a15c7a694be1f8d02d91757ec1a81",
+    "native_size": [
+      1600,
+      900
+    ],
+    "game_version": "1.0.2 (50)",
+    "status": "research_candidate",
+    "positive": "68-b-login-uid-proof.png",
+    "positive_score": 1.0,
+    "cross_page_scores": {
+      "31-binding-info.png": 0.0,
+      "32-rebind-a.png": 0.011907,
+      "39-new-email-form.png": 0.047118,
+      "45-b-verification.png": 0.0,
+      "57-login-form-ready.png": -0.032974
+    },
+    "file": "binding-tile.png"
+  },
+  {
+    "name": "binding-title",
+    "source": "31-binding-info.png",
+    "source_sha256": "1108c3bd7322eeb6c78260e00fe60240f90db0c6551e3b6d6dd6fdb9e5268e39",
+    "box": [
+      748,
+      301,
+      853,
+      333
+    ],
+    "crop": "crops\\binding-title.png",
+    "crop_sha256": "f6c94b35f3045a99fdba20537cc69633902e6596faa9a96b347760a1beaf5e16",
+    "native_size": [
+      1600,
+      900
+    ],
+    "game_version": "1.0.2 (50)",
+    "status": "research_candidate",
+    "positive": "70-binding-independent.png",
+    "positive_score": 1.0,
+    "cross_page_scores": {
+      "30-user-center.png": 0.224058,
+      "32-rebind-a.png": 0.434301,
+      "39-new-email-form.png": 0.722337,
+      "45-b-verification.png": 0.01815,
+      "57-login-form-ready.png": 0.169789
+    },
+    "file": "binding-title.png"
+  },
+  {
+    "name": "change-binding",
+    "source": "31-binding-info.png",
+    "source_sha256": "1108c3bd7322eeb6c78260e00fe60240f90db0c6551e3b6d6dd6fdb9e5268e39",
+    "box": [
+      886,
+      360,
+      987,
+      394
+    ],
+    "crop": "crops\\change-binding.png",
+    "crop_sha256": "8fd5e7033043716f7230c89cc12942880bf4fd5eb5e1df938766944993c446ef",
+    "native_size": [
+      1600,
+      900
+    ],
+    "game_version": "1.0.2 (50)",
+    "status": "research_candidate",
+    "positive": "70-binding-independent.png",
+    "positive_score": 1.0,
+    "cross_page_scores": {
+      "30-user-center.png": 0.0,
+      "32-rebind-a.png": 0.0,
+      "39-new-email-form.png": 0.177657,
+      "45-b-verification.png": 0.056678,
+      "57-login-form-ready.png": 0.227084
+    },
+    "file": "change-binding.png"
+  },
+  {
+    "name": "verify-identity-title",
+    "source": "32-rebind-a.png",
+    "source_sha256": "9475baeed35ad5be3dd4500e9e26e73d576ec909435ef787f9e107b8aeaedb15",
+    "box": [
+      747,
+      302,
+      853,
+      334
+    ],
+    "crop": "crops\\verify-identity-title.png",
+    "crop_sha256": "1597ad33840104e58d80e1ef07aa833c266e47d77882f0153197c656aaa06fb7",
+    "native_size": [
+      1600,
+      900
+    ],
+    "game_version": "1.0.2 (50)",
+    "status": "research_candidate",
+    "positive": "71-identity-independent.png",
+    "positive_score": 1.0,
+    "cross_page_scores": {
+      "30-user-center.png": 0.11353,
+      "31-binding-info.png": 0.437011,
+      "39-new-email-form.png": 0.418432,
+      "45-b-verification.png": 0.036144,
+      "57-login-form-ready.png": 0.071057
+    },
+    "file": "verify-identity-title.png"
+  },
+  {
+    "name": "send-now",
+    "source": "32-rebind-a.png",
+    "source_sha256": "9475baeed35ad5be3dd4500e9e26e73d576ec909435ef787f9e107b8aeaedb15",
+    "box": [
+      751,
+      539,
+      847,
+      572
+    ],
+    "crop": "crops\\send-now.png",
+    "crop_sha256": "46c990151766c9575b3514357a5e4c328f0694d620e0e5bb9d4eb665c7d4f19d",
+    "native_size": [
+      1600,
+      900
+    ],
+    "game_version": "1.0.2 (50)",
+    "status": "research_candidate",
+    "positive": "71-identity-independent.png",
+    "positive_score": 1.0,
+    "cross_page_scores": {
+      "30-user-center.png": 0.0889,
+      "31-binding-info.png": 0.0,
+      "39-new-email-form.png": 0.0,
+      "45-b-verification.png": 0.05668,
+      "57-login-form-ready.png": 0.0
+    },
+    "file": "send-now.png"
+  },
+  {
+    "name": "bind-form-title",
+    "source": "39-new-email-form.png",
+    "source_sha256": "ea661f6e56d15084a2fe3f9e5fdb3760c4e9bfa1e2490f8fab9f093f9af27b1d",
+    "box": [
+      747,
+      302,
+      853,
+      334
+    ],
+    "crop": "crops\\bind-form-title.png",
+    "crop_sha256": "c93434fd05769f766e1d7505cc7f0f67666d91993272e71b5171c4addacc2ee6",
+    "native_size": [
+      1600,
+      900
+    ],
+    "game_version": "1.0.2 (50)",
+    "status": "research_candidate",
+    "positive": "43-b-form-ready.png",
+    "positive_score": 1.0,
+    "cross_page_scores": {
+      "30-user-center.png": 0.137738,
+      "31-binding-info.png": 0.723792,
+      "32-rebind-a.png": 0.418431,
+      "45-b-verification.png": -0.004705,
+      "57-login-form-ready.png": 0.156701
+    },
+    "file": "bind-form-title.png"
+  },
+  {
+    "name": "next-large",
+    "source": "39-new-email-form.png",
+    "source_sha256": "ea661f6e56d15084a2fe3f9e5fdb3760c4e9bfa1e2490f8fab9f093f9af27b1d",
+    "box": [
+      746,
+      610,
+      851,
+      645
+    ],
+    "crop": "crops\\next-large.png",
+    "crop_sha256": "006a1b43dfb9d13a80b7017c95f9a6ba8b608a1f8cf65afb2a97f825f95c80e8",
+    "native_size": [
+      1600,
+      900
+    ],
+    "game_version": "1.0.2 (50)",
+    "status": "research_candidate",
+    "positive": "71-identity-independent.png",
+    "positive_score": 0.910559,
+    "cross_page_scores": {
+      "30-user-center.png": 0.073654,
+      "31-binding-info.png": 0.0,
+      "32-rebind-a.png": 0.910559,
+      "45-b-verification.png": -0.097739,
+      "57-login-form-ready.png": 0.177251
+    },
+    "file": "next-large.png"
+  },
+  {
+    "name": "bind-confirm-title",
+    "source": "45-b-verification.png",
+    "source_sha256": "a3f20954d806eed2e41e642ad2e21fc3c1f1bd1ad4bf33a6c874eda6900cb484",
+    "box": [
+      747,
+      324,
+      853,
+      358
+    ],
+    "crop": "crops\\bind-confirm-title.png",
+    "crop_sha256": "63273001dad3e6af6a60a36a3fa035f32343163c14033a75742ac787a5960f4b",
+    "native_size": [
+      1600,
+      900
+    ],
+    "game_version": "1.0.2 (50)",
+    "status": "research_candidate",
+    "positive": "47-b-confirmed-before-next.png",
+    "positive_score": 1.0,
+    "cross_page_scores": {
+      "30-user-center.png": 0.108424,
+      "31-binding-info.png": 0.0,
+      "32-rebind-a.png": 0.00775,
+      "39-new-email-form.png": -0.025961,
+      "57-login-form-ready.png": 0.085485
+    },
+    "file": "bind-confirm-title.png"
+  },
+  {
+    "name": "bind-confirm-instructions",
+    "source": "45-b-verification.png",
+    "source_sha256": "a3f20954d806eed2e41e642ad2e21fc3c1f1bd1ad4bf33a6c874eda6900cb484",
+    "box": [
+      607,
+      375,
+      993,
+      435
+    ],
+    "crop": "crops\\bind-confirm-instructions.png",
+    "crop_sha256": "c2d9eac9efedd47a20fa912853349fe5ee348db24983b5081c7fa041607a37d9",
+    "native_size": [
+      1600,
+      900
+    ],
+    "game_version": "1.0.2 (50)",
+    "status": "research_candidate",
+    "positive": "47-b-confirmed-before-next.png",
+    "positive_score": 1.0,
+    "cross_page_scores": {
+      "30-user-center.png": 0.112415,
+      "31-binding-info.png": 0.072333,
+      "32-rebind-a.png": 0.076156,
+      "39-new-email-form.png": 0.141789,
+      "57-login-form-ready.png": 0.129286
+    },
+    "file": "bind-confirm-instructions.png"
+  },
+  {
+    "name": "next-confirm",
+    "source": "45-b-verification.png",
+    "source_sha256": "a3f20954d806eed2e41e642ad2e21fc3c1f1bd1ad4bf33a6c874eda6900cb484",
+    "box": [
+      744,
+      588,
+      854,
+      622
+    ],
+    "crop": "crops\\next-confirm.png",
+    "crop_sha256": "8ceb660e0352251e45391f01140e6c332e290c735629beec65ab968f9dfc9f6a",
+    "native_size": [
+      1600,
+      900
+    ],
+    "game_version": "1.0.2 (50)",
+    "status": "research_candidate",
+    "positive": "47-b-confirmed-before-next.png",
+    "positive_score": 1.0,
+    "cross_page_scores": {
+      "30-user-center.png": 0.077459,
+      "31-binding-info.png": 0.0,
+      "32-rebind-a.png": -0.071442,
+      "39-new-email-form.png": -0.069763,
+      "57-login-form-ready.png": 0.031486
+    },
+    "file": "next-confirm.png"
+  },
+  {
+    "name": "unconfirmed-text",
+    "source": "46-b-unconfirmed-8.png",
+    "source_sha256": "f1440d9d8d1b86e0be4855f958f6dafdc89f10a65860de35c99c4a2a5734ecb1",
+    "box": [
+      690,
+      455,
+      835,
+      480
+    ],
+    "crop": "crops\\unconfirmed-text.png",
+    "crop_sha256": "9ae0e1763e6963feaf8ddbb59b3e547736bf2f5cd71640030256f7d45ce92dbf",
+    "native_size": [
+      1600,
+      900
+    ],
+    "game_version": "1.0.2 (50)",
+    "status": "research_candidate",
+    "positive": "36-a-failure-8.png",
+    "positive_score": 1.0,
+    "cross_page_scores": {
+      "30-user-center.png": 0.066021,
+      "31-binding-info.png": 0.0,
+      "32-rebind-a.png": 0.137179,
+      "39-new-email-form.png": 0.010088,
+      "45-b-verification.png": 0.0,
+      "57-login-form-ready.png": 0.18864
+    },
+    "file": "unconfirmed-text.png"
+  },
+  {
+    "name": "sdk-loading-frame",
+    "file": "sdk-loading-frame.png",
+    "box": [
+      740,
+      390,
+      860,
+      413
+    ],
+    "native_size": [
+      1600,
+      900
+    ],
+    "source": "results/maintenance/diagnostics/email-rebind/9238dd7611dd4baebd459eef803a9d85/failure.png",
+    "source_sha256": "1cb49b6697fa9a897ddb84aaa46b8682dbdec8646727850b31615aec5679c421",
+    "crop_sha256": "ea22542c30ab12d9f99f482b268c3e51e5a25d0e1fb6e116d20a8815baf9a6b6",
+    "status": "verified_independent",
+    "game_version": "1.0.2 (50)",
+    "positive": "results/maintenance/validation/email-rebind-qq-20261006/sdk-loading-independent.png",
+    "positive_sha256": "bf2237f36f2d789cf49ec706329c07f98cc5728e9ade23597121256596eb2b65",
+    "positive_score": 0.9884795546531677
+  },
+  {
+    "name": "domain-menu-border",
+    "file": "domain-menu-border.png",
+    "box": [
+      598,
+      447,
+      614,
+      622
+    ],
+    "native_size": [
+      1600,
+      900
+    ],
+    "source": "results/maintenance/validation/email-rebind-qq-20261006/domain-login-expanded.png",
+    "source_sha256": "ddd16a392fe7e924eba24afce10fe5648701f954d1f28e6408960f9c29daca52",
+    "crop_sha256": "8ddfce950e10976e2e607019813019729f8aaa65cbe8fa1862c0655eebc1a7e7",
+    "status": "verified_independent",
+    "game_version": "1.0.2 (50)",
+    "positive": "results/maintenance/validation/email-rebind-qq-20261006/domain-login-scrolled.png",
+    "positive_sha256": "32d5be38e355bee93a11262e5de0280bc6e84c10f7c22803bc2ae51fb4ec73d3",
+    "positive_score": 1.0
+  }
+]

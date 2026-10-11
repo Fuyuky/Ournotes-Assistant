@@ -1,0 +1,43 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+state/
+results/*
+!results/README.md
+!results/maintenance/
+results/maintenance/*
+!results/maintenance/README.md
+.ruff_cache/
+work/
+.env
+.env.*
+!.env.example
+dist/
+build/
+# Machine configuration, downloaded catalogs and local regression evidence.
+mail-rule.json
+config/local*.json
+data/
+assets/reference/
+*.dpapi
+*.pem
+*.key
+*.sqlite3
+*.sqlite3-*
+*.log
+.scratch/
+tmp/
+config/client.json
+config/mail-rule.local.json
+# External emulator machine identity, not application defaults.
+configs/
+
+# Private regression screenshots and retired setup/export tools.
+assets/login-history/history-*.png
+ournotes/integrations/oauth_setup.py
+ournotes/integrations/browser.py
+ournotes_dev/marketplace/
+scripts/account_browser.py
+scripts/export_account_site.py

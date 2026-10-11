@@ -1,0 +1,10 @@
+[Unit]
+Description=Check the short-lived IP certificate every six hours
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=6h
+Persistent=true
+
+[Install]
+WantedBy=timers.target

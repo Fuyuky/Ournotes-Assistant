@@ -1,0 +1,504 @@
+{
+  "schema_version": 1,
+  "source_type": "verified_game_capture",
+  "normalized_size": [
+    1600,
+    900
+  ],
+  "templates": [
+    {
+      "key": "member:54",
+      "display_kind": "member",
+      "item_id": null,
+      "image": "member-54-member.png",
+      "sha256": "6a485ea60b10bfb9d78189e6ff7419cd404fbe286dc92a2bfd5ff64d162ce423",
+      "source": "assets/reference/runtime-regressions/recruit-history/account816-top.png",
+      "source_sha256": "8be954e78358fbdb3b8f281ad0f022430d5cecc2e101a7ac6f3b36f49007ceac",
+      "bbox": [
+        155,
+        287,
+        267,
+        399
+      ],
+      "slot": 1,
+      "verification": "Explicit curated regression identity; matches catalog and established record result"
+    },
+    {
+      "key": "support:30",
+      "display_kind": "support",
+      "item_id": null,
+      "image": "support-30-support.png",
+      "sha256": "dae32e1c79e28933c4771181de9bf9c21cb1c2b5e69a1466a6b0f9e5f6a17db4",
+      "source": "assets/reference/runtime-regressions/recruit-history/account816-top.png",
+      "source_sha256": "8be954e78358fbdb3b8f281ad0f022430d5cecc2e101a7ac6f3b36f49007ceac",
+      "bbox": [
+        286,
+        287,
+        398,
+        399
+      ],
+      "slot": 2,
+      "verification": "Explicit curated regression identity; matches catalog and established record result"
+    },
+    {
+      "key": "support:51",
+      "display_kind": "support",
+      "item_id": null,
+      "image": "support-51-support.png",
+      "sha256": "897a59a4ea1f93b91d4605e2b85a0f47bf91f28a99f6f75a10f683b5f3e74493",
+      "source": "assets/reference/runtime-regressions/recruit-history/account816-top.png",
+      "source_sha256": "8be954e78358fbdb3b8f281ad0f022430d5cecc2e101a7ac6f3b36f49007ceac",
+      "bbox": [
+        417,
+        287,
+        529,
+        399
+      ],
+      "slot": 3,
+      "verification": "Explicit curated regression identity; matches catalog and established record result"
+    },
+    {
+      "key": "member:30",
+      "display_kind": "member",
+      "item_id": null,
+      "image": "member-30-member.png",
+      "sha256": "ce3eef4c455175d02654ac39dd66e51dcf9d4d383b17c24b41beb10d97262c70",
+      "source": "assets/reference/runtime-regressions/recruit-history/account816-top.png",
+      "source_sha256": "8be954e78358fbdb3b8f281ad0f022430d5cecc2e101a7ac6f3b36f49007ceac",
+      "bbox": [
+        548,
+        287,
+        660,
+        399
+      ],
+      "slot": 4,
+      "verification": "Explicit curated regression identity; matches catalog and established record result"
+    },
+    {
+      "key": "support:14",
+      "display_kind": "support",
+      "item_id": null,
+      "image": "support-14-support.png",
+      "sha256": "ed32250c3a18bd85478df2f453c3ffe0728cededfc7dc177c4db24b7be8cb27c",
+      "source": "assets/reference/runtime-regressions/recruit-history/account816-top.png",
+      "source_sha256": "8be954e78358fbdb3b8f281ad0f022430d5cecc2e101a7ac6f3b36f49007ceac",
+      "bbox": [
+        679,
+        287,
+        791,
+        399
+      ],
+      "slot": 5,
+      "verification": "Explicit curated regression identity; matches catalog and established record result"
+    },
+    {
+      "key": "support:53",
+      "display_kind": "support",
+      "item_id": null,
+      "image": "support-53-support.png",
+      "sha256": "97472319f75573268469cebca154cab746568d82be2f177294dcc076b4101a55",
+      "source": "assets/reference/runtime-regressions/recruit-history/account816-top.png",
+      "source_sha256": "8be954e78358fbdb3b8f281ad0f022430d5cecc2e101a7ac6f3b36f49007ceac",
+      "bbox": [
+        1072,
+        287,
+        1184,
+        399
+      ],
+      "slot": 8,
+      "verification": "Explicit curated regression identity; matches catalog and established record result"
+    },
+    {
+      "key": "support:29",
+      "display_kind": "support",
+      "item_id": null,
+      "image": "support-29-support.png",
+      "sha256": "17cdca7567f4dc725f8135037ad108c1f191743d654148eafe6664fe49404af1",
+      "source": "assets/reference/runtime-regressions/recruit-history/account816-top.png",
+      "source_sha256": "8be954e78358fbdb3b8f281ad0f022430d5cecc2e101a7ac6f3b36f49007ceac",
+      "bbox": [
+        1334,
+        287,
+        1446,
+        399
+      ],
+      "slot": 10,
+      "verification": "Explicit curated regression identity; matches catalog and established record result"
+    },
+    {
+      "key": "support:35",
+      "display_kind": "support",
+      "item_id": null,
+      "image": "support-35-support.png",
+      "sha256": "d13a419834752debb16d341effe7e53910dd9f3635d88c9d09e24a8cd8050221",
+      "source": "assets/reference/runtime-regressions/recruit-history/account816-top.png",
+      "source_sha256": "8be954e78358fbdb3b8f281ad0f022430d5cecc2e101a7ac6f3b36f49007ceac",
+      "bbox": [
+        286,
+        523,
+        398,
+        635
+      ],
+      "slot": 2,
+      "verification": "Explicit curated regression identity; matches catalog and established record result"
+    },
+    {
+      "key": "support:22",
+      "display_kind": "support",
+      "item_id": null,
+      "image": "support-22-support.png",
+      "sha256": "bc4f90b8b9cc5120b8739620f1f2815e8d6bc760f24cdcad4280c8b0ca078499",
+      "source": "assets/reference/runtime-regressions/recruit-history/account816-top.png",
+      "source_sha256": "8be954e78358fbdb3b8f281ad0f022430d5cecc2e101a7ac6f3b36f49007ceac",
+      "bbox": [
+        417,
+        523,
+        529,
+        635
+      ],
+      "slot": 3,
+      "verification": "Explicit curated regression identity; matches catalog and established record result"
+    },
+    {
+      "key": "support:4",
+      "display_kind": "support",
+      "item_id": null,
+      "image": "support-4-support.png",
+      "sha256": "471704620aaa2a2e34967acb57d2ddee030363a8b2001e88b1eb0c8676c08d07",
+      "source": "assets/reference/runtime-regressions/recruit-history/account816-top.png",
+      "source_sha256": "8be954e78358fbdb3b8f281ad0f022430d5cecc2e101a7ac6f3b36f49007ceac",
+      "bbox": [
+        810,
+        523,
+        922,
+        635
+      ],
+      "slot": 6,
+      "verification": "Explicit curated regression identity; matches catalog and established record result"
+    },
+    {
+      "key": "support:2",
+      "display_kind": "support",
+      "item_id": null,
+      "image": "support-2-support.png",
+      "sha256": "ed95bceff288a7f285bf9704f49e96d1d064245b7b319d9cd8aa5122388226b9",
+      "source": "assets/reference/runtime-regressions/recruit-history/account816-top.png",
+      "source_sha256": "8be954e78358fbdb3b8f281ad0f022430d5cecc2e101a7ac6f3b36f49007ceac",
+      "bbox": [
+        941,
+        523,
+        1053,
+        635
+      ],
+      "slot": 7,
+      "verification": "Explicit curated regression identity; matches catalog and established record result"
+    },
+    {
+      "key": "support:19",
+      "display_kind": "support",
+      "item_id": null,
+      "image": "support-19-support.png",
+      "sha256": "5de14119ee22c60eb909de3820c140a0f97569c70a44eab4b6c2d0319b308fc2",
+      "source": "assets/reference/runtime-regressions/recruit-history/account816-top.png",
+      "source_sha256": "8be954e78358fbdb3b8f281ad0f022430d5cecc2e101a7ac6f3b36f49007ceac",
+      "bbox": [
+        1072,
+        523,
+        1184,
+        635
+      ],
+      "slot": 8,
+      "verification": "Explicit curated regression identity; matches catalog and established record result"
+    },
+    {
+      "key": "member:32",
+      "display_kind": "member",
+      "item_id": null,
+      "image": "member-32-member.png",
+      "sha256": "abc4b78641e0d685033c3236df985025afbdff488b9a95d0dbc33c492298fe16",
+      "source": "assets/reference/runtime-regressions/recruit-history/account816-top.png",
+      "source_sha256": "8be954e78358fbdb3b8f281ad0f022430d5cecc2e101a7ac6f3b36f49007ceac",
+      "bbox": [
+        1334,
+        523,
+        1446,
+        635
+      ],
+      "slot": 10,
+      "verification": "Explicit curated regression identity; matches catalog and established record result"
+    },
+    {
+      "key": "member:47",
+      "display_kind": "member",
+      "item_id": null,
+      "image": "member-47-member.png",
+      "sha256": "0b8d2c10a069369526873b7438c61f5dcfd60fa32d058246057b27b4fcdf4207",
+      "source": "assets/reference/runtime-regressions/recruit-history/new-pool-ten.png",
+      "source_sha256": "59cb9c92b78330ce7f3756f446a8a6601f78db86e3208644d0516239b533d962",
+      "bbox": [
+        155,
+        287,
+        267,
+        399
+      ],
+      "slot": 1,
+      "verification": "Explicit curated regression identity; matches catalog and established record result"
+    },
+    {
+      "key": "support:28",
+      "display_kind": "support",
+      "item_id": null,
+      "image": "support-28-support.png",
+      "sha256": "482cfe66bd489d224a326c6cb67767c6e9ac577074491517a516c824ab1eb37e",
+      "source": "assets/reference/runtime-regressions/recruit-history/new-pool-ten.png",
+      "source_sha256": "59cb9c92b78330ce7f3756f446a8a6601f78db86e3208644d0516239b533d962",
+      "bbox": [
+        417,
+        287,
+        529,
+        399
+      ],
+      "slot": 3,
+      "verification": "Explicit curated regression identity; matches catalog and established record result"
+    },
+    {
+      "key": "support:9",
+      "display_kind": "support",
+      "item_id": null,
+      "image": "support-9-support.png",
+      "sha256": "7db638db6658e495253263bf60172ccb9f2f51f38ac52a54b9e830f1d30b9510",
+      "source": "assets/reference/runtime-regressions/recruit-history/new-pool-ten.png",
+      "source_sha256": "59cb9c92b78330ce7f3756f446a8a6601f78db86e3208644d0516239b533d962",
+      "bbox": [
+        810,
+        287,
+        922,
+        399
+      ],
+      "slot": 6,
+      "verification": "Explicit curated regression identity; matches catalog and established record result"
+    },
+    {
+      "key": "support:63",
+      "display_kind": "support",
+      "item_id": null,
+      "image": "support-63-support.png",
+      "sha256": "e985fe1ac5ef2c034cb998bc6c3380a24f5588e02d3bb30782b9248607a8ab1a",
+      "source": "assets/reference/runtime-regressions/recruit-history/new-pool-ten.png",
+      "source_sha256": "59cb9c92b78330ce7f3756f446a8a6601f78db86e3208644d0516239b533d962",
+      "bbox": [
+        941,
+        287,
+        1053,
+        399
+      ],
+      "slot": 7,
+      "verification": "Explicit curated regression identity; matches catalog and established record result"
+    },
+    {
+      "key": "support:10",
+      "display_kind": "support",
+      "item_id": null,
+      "image": "support-10-support.png",
+      "sha256": "8dc2a1692ae0241b1c0de8dac84b698b60864ed865e283f58fd7935e075a6c49",
+      "source": "assets/reference/runtime-regressions/recruit-history/new-pool-ten.png",
+      "source_sha256": "59cb9c92b78330ce7f3756f446a8a6601f78db86e3208644d0516239b533d962",
+      "bbox": [
+        1072,
+        287,
+        1184,
+        399
+      ],
+      "slot": 8,
+      "verification": "Explicit curated regression identity; matches catalog and established record result"
+    },
+    {
+      "key": "support:46",
+      "display_kind": "support",
+      "item_id": null,
+      "image": "support-46-support.png",
+      "sha256": "5751be171962c7c7a79d5ae1151a1cced9454ffd0a459bf661e995e2416f3a34",
+      "source": "assets/reference/runtime-regressions/recruit-history/new-pool-ten.png",
+      "source_sha256": "59cb9c92b78330ce7f3756f446a8a6601f78db86e3208644d0516239b533d962",
+      "bbox": [
+        1203,
+        287,
+        1315,
+        399
+      ],
+      "slot": 9,
+      "verification": "Explicit curated regression identity; matches catalog and established record result"
+    },
+    {
+      "key": "support:31",
+      "display_kind": "support",
+      "item_id": null,
+      "image": "support-31-support.png",
+      "sha256": "1729896cd844f6c5445022f6314de184919e912b410c93f580103c9184fd5110",
+      "source": "assets/reference/runtime-regressions/recruit-history/new-pool-ten.png",
+      "source_sha256": "59cb9c92b78330ce7f3756f446a8a6601f78db86e3208644d0516239b533d962",
+      "bbox": [
+        1334,
+        287,
+        1446,
+        399
+      ],
+      "slot": 10,
+      "verification": "Explicit curated regression identity; matches catalog and established record result"
+    },
+    {
+      "key": "support:54",
+      "display_kind": "support",
+      "item_id": null,
+      "image": "support-54-support.png",
+      "sha256": "dc234a4d1a9217de1482467acdb372aae5e4c40901e09624d34ec97e1e4a43ef",
+      "source": "assets/reference/runtime-regressions/recruit-history/ticket-single.png",
+      "source_sha256": "756ecf7519c30c8f4b1c6dc8ed817ec2163aea7399c4e179fd10c4bc76843d80",
+      "bbox": [
+        155,
+        287,
+        267,
+        399
+      ],
+      "slot": 1,
+      "verification": "Explicit curated regression identity; matches catalog and established record result"
+    },
+    {
+      "key": "support:6",
+      "display_kind": "support",
+      "item_id": null,
+      "image": "support-6-support.png",
+      "sha256": "e056e4ffd7caa1bfb94eba0ed12029cd11f3b3f3fdb029c58f422f2e6a746a43",
+      "source": "assets/reference/runtime-regressions/recruit-history/ticket-ten-review.png",
+      "source_sha256": "8ace43d399a7c28d6598829d36c88ff4aa4a245830423fd807a70f25f347d2ec",
+      "bbox": [
+        155,
+        287,
+        267,
+        399
+      ],
+      "slot": 1,
+      "verification": "Explicit curated regression identity; matches catalog and established record result"
+    },
+    {
+      "key": "support:23",
+      "display_kind": "support",
+      "item_id": null,
+      "image": "support-23-support.png",
+      "sha256": "12b009de6ec703497b9d8d6e95c6b149c060e5772a117cdbb00a2da93380fe2f",
+      "source": "assets/reference/runtime-regressions/recruit-history/ticket-ten-review.png",
+      "source_sha256": "8ace43d399a7c28d6598829d36c88ff4aa4a245830423fd807a70f25f347d2ec",
+      "bbox": [
+        286,
+        287,
+        398,
+        399
+      ],
+      "slot": 2,
+      "verification": "Explicit curated regression identity; matches catalog and established record result"
+    },
+    {
+      "key": "support:15",
+      "display_kind": "support",
+      "item_id": null,
+      "image": "support-15-support.png",
+      "sha256": "b3684b4bf50893d4def8e7e899170ab4cc16319230a441771f2ada8ecbca0cb7",
+      "source": "assets/reference/runtime-regressions/recruit-history/ticket-ten-review.png",
+      "source_sha256": "8ace43d399a7c28d6598829d36c88ff4aa4a245830423fd807a70f25f347d2ec",
+      "bbox": [
+        417,
+        287,
+        529,
+        399
+      ],
+      "slot": 3,
+      "verification": "Explicit curated regression identity; matches catalog and established record result"
+    },
+    {
+      "key": "support:44",
+      "display_kind": "support",
+      "item_id": null,
+      "image": "support-44-support.png",
+      "sha256": "b45b867ff8d7e1debef109fa218b5e64148d1d484521fb668acae0c13c488405",
+      "source": "assets/reference/runtime-regressions/recruit-history/ticket-ten-review.png",
+      "source_sha256": "8ace43d399a7c28d6598829d36c88ff4aa4a245830423fd807a70f25f347d2ec",
+      "bbox": [
+        679,
+        287,
+        791,
+        399
+      ],
+      "slot": 5,
+      "verification": "Explicit curated regression identity; matches catalog and established record result"
+    },
+    {
+      "key": "support:33",
+      "display_kind": "support",
+      "item_id": null,
+      "image": "support-33-support.png",
+      "sha256": "954cc1600ccf5ea49d1bcd067f47e42975cc9222d485396c707c58786b135adb",
+      "source": "assets/reference/runtime-regressions/recruit-history/ticket-ten-review.png",
+      "source_sha256": "8ace43d399a7c28d6598829d36c88ff4aa4a245830423fd807a70f25f347d2ec",
+      "bbox": [
+        810,
+        287,
+        922,
+        399
+      ],
+      "slot": 6,
+      "verification": "Explicit curated regression identity; matches catalog and established record result"
+    },
+    {
+      "key": "member:34",
+      "display_kind": "member",
+      "item_id": null,
+      "image": "member-34-member.png",
+      "sha256": "ff47d5a3749ec6322294a8600547bab6dfdf0ce852d5587c47365ff5548a2baf",
+      "source": "assets/reference/runtime-regressions/recruit-history/ticket-ten-review.png",
+      "source_sha256": "8ace43d399a7c28d6598829d36c88ff4aa4a245830423fd807a70f25f347d2ec",
+      "bbox": [
+        1203,
+        287,
+        1315,
+        399
+      ],
+      "slot": 9,
+      "verification": "Explicit curated regression identity; matches catalog and established record result"
+    },
+    {
+      "key": "support:38",
+      "display_kind": "support",
+      "item_id": null,
+      "image": "support-38-support.png",
+      "sha256": "81de29feed4c368a50f629e2d606bd096f34567de94cc2f54a72419e1f2a2d31",
+      "source": "assets/reference/runtime-regressions/recruit-history/ticket-ten-review.png",
+      "source_sha256": "8ace43d399a7c28d6598829d36c88ff4aa4a245830423fd807a70f25f347d2ec",
+      "bbox": [
+        1334,
+        287,
+        1446,
+        399
+      ],
+      "slot": 10,
+      "verification": "Explicit curated regression identity; matches catalog and established record result"
+    },
+    {
+      "key": "member:56",
+      "display_kind": "member",
+      "item_id": null,
+      "image": "member-56-member.png",
+      "sha256": "25e7531baa0f7feae3bd56d56b7a4b81c0d3929c443e7b85c1c01d28d66b1847",
+      "source": "assets/reference/runtime-regressions/recruit-history/downsampling/account-833.png",
+      "source_sha256": "b5845ed9c9e393897b14daaa4757521be5d817f5d7a4dff4535fc94f28c886ff",
+      "bbox": [
+        417,
+        287,
+        529,
+        399
+      ],
+      "slot": 3,
+      "verification": "Explicit curated regression identity; matches catalog and established record result"
+    }
+  ],
+  "policy": "Curated offline only. No automatic learning from live or unknown predictions. Game card artwork only; dedicated piece identities use the original explicit BDON item mapping and unblurred masked references."
+}

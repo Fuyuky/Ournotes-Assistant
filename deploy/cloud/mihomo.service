@@ -1,0 +1,22 @@
+[Unit]
+Description=OurNotes Gmail local outbound proxy
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ournotes-proxy
+Group=ournotes-proxy
+ExecStart=/usr/local/bin/mihomo -d /var/lib/ournotes-proxy -f /var/lib/ournotes-proxy/config.yaml
+Restart=on-failure
+RestartSec=5
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/ournotes-proxy
+CapabilityBoundingSet=
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,10 @@
+{
+  "senders": [
+    "help@intl-service.bilibili.com",
+    "help@biligames.co",
+    "help@biligames.cc",
+    "help@biligames.vip"
+  ],
+  "subject_pattern": "^【bilibili】请验证您的邮箱地址\\s*$",
+  "code_pattern": "您的验证码是\\s*[:：]\\s*(?P<code>[0-9]{6})(?![A-Za-z0-9])"
+}

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>账号卡牌筛选 · OurNotes</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/data-source.js" defer></script>
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <main>
+    <header class="hero">
+      <div><div class="eyebrow"><span class="spark">✧</span> OUR NOTES / COLLECTION</div>
+        <h1>找到你的理想阵容<span>。</span></h1>
+        <p>点选想要的 SSR 卡牌，寻找同时拥有它们的账号。</p>
+      </div>
+      <div class="data-status">
+        <div class="data-counts"><strong id="valid-count">—</strong> 有效账号 <span><span class="divider">/</span> <b id="used-count">—</b> 已使用</span></div>
+        <small id="loaded-at">每 5 秒检查数据更新</small>
+      </div>
+    </header>
+
+    <section class="selection panel" aria-labelledby="selection-title">
+      <div class="section-head"><div><div class="eyebrow">01 / BUILD YOUR FILTER</div><h2 id="selection-title">选择卡牌</h2></div>
+        <label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="搜索角色名或卡牌标题" aria-label="搜索角色名或卡牌标题" autocomplete="off"></label>
+      </div>
+      <div id="catalog" aria-label="SSR 卡牌目录"></div>
+      <div id="catalog-empty" class="empty" hidden>没有找到卡牌，换个关键词试试。</div>
+      <div class="conditions"><div class="condition-label"><span id="selection-rule">同时拥有</span> <strong id="selected-count">0</strong> 种指定卡牌</div><button id="clear" class="text-button" disabled>清空条件</button><div id="chips"></div></div>
+    </section>
+
+    <section class="results" aria-labelledby="results-title">
+      <div class="section-head results-head"><div><div class="eyebrow">02 / MATCHING ACCOUNTS</div><h2 id="results-title">匹配账号 <span id="match-count" class="count">—</span></h2></div>
+        <div class="controls"><label>排序 <select id="order"><option value="mygo_desc">It's MyGO!!!!! 成员数量多到少</option><option value="mujica_desc">Ave Mujica 成员数量多到少</option><option value="dream_desc">梦限大 MewType 成员数量多到少</option><option value="millsage_desc">Millsage 成员数量多到少</option><option value="dumb_desc">一家 Dumb Rock 成员数量多到少</option><option value="price_desc" selected>价格从高到低</option><option value="price_asc">价格从低到高</option><option value="selected_desc" disabled>按选中卡牌数量排序</option><option value="desc">SSR 从多到少</option><option value="asc">SSR 从少到多</option></select></label><label>每页 <select id="page-size"><option value="10">10 个</option><option value="15">15 个</option><option value="20">20 个</option></select></label><button id="refresh" class="plain-button" title="重新读取当前服务快照">刷新</button></div>
+      </div>
+      <div class="result-filters panel"><label class="index-search">账号 index<input id="index-search" type="search" inputmode="numeric" placeholder="例如 198" autocomplete="off" aria-label="按账号 index 精确查询"></label><label class="pull-filter">抽数标签<select id="pull-count" aria-label="按抽数标签筛选"><option value="">全部抽数</option><option value="42">42 抽</option><option value="43">43 抽</option><option value="62">62 抽</option></select></label><label class="used-toggle"><input id="include-pending" type="checkbox" checked>显示高稀有账号</label><label class="used-toggle"><input id="include-used" type="checkbox">包含已使用账号</label><label class="used-toggle" title="至少拥有一种所选卡牌即可匹配"><input id="allow-missing" type="checkbox" disabled>允许选择卡牌缺失</label><details class="score-help" id="score-help"><summary id="score-help-label">展开说明</summary><p>标记 43 抽的账号：消耗 星钻x4000 + 交织的乐章招募券×20 + SSR角色必得券x1 + SSR必得券x1 + SR必得券x1</p><p>标记 62 抽的账号：消耗 星钻×8000 + 交织的乐章招募券×20 + SSR角色必得券×1 + SSR必得券×1；集齐UP转池预设会将剩余星钻十连转到常驻。</p><p>真实价格与标价可能相差最多 5 元，请务必注意</p></details></div>
+      <p id="notice" role="status" aria-live="polite" hidden></p>
+      <div id="accounts" aria-busy="true"><div class="empty panel">正在读取账号…</div></div>
+      <nav class="pagination" aria-label="结果分页"><span id="range">—</span><div><button id="prev" class="plain-button" disabled>← 上一页</button><span id="page-label">1 / 1</span><button id="next" class="plain-button" disabled>下一页 →</button></div></nav>
+    </section>
+    <footer><span>✧ OUR NOTES</span><span>只展示完整且有效的现存档案 · 卡牌数量按实际持有张数计算</span></footer>
+  </main>
+<dialog id="site-announcement" aria-labelledby="announcement-title"><h2 id="announcement-title">公告</h2><p id="announcement-text"></p><button id="announcement-confirm" type="button">确认</button></dialog>
+</body>
+</html>

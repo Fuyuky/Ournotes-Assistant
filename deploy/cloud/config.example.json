@@ -1,0 +1,11 @@
+{
+  "database": "/var/lib/ournotes-cloud/cloud.sqlite3",
+  "mailbox": "REPLACE_WITH_CANONICAL_GMAIL_ADDRESS",
+  "admin_token_file": "/etc/ournotes-cloud/admin-token",
+  "gmail_credentials": "/var/lib/ournotes-cloud/private/google-oauth.json",
+  "gmail_proxy": "http://127.0.0.1:7890",
+  "mail_rule": "/etc/ournotes-cloud/mail-rule.json",
+  "publication_root": "/var/lib/ournotes-cloud/publications",
+  "catalog": "/opt/ournotes-cloud/data/bdon",
+  "port": 8770
+}

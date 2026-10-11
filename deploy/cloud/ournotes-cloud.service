@@ -1,0 +1,24 @@
+[Unit]
+Description=OurNotes private coordination service
+After=network.target
+
+[Service]
+Type=simple
+User=ournotes-cloud
+Group=ournotes-cloud
+WorkingDirectory=/opt/ournotes-cloud
+ExecStart=/opt/ournotes-cloud/.venv/bin/python -m ournotes.cloud --config /etc/ournotes-cloud/config.json
+Restart=on-failure
+RestartSec=3
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/ournotes-cloud
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+LockPersonality=true
+CapabilityBoundingSet=
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,51 @@
+[project]
+name = "ournotes-assistant"
+version = "0.2.0"
+description = "Independent desktop workers with cloud account and mail services"
+requires-python = ">=3.12"
+dependencies = [
+  "Pillow>=10.3,<13",
+]
+
+[project.optional-dependencies]
+client = [
+  "pywin32>=305; sys_platform == 'win32'",
+  "opencv-python>=4.12,<5",
+  "numpy>=2,<3",
+  "rapidocr-onnxruntime>=1.4.4,<2",
+  "onnxruntime==1.20.1",
+  "fastapi>=0.115,<1", "uvicorn>=0.30,<1",
+  "cryptography>=50,<51",
+  "PyYAML>=6,<7",
+  "websockets==15.0.1",
+]
+server = [
+  "fastapi>=0.115,<1", "uvicorn>=0.30,<1", "requests>=2,<3", "PyYAML>=6,<7",
+  "google-auth-oauthlib>=1.2,<2", "PySocks>=1.7.1,<2", "cryptography>=50,<51",
+  "websockets==15.0.1",
+]
+
+[project.scripts]
+ournotes = "ournotes.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["ournotes"]
+
+[dependency-groups]
+client = ["ournotes-assistant[client]"]
+server = ["ournotes-assistant[server]"]
+analysis = [
+    "matplotlib>=3.9,<4",
+]
+dev = ["pytest>=8,<10", "ruff>=0.12,<1", "httpx>=0.28,<1", "cryptography>=50,<51"]
+browser = ["fastapi>=0.115,<1", "uvicorn>=0.30,<1"]
+
+[tool.ruff]
+line-length = 110
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

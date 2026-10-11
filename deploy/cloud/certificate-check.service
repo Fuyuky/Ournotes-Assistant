@@ -1,0 +1,6 @@
+[Unit]
+Description=Check OurNotes IP certificate has at least 36 hours remaining
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/openssl x509 -checkend 129600 -noout -in /etc/letsencrypt/live/PUBLIC_IP/fullchain.pem

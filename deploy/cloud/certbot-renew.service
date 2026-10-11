@@ -1,0 +1,8 @@
+[Unit]
+Description=Renew OurNotes IP certificate
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/opt/ournotes-certbot/bin/certbot renew --quiet

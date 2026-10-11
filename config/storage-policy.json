@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "keep_batches": 3,
+  "keep_jobs": 40,
+  "compact_completed": true,
+  "remove_expired_unfinished": true,
+  "compress_logs": true,
+  "gzip_level": 6
+}

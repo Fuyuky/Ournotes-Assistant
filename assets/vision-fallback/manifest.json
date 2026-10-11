@@ -1,0 +1,33 @@
+[
+  {
+    "file": "animation-skip.png",
+    "source": "2026-09-27-gacha-both-run/templates/animation-skip.png",
+    "source_sha256": "9c8d2d18bbd75231b11667c820359599eac2e6a2759e1b51bd5fe24aee92701f",
+    "box": null,
+    "sha256": "9c8d2d18bbd75231b11667c820359599eac2e6a2759e1b51bd5fe24aee92701f"
+  },
+  {
+    "file": "pool.png",
+    "source": "2026-09-27-gacha-survey/screens/01-mygo-main.png",
+    "source_sha256": "56af1a2118ac1988505f8b080223c7bf91492bb0c0feba68484f5b5623af04a1",
+    "box": [
+      288,
+      30,
+      344,
+      65
+    ],
+    "sha256": "0498e8b306c97e73488e95be4c2b4a5ab88a46631721292bac912b830b9e82ea"
+  },
+  {
+    "file": "confirm.png",
+    "source": "2026-09-27-gacha-both-run/screens/03-mygo-confirm.png",
+    "source_sha256": "ff1ef4e6977d725020ea174972ed06921384de81621688885cb8bd1b4ce0a849",
+    "box": [
+      721,
+      85,
+      880,
+      123
+    ],
+    "sha256": "b154fe901d1541a42b7ae3621abd1f5f6ff1dc07d0f90ee5eb48c592f891681e"
+  }
+]
