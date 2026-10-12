@@ -2,9 +2,10 @@ import json
 from pathlib import Path
 
 import pytest
+from preset_fixtures import HISTORICAL_PRESETS, historical_plan
 
 from ournotes.reports.account import format_account
-from ournotes.runtime.pools import PRESETS, make_plan
+from ournotes.runtime.pools import make_plan
 from ournotes.runtime.store import FORMAL_START, RuntimeStore, alias_at
 
 
@@ -37,9 +38,9 @@ def test_reservation_rolls_back_counter_and_account_on_crash(tmp_path, monkeypat
     store.close()
 
 
-@pytest.mark.parametrize("preset", [name for name in PRESETS if sum(e["pulls"] for e in make_plan(name)) == 43])
-def test_presets_use_only_ten_pulls_for_multiples_of_ten(preset):
-    plan = make_plan(preset)
+@pytest.mark.parametrize("preset", [name for name in HISTORICAL_PRESETS if sum(e["pulls"] for e in historical_plan(name)) == 43])
+def test_historical_presets_use_only_ten_pulls_for_multiples_of_ten(preset):
+    plan = historical_plan(preset)
     assert sum(e["pulls"] for e in plan) == 43
     assert len(plan) == 7
     assert sorted(e["pulls"] for e in plan) == [1, 1, 1, 10, 10, 10, 10]

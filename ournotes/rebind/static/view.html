@@ -1,18 +1,18 @@
 <section id="email-rebind-panel" hidden aria-label="账号换绑">
   <h3>账号换绑</h3>
-  <p class="help">未使用或已拍下账号可换绑，已使用账号不可换绑。支持 Gmail、Hotmail、MSN、Outlook、Yahoo、iCloud、QQ、163、126。原邮箱自动验证，新邮箱由你打开邮件确认；运行期间请勿手动操作该实例。</p>
+
   <label class="field">目标邮箱<input id="rebind-email" type="email" maxlength="254" autocomplete="off" placeholder="输入完整邮箱地址（如 name@qq.com）"></label>
   <label class="field">MuMu 实例编号<input id="rebind-instance" type="number" min="0" max="999" value="0"></label>
-  <p class="help">可与批次同时运行，请选择批次之外的空闲实例；已暂停批次的实例仍保留给原批次。</p>
+
   <p id="rebind-identity" class="help"></p>
   <div class="control-bar"><button id="rebind-start" class="button primary">开始换绑</button><button id="rebind-target" class="button primary" hidden>更换邮箱并继续</button><button id="rebind-confirm" class="button secondary" disabled>邮件已确认</button><button id="rebind-stop" class="button danger" disabled>停止换绑</button></div>
-  <p id="rebind-status" role="status" aria-live="polite" class="help">开始后自动生成随机密码，清除任务后不保留。</p>
+  <p id="rebind-status" role="status" aria-live="polite" class="help">尚未开始换绑。</p>
   <p id="rebind-error-hint" class="help" hidden></p>
   <details id="rebind-error-details" hidden><summary>查看诊断信息</summary><p id="rebind-error-info" class="help"></p></details>
   <div id="rebind-secret">
     <div class="rebind-copy-row"><div><span class="rebind-copy-label">发信提示</span><p id="rebind-message-sent" class="rebind-copy-text" tabindex="0">验证邮件已发送，请查收邮箱~</p></div><button id="rebind-copy-sent" class="button secondary" aria-label="复制发信提示">复制</button></div>
-    <div class="rebind-copy-row"><div><span class="rebind-copy-label">密码文案</span><p id="rebind-password" class="rebind-copy-text" tabindex="0">开始换绑后显示当前密码。</p></div><button id="rebind-copy" class="button secondary" aria-label="复制密码文案" disabled>复制</button></div>
+    <div class="rebind-copy-row"><div><span class="rebind-copy-label">密码文案</span><p id="rebind-password" class="rebind-copy-text" tabindex="0">暂无密码。</p></div><button id="rebind-copy" class="button secondary" aria-label="复制密码文案" disabled>复制</button></div>
     <div class="rebind-copy-row"><div><span class="rebind-copy-label">收货提示</span><p id="rebind-message-receipt" class="rebind-copy-text" tabindex="0">上号看看没问题后记得确认收货哦，为了您的账号安全请及时修改密码！</p></div><button id="rebind-copy-receipt" class="button secondary" aria-label="复制收货提示">复制</button></div>
-    <p class="help">以上文案可直接选择复制。请在结束任务前保存密码；结束后会清除页面中的密码。</p>
+
   </div>
 </section>

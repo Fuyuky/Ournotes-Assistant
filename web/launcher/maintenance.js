@@ -13,7 +13,7 @@
     notificationToggle.disabled = !value.available;
     notificationTest.disabled = !value.available || !value.enabled;
     notificationStatus.textContent = !value.available ? '后台通知在当前系统上不可用。' : value.error ||
-      (value.enabled ? `后台通知已开启。关闭网页仍可提醒；退出控制台后停止。${value.click_opens_console === false ? '当前系统通知不支持点击打开控制台。' : ''}` : '后台通知已关闭。');
+      (value.enabled ? `后台通知已开启。${value.click_opens_console === false ? '当前系统通知不支持点击打开控制台。' : ''}` : '后台通知已关闭。');
   }
   notificationToggle.addEventListener('change', async () => {
     try { renderNotifications(await api('notifications/settings', {enabled: notificationToggle.checked})); }
@@ -29,7 +29,7 @@
     const amount = value.stage === 'downloading' && value.bytes
       ? ` · ${(value.bytes / 1048576).toFixed(1)} MiB${value.total_bytes ? ' / ' + (value.total_bytes / 1048576).toFixed(1) + ' MiB' : ''}` : '';
     const historical = !!value.historical;
-    progress.textContent = historical ? '本次控制台尚未手动更新。上次结果可在下方展开查看。' : (value.message || '尚未手动更新。') + amount;
+    progress.textContent = historical ? '本次控制台尚未手动更新。' : (value.message || '尚未手动更新。') + amount;
     const history = document.getElementById('game-update-history');
     history.hidden = value.status === 'idle';
     if (!historical && value.status !== 'idle') history.open = true;

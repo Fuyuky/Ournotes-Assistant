@@ -1,10 +1,10 @@
 <section class="panel clash-panel" id="clash-panel" aria-labelledby="clash-title">
-  <div class="panel-head"><div><div class="eyebrow">LOCAL PROXY</div><h2 id="clash-title">Clash Verge <span class="tiny-tag">开发版</span></h2></div><button type="button" id="clash-check" class="button secondary small">重新检查连接</button></div>
+  <div class="panel-head"><div><h2 id="clash-title">Clash Verge</h2></div><button type="button" id="clash-check" class="button secondary small">重新检查连接</button></div>
   <div class="clash-status-row"><span data-clash="connection-badge" class="clash-badge checking">检查中</span><span data-clash="rotation-badge" class="clash-badge idle">等待读取</span><small id="clash-checked">尚未检查</small></div>
   <p id="clash-message" class="clash-message" role="status" aria-live="polite">正在读取本机 Clash Verge…</p>
   <dl class="clash-details"><div><dt>当前节点</dt><dd id="clash-node">—</dd></div><div><dt>下次切换候选</dt><dd id="clash-next">—</dd></div><div><dt>节点组</dt><dd id="clash-group">—</dd></div><div><dt>其他可用节点</dt><dd id="clash-remaining-nodes">—</dd></div></dl>
   <div class="clash-cycle"><div><b id="clash-progress-title">24小时发信次数</b><span id="clash-count">— / 150</span></div><progress id="clash-progress" max="150" value="0" aria-label="当前节点24小时发信次数"></progress><p id="clash-countdown">等待读取节点用量</p></div>
   <p id="clash-expiry" class="clash-last"></p>
   <div class="clash-node-scroll"><table class="clash-node-table"><thead><tr><th>节点</th><th>24小时发信</th><th>在途预留</th><th>剩余额度</th></tr></thead><tbody id="clash-nodes"></tbody></table></div>
-  <p id="clash-last" class="clash-last">尚未切换节点</p><p class="help">登录、重发和换绑的三次发信共用计数。150次提前切换，当前任务完成后才换节点；预留不计作实际发信。候选随实际节点和额度重新计算，连接检查只读取状态。</p>
+  <p id="clash-last" class="clash-last">尚未切换节点</p>
 </section>

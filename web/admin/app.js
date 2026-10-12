@@ -182,7 +182,7 @@ async function detail(index) {
       }
       messages.append(row);
     }
-  }), messages, node('p', '读取邮件不会执行验证；标记已使用是独立操作。', 'muted small'));
+  }), messages);
   box.append(mail); box.scrollIntoView({block: 'start', behavior: 'smooth'});
 }
 async function statistics() {
@@ -205,7 +205,7 @@ async function statistics() {
       if (metric.indices.length) {const d = node('details'); d.append(node('summary', `最高记录编号 · ${metric.indices.length} 个账号`), node('p', metric.indices.join('、'))); card.append(d);}
       fragment.append(card);
     }
-    $('tables').replaceChildren(fragment); $('sample').textContent = `${report.n.toLocaleString()} 个完整样本`;
+    $('tables').replaceChildren(fragment); $('sample').textContent = `${report.n.toLocaleString()} 个账号`;
     $('observed').textContent = '读取时间：' + time(report.observed_at) + '（北京时间）'; notice('');
   } catch (error) {notice(error.message);} finally {if (request === reportRequest) $('refresh').disabled = false;}
 }
@@ -216,7 +216,7 @@ async function activities() {
 }
 function activityDetails() {
   const value = activityDocument?.activities.find(v => v.id === $('activity-select').value);
-  $('activity-detail').textContent = value ? `${value.name} · ${value.pickup_card_keys.length} 种 UP（角色卡与支援卡分别计数）` : '新分配账号不标记活动。';
+  $('activity-detail').textContent = value ? `${value.name} · ${value.pickup_card_keys.length} 种 UP` : '无活动';
 }
 const presetPool = key => presetDocument?.pools.find(value => value.key === key || `bdon-gacha-${value.gacha_id}` === key);
 function field(label, input) {const result = node('label', label); result.append(input); return result;}
@@ -265,7 +265,6 @@ function presetBusy(value) {
 }
 function editPreset(key) {
   const value = presetDocument?.presets[key]; presetKey = value ? String(key) : null;
-  $('preset-key').value = presetKey ?? ''; $('preset-key').readOnly = true;
   $('preset-name').value = value?.name || ''; $('preset-description').value = value?.description || '';
   $('preset-name').setCustomValidity(''); $('preset-status').textContent = '';
   $('preset-select').value = presetKey ?? '';

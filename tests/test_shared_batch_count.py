@@ -11,7 +11,7 @@ from ournotes.runtime.store import AllocationClosed, RuntimeStore
 @pytest.mark.parametrize("total", [1, 2, 5, 17])
 def test_concurrent_lanes_never_exceed_shared_total(tmp_path, total):
     db = RuntimeStore(tmp_path)
-    batch = create_batch(db, [(i, "MyGO only") for i in range(4)], "test", total)
+    batch = create_batch(db, [(i, "都抽") for i in range(4)], "test", total)
     barrier = threading.Barrier(4)
 
     def work(lane):
@@ -40,7 +40,7 @@ def test_concurrent_lanes_never_exceed_shared_total(tmp_path, total):
 
 def test_inflight_and_deleted_slots_still_consume_quota_after_reopen(tmp_path):
     db = RuntimeStore(tmp_path)
-    batch = create_batch(db, [(0, "MyGO only"), (1, "Mujica only")], "test", 1)
+    batch = create_batch(db, [(0, "都抽"), (1, "millsage 一期活动")], "test", 1)
     run = db.get_run(batch["lanes"][0]["run_id"])
     account = db.reserve(run, make_plan(run["preset"]))
     db.close()
@@ -59,7 +59,7 @@ def test_inflight_and_deleted_slots_still_consume_quota_after_reopen(tmp_path):
 
 def test_legacy_batches_and_unlimited_batches_keep_semantics(tmp_path):
     db = RuntimeStore(tmp_path)
-    batch = create_batch(db, [(0, "MyGO only")], "test", None)
+    batch = create_batch(db, [(0, "都抽")], "test", None)
     run = db.get_run(batch["lanes"][0]["run_id"])
     for _ in range(3):
         db.reserve(run, make_plan(run["preset"]))
@@ -77,7 +77,7 @@ def test_empty_staggered_lane_does_not_boot_when_shared_quota_is_allocated(tmp_p
     import ournotes.runtime.scheduler as module
 
     db = RuntimeStore(tmp_path)
-    batch = create_batch(db, [(0, "MyGO only"), (1, "MyGO only")], "test", 1)
+    batch = create_batch(db, [(0, "都抽"), (1, "都抽")], "test", 1)
     first = db.get_run(batch["lanes"][0]["run_id"])
     db.reserve(first, make_plan(first["preset"]))
     monkeypatch.setattr(module, "RuntimeStore", lambda: RuntimeStore(tmp_path))

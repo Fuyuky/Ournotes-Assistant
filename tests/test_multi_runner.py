@@ -37,7 +37,7 @@ def test_cloud_preset_id_zero_is_pinned_independently_of_name(tmp_path, monkeypa
 
 def test_worker_keeps_actionable_initialization_error_and_trace(tmp_path, monkeypatch):
     with_store = RuntimeStore(tmp_path)
-    batch = create_batch(with_store, [(1, '主抽 mygo 60 抽')], 'test', 200)
+    batch = create_batch(with_store, [(1, '都抽')], 'test', 200)
     with_store.close()
     monkeypatch.setattr('ournotes.runtime.scheduler.RuntimeStore', lambda: RuntimeStore(tmp_path))
     monkeypatch.setattr('ournotes.runtime.scheduler.Runner',
@@ -52,7 +52,7 @@ def test_worker_keeps_actionable_initialization_error_and_trace(tmp_path, monkey
 
 def test_initialized_runner_publishes_lane_status_without_overwriting_scheduler(tmp_path, monkeypatch):
     db = RuntimeStore(tmp_path)
-    batch = create_batch(db, [(2, '主抽 mygo 60 抽')], 'test', 200)
+    batch = create_batch(db, [(2, '都抽')], 'test', 200)
     run_id = batch['lanes'][0]['run_id']
     state = tmp_path / 'state'
     aggregate = state / 'runner-status.json'
@@ -80,7 +80,7 @@ def test_initialized_runner_publishes_lane_status_without_overwriting_scheduler(
 
 def test_cancelled_batch_cannot_resume_or_repair_exports(tmp_path, monkeypatch):
     db = RuntimeStore(tmp_path)
-    batch = create_batch(db, [(0, "MyGO only")], "test", 1)
+    batch = create_batch(db, [(0, "都抽")], "test", 1)
     batch["status"] = "cancelled"
     db.save_batch(batch)
     repair = Mock(side_effect=AssertionError("cancelled batch must not repair or recreate archives"))
@@ -95,7 +95,7 @@ def test_cancelled_batch_cannot_resume_or_repair_exports(tmp_path, monkeypatch):
 @pytest.mark.parametrize('legacy', [False, True])
 def test_explicit_resume_clears_mail_limit_before_starting_lanes(tmp_path, monkeypatch, legacy):
     db = RuntimeStore(tmp_path)
-    batch = create_batch(db, [(0, 'MyGO only'), (2, 'Mujica only')], 'test', 2)
+    batch = create_batch(db, [(0, '都抽'), (2, 'millsage 一期活动')], 'test', 2)
     run = db.get_run(batch['lanes'][1]['run_id'])
     run.update(status='paused', pause_reason='今日邮箱发送次数已达上限' if legacy else '用户暂停',
                mail_send_limit_reached=not legacy)
@@ -121,7 +121,7 @@ def test_explicit_resume_clears_mail_limit_before_starting_lanes(tmp_path, monke
 
 def test_cancelled_run_cannot_resume_or_repair_exports(tmp_path, monkeypatch):
     db = RuntimeStore(tmp_path)
-    run = db.create_run("MyGO only", "test", 1)
+    run = db.create_run("都抽", "test", 1)
     run["status"] = "cancelled"
     db.save_run(run)
     repair = Mock(side_effect=AssertionError("cancelled run must not repair archives"))
@@ -165,7 +165,7 @@ def test_three_workers_share_atomic_counter_and_recover_each_account(tmp_path):
 def test_duplicate_instances_cannot_create_or_consume_accounts(tmp_path):
     db = RuntimeStore(tmp_path)
     with pytest.raises(ValueError):
-        create_batch(db, [(0, "都抽"), (0, "MyGO only")], "test", 1)
+        create_batch(db, [(0, "都抽"), (0, "都抽")], "test", 1)
     assert db.get_batch() is None and db.get_run() is None
     assert db.counters()["test"] == 8
     db.close()
@@ -315,7 +315,7 @@ def test_safe_pause_keeps_emulators_and_durable_work(tmp_path, scheduler_shutdow
     from ournotes.control.operations import OperationStore
 
     db = RuntimeStore(tmp_path)
-    batch = create_batch(db, [(1, 'MyGO only'), (3, 'Mujica only')], 'test', 2)
+    batch = create_batch(db, [(1, '都抽'), (3, 'millsage 一期活动')], 'test', 2)
     run = db.get_run(batch['lanes'][0]['run_id'])
     account = db.reserve(run, make_plan(run['preset']))
     draw = {'id': 'saved-draw', 'account_id': account['id'], 'ordinal': 0, 'status': draw_status}
@@ -359,7 +359,7 @@ def test_normal_completion_still_closes_emulators(tmp_path, scheduler_shutdown, 
     from ournotes.control.operations import OperationStore
 
     db = RuntimeStore(tmp_path)
-    batch = create_batch(db, [(1, 'MyGO only')], 'test', 1)
+    batch = create_batch(db, [(1, '都抽')], 'test', 1)
     if finish_requested:
         OperationStore(tmp_path).submit('finish-close-emulators', 'finish', {'batch_id': batch['id']}, lambda _: {})
     controller = MultiRunner(resume=True)
@@ -386,7 +386,7 @@ def test_resume_selected_lanes_only_resets_selected_limit(tmp_path, monkeypatch)
     from ournotes.runtime.runner import mail_limit_reached
 
     db = RuntimeStore(tmp_path)
-    batch = create_batch(db, [(0, 'MyGO only'), (1, 'Mujica only')], 'test', 2)
+    batch = create_batch(db, [(0, '都抽'), (1, 'millsage 一期活动')], 'test', 2)
     for lane in batch['lanes']:
         run = db.get_run(lane['run_id'])
         run.update(status='paused', mail_send_limit_reached=True)
@@ -425,12 +425,12 @@ def test_rebind_conflict_prevents_batch_creation_or_resume_mutation(tmp_path, sc
     from ournotes.common.devices import lock_held, rebind_lease
     db = RuntimeStore(tmp_path)
     if resume:
-        batch = create_batch(db, [(0, 'MyGO only')], 'test', 2)
+        batch = create_batch(db, [(0, '都抽')], 'test', 2)
         run = db.get_run(batch['lanes'][0]['run_id'])
         run.update(status='paused', mail_send_limit_reached=True)
         db.save_run(run)
     before = list(db.db.iterdump())
-    controller = MultiRunner(lanes=[(0, 'MyGO only')], resume=resume)
+    controller = MultiRunner(lanes=[(0, '都抽')], resume=resume)
     controller.worker = Mock()
     try:
         with rebind_lease(tmp_path, 0), pytest.raises(ValueError, match='实例 0'):
@@ -445,7 +445,7 @@ def test_rebind_conflict_prevents_batch_creation_or_resume_mutation(tmp_path, sc
 
 def test_batch_can_start_after_spare_instance_rebind_and_keeps_its_lease(tmp_path, scheduler_shutdown):
     from ournotes.common.devices import lock_held, rebind_lease
-    controller = MultiRunner(lanes=[(1, 'MyGO only')], count=1)
+    controller = MultiRunner(lanes=[(1, '都抽')], count=1)
     def worker(lane):
         assert lock_held(tmp_path, 'device-0') and lock_held(tmp_path, 'device-1')
         controller.device_instances.add(lane['instance'])

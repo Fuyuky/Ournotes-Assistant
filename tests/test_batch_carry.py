@@ -12,7 +12,7 @@ def test_submission_abandon_replaces_shared_slot_without_reusing_identity(tmp_pa
     from ournotes.runtime.abandon import retire_submission_error
     db = RuntimeStore(tmp_path)
     try:
-        batch = create_batch(db, [(2, 'MyGO only')], 'test', 1)
+        batch = create_batch(db, [(2, '都抽')], 'test', 1)
         run = db.get_run(batch['lanes'][0]['run_id'])
         account = db.reserve(run, make_plan(run['preset']))
         draw = {'id': 'submitted', 'account_id': account['id'], 'ordinal': 0,
@@ -32,7 +32,7 @@ def test_submission_abandon_replaces_shared_slot_without_reusing_identity(tmp_pa
 
 
 def closed_batch(db):
-    batch = create_batch(db, [(1, 'MyGO only'), (2, 'Mujica only')], 'test', 200)
+    batch = create_batch(db, [(1, '都抽'), (2, 'millsage 一期活动')], 'test', 200)
     accounts = []
     for lane in batch['lanes']:
         run = db.get_run(lane['run_id'])
@@ -54,7 +54,7 @@ def test_carry_keeps_identity_transactions_counts_and_quota(tmp_path):
     old, accounts = closed_batch(db)
     counters = db.counters()
     draws = [db.draws(a['id']) for a in accounts]
-    new = create_batch(db, [(1, 'MyGO only'), (2, 'Mujica only')], 'test', 2, carry_from=old['id'])
+    new = create_batch(db, [(1, '都抽'), (2, 'millsage 一期活动')], 'test', 2, carry_from=old['id'])
     assert new['total_count'] == 2 and db.counters() == counters
     for a, lane, tx in zip(accounts, new['lanes'], draws):
         after = db.account(a['id'])
@@ -75,11 +75,11 @@ def test_carry_keeps_identity_transactions_counts_and_quota(tmp_path):
 def test_carry_failure_is_atomic(tmp_path, problem):
     db = RuntimeStore(tmp_path)
     old, accounts = closed_batch(db)
-    lanes, count, source = [(1, 'MyGO only'), (2, 'Mujica only')], 200, old['id']
+    lanes, count, source = [(1, '都抽'), (2, 'millsage 一期活动')], 200, old['id']
     if problem == 'wrong_source':
         source = 'other'
     elif problem == 'preset':
-        lanes = [(1, 'Mujica only'), (2, 'Mujica only')]
+        lanes = [(1, 'millsage 一期活动'), (2, 'millsage 一期活动')]
     elif problem == 'quota':
         count = 1
     elif problem == 'mail_limit':
@@ -101,7 +101,7 @@ def test_carry_failure_is_atomic(tmp_path, problem):
 def test_held_account_does_not_boot_or_receive_device_input(tmp_path, monkeypatch):
     db = RuntimeStore(tmp_path)
     old, _ = closed_batch(db)
-    new = create_batch(db, [(1, 'MyGO only'), (2, 'Mujica only')], 'test', 200, carry_from=old['id'])
+    new = create_batch(db, [(1, '都抽'), (2, 'millsage 一期活动')], 'test', 200, carry_from=old['id'])
     db.close()
     monkeypatch.setattr('ournotes.runtime.scheduler.RuntimeStore', lambda: RuntimeStore(tmp_path))
     runner = Mock()
@@ -115,7 +115,7 @@ def test_held_account_does_not_boot_or_receive_device_input(tmp_path, monkeypatc
 def test_controller_never_schedules_held_lanes_or_closes_their_devices(tmp_path, monkeypatch):
     db = RuntimeStore(tmp_path)
     old, _ = closed_batch(db)
-    new = create_batch(db, [(1, 'MyGO only'), (2, 'Mujica only')], 'test', 200, carry_from=old['id'])
+    new = create_batch(db, [(1, '都抽'), (2, 'millsage 一期活动')], 'test', 200, carry_from=old['id'])
     new['async_start'] = True
     db.save_batch(new)
     monkeypatch.setattr('ournotes.runtime.scheduler.RuntimeStore', lambda: db)

@@ -4,6 +4,7 @@ from unittest.mock import MagicMock, Mock
 
 import pytest
 from PIL import Image
+from preset_fixtures import historical_plan
 
 from ournotes.common.files import file_hash
 from ournotes.runtime.model import PauseRun
@@ -626,7 +627,7 @@ def test_execute_finishes_accounts_and_advances_without_idle_watchdog_failure(co
 @pytest.mark.parametrize('missing_result', [False, True])
 def test_finished_old_and_new_presets_persist_actual_pull_tag(controller, preset, missing_result):
     r = controller
-    r.account['plan'] = make_plan(preset)
+    r.account['plan'] = historical_plan(preset)
     pulls = sum(item['pulls'] for item in r.account['plan'])
     r.save()
     account_id = r.account['id']
@@ -648,7 +649,7 @@ def test_completed_results_preserve_fixed_plan_and_next_transaction_after_restar
     from copy import deepcopy
 
     r = controller
-    r.account['plan'] = make_plan('主抽梦限大 60 抽')
+    r.account['plan'] = historical_plan('主抽梦限大 60 抽')
     if historical_metadata:
         for entry in r.account['plan'][:4]:
             entry.update(until_owned=['member:61', 'member:62', 'support:62', 'support:63'],

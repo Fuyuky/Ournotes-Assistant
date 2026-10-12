@@ -134,7 +134,7 @@ def test_old_controller_and_stale_lane_version_are_rejected(http_control):
 @pytest.fixture
 def durable(tmp_path):
     db = RuntimeStore(tmp_path)
-    batch = create_batch(db, [(2, 'MyGO only'), (4, 'Mujica only')], 'test', None)
+    batch = create_batch(db, [(2, '都抽'), (4, 'millsage 一期活动')], 'test', None)
     for lane in batch['lanes']:
         run = db.get_run(lane['run_id'])
         run.update(status='paused')

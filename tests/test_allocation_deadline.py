@@ -51,7 +51,7 @@ def test_resume_only_completed_paused_worker_without_touching_peers(tmp_path, mo
     import ournotes.runtime.scheduler as module
     from ournotes.control.operations import OperationStore
     db = RuntimeStore(tmp_path)
-    batch = create_batch(db, [(0, '都抽'), (1, 'MyGO only')], 'test', None)
+    batch = create_batch(db, [(0, '都抽'), (1, '都抽')], 'test', None)
     run = db.get_run(batch['lanes'][0]['run_id'])
     run['status'] = 'paused'
     db.save_run(run)

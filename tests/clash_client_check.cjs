@@ -39,7 +39,7 @@ vm.runInNewContext(source, {
   await el('clash-check').click();await tick();
   assert.equal(el('clash-count').textContent,'152 / 150');
   assert.equal(el('clash-progress').value,150);
-  assert.match(el('clash-expiry').textContent,/北京时间.*不会自动恢复/);
+  assert.match(el('clash-expiry').textContent,/北京时间/);
   assert.match(el('clash-last').textContent,/累计切换 1 次/);
   assert.equal(calls.length,1);
   assert.equal(calls[0].options.method,'POST');

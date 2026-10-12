@@ -28,7 +28,7 @@
   }
   function entryNote(e) {
     const p = pool(e.pool_key);
-    return `${splitText(Number(e.pulls) || 0)} · ${e.resource === 'ticket' ? (p?.ticket_name || '券种待核验') : '仅使用免费星钻'}`;
+    return `${splitText(Number(e.pulls) || 0)} · ${e.resource === 'ticket' ? (p?.ticket_name || '券种待核验') : '免费星钻'}`;
   }
   function updateSummary() {
     if (!page.draft) return;
@@ -107,7 +107,6 @@
     page.draft=preset ? structuredClone(preset) : null;page.editing=false;page.creating=false;page.deleting=false;
     $('preset-new-name-field').hidden=true;$('preset-new-name').disabled=true;$('preset-new-name').required=false;
     $('preset-name').textContent=preset?.name || '尚无共享预设';
-    $('preset-id').textContent=preset ? `预设编号：${preset.key}` : '预设编号：保存后分配';
     $('preset-description').value=preset?.description || '';
     const notes=[...(preset?.validation_errors || [])];
     const named=preset?.name.match(/(\d+)\s*抽/);
@@ -122,7 +121,7 @@
   }
   function renderSaved() {
     const saved=page.data.saved;
-    $('preset-plans-note').textContent=saved.error || (saved.batch_id?`批次 ${saved.batch_id.slice(0,8)} · ${statuses[saved.batch_status] || saved.batch_status} · 下方取自已保存账号，修改预设不会重写这些计划。`:'尚无已保存批次。');
+    $('preset-plans-note').textContent=saved.error || (saved.batch_id?`批次 ${saved.batch_id.slice(0,8)} · ${statuses[saved.batch_status] || saved.batch_status}`:'尚无已保存批次。');
     $('preset-saved-plans').replaceChildren(...saved.plans.map(item=>{
       const details=el('details','preset-saved');
       const total=item.plan.reduce((sum,e)=>sum+e.pulls,0);
@@ -148,7 +147,7 @@
       page.data=data;
       if (!selected()) page.key=data.presets[0]?.key;
       page.loading=false;
-      $('presets-notice').textContent=data.blocked_reason || `共享版本 ${data.version}；保存用于后续分配，活动账号继续原计划。资源不足时跳过该项，不购买资源。`;
+      $('presets-notice').textContent=data.blocked_reason || `共享版本 ${data.version}`;
       renderPreset();renderSaved();
     } catch(error) {
       $('presets-notice').textContent=error.message;
@@ -163,7 +162,7 @@
     const p=page.data.pools.find(p=>p.supported && p.resources.length);if(!p)return;
     page.creating=true;page.deleting=false;page.editing=true;
     page.draft={name:'',description:'',entries:[{pool_key:p.key,resource:p.resources[0],pulls:1}]};
-    $('preset-name').textContent='增加预设';$('preset-id').textContent='预设编号：保存后分配';$('preset-description').value='';
+    $('preset-name').textContent='增加预设';$('preset-description').value='';
     $('preset-validation').hidden=true;$('preset-fields').disabled=false;
     $('preset-new-name-field').hidden=false;$('preset-new-name').disabled=false;
     $('preset-new-name').required=true;$('preset-new-name').value='';$('preset-new-name').setCustomValidity('');
@@ -194,7 +193,7 @@
     const old=selected(),t=totals(page.draft.entries);
     $('preset-save-title').textContent='确认保存预设';$('preset-save-back').textContent='返回编辑';
     $('preset-save-confirm').textContent='确认保存';
-    $('preset-save-summary').textContent=page.creating?`增加「${page.draft.name}」：${t.pulls} 抽，${t.transactions} 笔交易。星钻招募 ${t.stars} 抽，券招募 ${t.tickets} 抽。保存后分配编号，可在新批次中选择。`:`#${old.key} · ${old.name}：${old.total_pulls} → ${t.pulls} 抽，${old.transactions} → ${t.transactions} 笔交易。星钻招募 ${t.stars} 抽，券招募 ${t.tickets} 抽。保存将用于新批次，已分配账号和交易保持原样。`;
+    $('preset-save-summary').textContent=page.creating?`增加「${page.draft.name}」：${t.pulls} 抽，${t.transactions} 笔交易。星钻招募 ${t.stars} 抽，券招募 ${t.tickets} 抽。`:`#${old.key} · ${old.name}：${old.total_pulls} → ${t.pulls} 抽，${old.transactions} → ${t.transactions} 笔交易。星钻招募 ${t.stars} 抽，券招募 ${t.tickets} 抽。`;
     $('preset-save-dialog').showModal();
   });
   $('preset-save-back').addEventListener('click',()=>{if(!page.saving)$('preset-save-dialog').close();});

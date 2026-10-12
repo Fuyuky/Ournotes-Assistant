@@ -8,8 +8,8 @@ from types import SimpleNamespace
 
 import pytest
 
-from ournotes.proxy.ui.status import rotation_status
 from ournotes.proxy.rotation import ProxyCoordinator, ProxyQuotaError, TaskProxyGate
+from ournotes.proxy.ui.status import rotation_status
 from ournotes.proxy.usage import WINDOW, usage_status
 
 
@@ -325,9 +325,9 @@ def test_real_login_input_guard_commits_usage_and_intent_only_at_sdk_boundary(se
     from unittest.mock import MagicMock
 
     from PIL import Image
+    from preset_fixtures import historical_plan
 
     from ournotes.runtime.model import PauseRun
-    from ournotes.runtime.pools import make_plan
     from ournotes.runtime.runner import Runner
     from ournotes.runtime.store import RuntimeStore
     from ournotes.vision.ocr import Observation, TextBox
@@ -336,7 +336,7 @@ def test_real_login_input_guard_commits_usage_and_intent_only_at_sdk_boundary(se
     r = Runner()
     r.db = RuntimeStore(s.root)
     r.run = r.db.create_run('MyGO only', 'test', 1)
-    r.account = r.db.reserve(r.run, make_plan('MyGO only'))
+    r.account = r.db.reserve(r.run, historical_plan('MyGO only'))
     r.account['phase'] = 'login'
     r.ctx.update(email_focus=True, email_filled=True, agreement=True, mail_ready=True,
                  otp={'ticket': 'ticket', 'expires_at': 200_000})
@@ -406,7 +406,8 @@ def test_finish_request_during_admission_wait_cannot_allocate_another_account(se
 def test_resumed_legacy_account_reserves_only_future_retry_without_backfill(setup):
     from unittest.mock import Mock
 
-    from ournotes.runtime.pools import make_plan
+    from preset_fixtures import historical_plan
+
     from ournotes.runtime.runner import Runner
     from ournotes.runtime.store import RuntimeStore
 
@@ -414,7 +415,7 @@ def test_resumed_legacy_account_reserves_only_future_retry_without_backfill(setu
     r = Runner()
     r.db = RuntimeStore(s.root)
     r.run = r.db.create_run('MyGO only', 'test', 1)
-    r.account = r.db.reserve(r.run, make_plan('MyGO only'))
+    r.account = r.db.reserve(r.run, historical_plan('MyGO only'))
     r.account['phase'] = 'login'
     r.ctx.update(send_intent=True, otp={'ticket': 'historical', 'expires_at': 200_000})
     r.task_gate = s.gate

@@ -1,6 +1,7 @@
 import json
 
 import pytest
+from preset_fixtures import HISTORICAL_PRESETS
 
 from ournotes.reports.statistics import account_metrics, analyze, describe
 
@@ -37,13 +38,13 @@ def test_report_accepts_new_presets_and_dream_roster(tmp_path):
     (catalog / 'raw/MasterCharacter.json').write_text(json.dumps({'_allData': [{'_id': 15, '_bandID': 3}]}))
     card = {'id': 61, 'kind': 'member', 'rarity': 'SSR', 'name': '由乃', 'title': '测试'}
     (catalog / 'catalog.json').write_text(json.dumps({'cards': [card]}))
-    from ournotes.runtime.pools import PRESETS
+    presets = HISTORICAL_PRESETS[2:]
     accounts = [{'alias_index': i, 'alias': 'test@example.test', 'preset': p, 'status': 'complete', 'pull_count': 62,
                      'totals': {'member': {'SSR': 1}, 'support': {'SSR': 0}}, 'summary': [dict(card, count=1)]}
-                for i, p in enumerate(PRESETS[3:])]
+                for i, p in enumerate(presets)]
     result = analyze({'id': 'test', 'accounts': accounts}, tmp_path)
     assert result['sample_size'] == len(accounts)
     assert result['excluded'] == 0
-    assert {row['preset'] for row in result['accounts']} == set(PRESETS[3:])
+    assert {row['preset'] for row in result['accounts']} == set(presets)
     assert all(r['dream_characters'] == 1 and r['pull_count'] == 62 for r in result['accounts'])
-    assert all(result['cards'][0]['by_preset'][p]['copies'] == 1 for p in PRESETS[3:])
+    assert all(result['cards'][0]['by_preset'][p]['copies'] == 1 for p in presets)

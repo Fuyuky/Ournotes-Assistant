@@ -43,13 +43,13 @@
     el('rebind-target').hidden = !changing;
     el('rebind-target').disabled = busy || !changing;
     el('rebind-stop').disabled = busy || !task || ['stopping','ending'].includes(task.state);
-    el('rebind-password').textContent = secretText || (task?.state === 'interrupted' ? '服务已重启，密码已丢失。' : passwordAvailable() ? '正在读取密码文案…' : '开始换绑后显示当前密码。');
+    el('rebind-password').textContent = secretText || (task?.state === 'interrupted' ? '服务已重启，密码已丢失。' : passwordAvailable() ? '正在读取密码文案…' : '暂无密码。');
     el('rebind-copy').disabled = !secretText;
     if (passwordAvailable() && !secretText && secretLoading !== task.id) showPassword();
     el('rebind-start').textContent = blocked ? '未启动换绑' : task ? ({waiting_email:'等待更换邮箱',waiting_b:'等待邮件确认',checking_b:'正在核验邮件',success:'换绑成功',error:'需要核查',interrupted:'任务已中断',stopping:'停止中',ending:'正在结束',marking_used:'正在标记已使用'}[task.state] || '换绑进行中') : '开始换绑';
     el('rebind-stop').textContent = task?.state === 'ending' ? '结束中…' : completed ? '结束换绑' : blocked && !taskRunning ? '清除任务' : '停止换绑';
     el('rebind-stop').className = completed || blocked && !taskRunning ? 'button secondary' : 'button danger';
-    el('rebind-status').textContent = task?.message || eligibilityMessage || (used ? '该账号已使用，不能进行邮箱换绑。' : '开始后自动生成随机密码，清除任务后不保留。');
+    el('rebind-status').textContent = task?.message || eligibilityMessage || (used ? '该账号已使用，不能进行邮箱换绑。' : '尚未开始换绑。');
     el('rebind-start').title = task ? '请先结束或清除当前换绑任务。' : used ? '该账号已使用。' : eligibleIndex !== el('account-index').value ? (eligibilityMessage || '请展开换绑面板或重新输入账号编号以检查资格。') : '';
     el('rebind-identity').textContent = task ? `当前任务：账号 ${task.index} · 实例 ${task.instance}` : '';
     const error = task?.error;

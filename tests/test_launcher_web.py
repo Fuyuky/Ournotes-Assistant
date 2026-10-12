@@ -457,8 +457,8 @@ def test_close_real_store_preserves_draw_evidence_and_continuous_indices(tmp_pat
             return {"account_id": account_id, "index": index, "alias": alias_at(index), "node_id": "test-node"}
     db = RuntimeStore(tmp_path, allocator=Allocator())
     try:
-        batch = create_batch(db, [(0, "MyGO only"), (1, "Mujica only")], "test", 1)
-        account = db.reserve(db.get_run(batch["lanes"][0]["run_id"]), make_plan("MyGO only"))
+        batch = create_batch(db, [(0, "都抽"), (1, "millsage 一期活动")], "test", 1)
+        account = db.reserve(db.get_run(batch["lanes"][0]["run_id"]), make_plan("都抽"))
         db.save_draw({"id": "unresolved", "account_id": account["id"], "ordinal": 0, "status": "submitted"})
         completed = db.get_run(batch["lanes"][1]["run_id"])
         completed.update(status="complete", completed=1)
@@ -474,8 +474,8 @@ def test_close_real_store_preserves_draw_evidence_and_continuous_indices(tmp_pat
         assert archive.read_bytes() == b"preserved archive"
         assert db.get_run(completed["id"]) == completed
         assert db.get_batch()["status"] == "cancelled"
-        next_batch = create_batch(db, [(0, "MyGO only")], "test", 2)
-        next_account = db.reserve(db.get_run(next_batch["lanes"][0]["run_id"]), make_plan("MyGO only"))
+        next_batch = create_batch(db, [(0, "都抽")], "test", 2)
+        next_account = db.reserve(db.get_run(next_batch["lanes"][0]["run_id"]), make_plan("都抽"))
         assert next_account["alias_index"] == account["alias_index"] + 1
         assert db.account(account["id"]) == account
     finally:

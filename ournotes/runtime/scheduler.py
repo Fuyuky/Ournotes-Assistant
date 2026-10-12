@@ -22,7 +22,7 @@ from ournotes.runtime.pools import make_plan
 from ournotes.runtime.runner import MAIL_LIMIT_MESSAGE, Runner, mail_limit_reached
 from ournotes.runtime.store import RuntimeStore
 
-DEFAULT_LANES = [(0, "MyGO only"), (1, "Mujica only"), (2, "都抽")]
+DEFAULT_LANES = [(0, "都抽"), (1, "millsage 一期活动"), (2, "都抽")]
 
 
 def clear_mail_limit_for_resume(db, run):
@@ -529,7 +529,7 @@ class MultiRunner:
 
 def main():
     p = argparse.ArgumentParser(description="一个调度器并行操作多个 MuMu 实例")
-    p.add_argument("--lane", action="append", help="实例编号=预设，例如 0=MyGO only；可重复")
+    p.add_argument("--lane", action="append", help="实例编号=预设，例如 0=都抽；可重复")
     p.add_argument("--channel", choices=("test", "formal"), default="test")
     p.add_argument("--count", type=int, default=1, help="所有实例共享的总账号数；0 表示持续运行")
     p.add_argument("--resume", action="store_true")

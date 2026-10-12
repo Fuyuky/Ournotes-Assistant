@@ -9,7 +9,7 @@ from ournotes.runtime.store import RuntimeStore
 
 def setup_batch(tmp_path):
     db = RuntimeStore(tmp_path)
-    batch = create_batch(db, [(1, 'MyGO only'), (2, 'Mujica only')], 'test', 2)
+    batch = create_batch(db, [(1, '都抽'), (2, 'millsage 一期活动')], 'test', 2)
     accounts = []
     for lane in batch['lanes']:
         run = db.get_run(lane['run_id'])

@@ -2,6 +2,8 @@ import json
 
 import pytest
 from PIL import Image
+from preset_fixtures import HISTORICAL_PRESETS
+from preset_fixtures import historical_plan as historical_fixture_plan
 
 from ournotes.paths import REFERENCE
 from ournotes.runtime.pools import AVE, MEMBER, MYGO, SR, SSR, STANDARD, make_plan, validate_confirmation
@@ -24,9 +26,26 @@ def test_new_presets_reject_retired_conditional_fields(retired_fields):
 
 
 def test_all_bundled_presets_expand_to_fixed_draw_entries():
+    assert [p['name'] for p in read_presets()['presets']] == ['都抽', 'millsage 一期活动']
     for preset in read_presets()['presets']:
         plan = make_plan(preset['name'])
         assert all(set(entry) == {'pool_key', 'resource', 'pulls'} for entry in plan)
+
+
+@pytest.mark.parametrize('name', HISTORICAL_PRESETS)
+def test_retired_presets_are_not_runtime_defaults(name):
+    with pytest.raises(ValueError, match='未知抽卡预设'):
+        make_plan(name)
+
+
+def test_millsage_activity_keeps_42_pulls_and_original_resource_order():
+    plan = make_plan('millsage 一期活动')
+    assert plan == [
+        {'pool_key': key, 'pulls': pulls, 'resource': resource}
+        for key, pulls, resource in [
+            ('bdon-gacha-12', 10, 'stars'), ('bdon-gacha-12', 10, 'stars'),
+            (SSR, 1, 'ticket'), (MEMBER, 1, 'ticket'),
+            (STANDARD, 10, 'ticket'), (STANDARD, 10, 'ticket')]]
 
 
 def test_both_uses_20_tickets_and_40_stars_with_correct_resources():
@@ -41,7 +60,7 @@ def test_both_uses_20_tickets_and_40_stars_with_correct_resources():
 
 
 def test_mygo_mujica_62_pulls_keep_both_pickups_and_ticket_resources():
-    plan = make_plan('mygo + mujica 60 抽')
+    plan = historical_fixture_plan('mygo + mujica 60 抽')
     assert plan == [
         {'pool_key': key, 'pulls': pulls, 'resource': resource}
         for key, pulls, resource in [
@@ -65,7 +84,7 @@ def test_other_presets_preserve_original_draws_and_resources(name):
     expected = historical_plan(name)
     if name == 'MyGO only':
         expected = [step for step in expected if step['pool_key'] != SR]
-    assert make_plan(name) == expected
+    assert historical_fixture_plan(name) == expected
 
 
 def test_saved_account_plan_remains_original_after_preset_change(tmp_path):

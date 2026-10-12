@@ -6,9 +6,9 @@ from unittest.mock import Mock
 
 import pytest
 from PIL import Image, ImageDraw
+from preset_fixtures import historical_plan
 
 from ournotes.runtime.model import MAIL_LIMIT_MESSAGE, PauseRun
-from ournotes.runtime.pools import make_plan
 from ournotes.runtime.runner import Runner
 from ournotes.runtime.store import RuntimeStore
 from ournotes.vision.ocr import Observation, TextBox
@@ -28,7 +28,7 @@ def login_runner(tmp_path):
     r = Runner()
     r.db = RuntimeStore(tmp_path)
     r.run = r.db.create_run('MyGO only', 'test', 1)
-    r.account = r.db.reserve(r.run, make_plan('MyGO only'))
+    r.account = r.db.reserve(r.run, historical_plan('MyGO only'))
     r.account['phase'] = 'login'
     r.ctx.update(history_cleared=True, history_removed=1, otp_round=2,
                  otp={'ticket': 'expired-ticket', 'expires_at': 1, 'status': 'prepared'},
@@ -284,7 +284,7 @@ def test_initialize_arms_only_explicit_resume_of_active_login(tmp_path, monkeypa
 
     db = RuntimeStore(tmp_path)
     run = db.create_run('MyGO only', 'test', 1)
-    account = db.reserve(run, make_plan('MyGO only'))
+    account = db.reserve(run, historical_plan('MyGO only'))
     account.update(phase='login', context={'otp_round': 2, 'otp': {'expires_at': 1}})
     db.save_account(account)
     db.close()

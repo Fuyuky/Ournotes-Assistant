@@ -91,7 +91,7 @@ const page = offset => ({total:45,offset,limit:20,preset_options:options,account
   requests[4].reply({...page(0),total:5}); await unknown;
 
   context.snapshot = snapshot; run('showPresets(snapshot)');
-  assert.equal(nodes['preset-key'].value, '0'); assert.equal(nodes['preset-key'].readOnly, true);
+  assert.equal(nodes['preset-select'].value, '0');
   assert.match(nodes['preset-select'].options[0].textContent, /^#0/);
   let row = nodes['preset-entries'].children[0];
   const pool = row.querySelector('[data-field="pool_key"]');
@@ -105,7 +105,7 @@ const page = offset => ({total:45,offset,limit:20,preset_options:options,account
   assert.deepEqual(JSON.parse(requests[5].options.body).preset.entries, [{pool_key:'pool-4',resource:'stars',pulls:43}]);
   await nodes['preset-form'].emit('submit'); assert.equal(requests.length, 6);
   requests[5].reply({...snapshot,version:5}); await update;
-  await nodes['preset-new'].emit('click'); assert.equal(nodes['preset-key'].value, '');
+  await nodes['preset-new'].emit('click'); assert.equal(nodes['preset-select'].value, '');
   assert.equal(nodes['preset-delete'].disabled, true);
   nodes['preset-name'].value = '新增预设'; row = nodes['preset-entries'].children[0];
   const create = nodes['preset-form'].emit('submit');
@@ -113,11 +113,11 @@ const page = offset => ({total:45,offset,limit:20,preset_options:options,account
   const body = JSON.parse(requests[6].options.body);
   assert.equal(Object.hasOwn(body, 'key'), false);
   requests[6].reply({...snapshot,version:6,created_id:1,presets:{...snapshot.presets,'1':body.preset}}); await create;
-  assert.equal(nodes['preset-key'].value, '1'); assert.match(nodes['preset-status'].textContent, /#1 已保存/);
+  assert.equal(nodes['preset-select'].value, '1'); assert.match(nodes['preset-status'].textContent, /#1 已保存/);
   const remove = nodes['preset-delete'].emit('click');
   assert.equal(requests[7].options.method, 'DELETE'); assert.match(requests[7].url, /presets\/1\?expected_version=6/);
   requests[7].reply({...snapshot,version:7}); await remove;
-  assert.equal(nodes['preset-key'].value, '0');
+  assert.equal(nodes['preset-select'].value, '0');
 
   const historyRead = run('detail(8)');
   assert.equal(requests[8].url, '/admin/api/accounts?index=8');

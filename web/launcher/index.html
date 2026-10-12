@@ -8,7 +8,7 @@
 </head>
 <body>
   <aside class="sidebar">
-    <a class="brand" href="#overview"><span class="brand-icon">✦</span><span>OurNotes<small>ASSISTANT</small></span></a>
+    <a class="brand" href="#overview"><span class="brand-icon">✦</span><span>OurNotes</span></a>
     <div class="sidebar-label">工作空间</div>
     <nav aria-label="功能导航">
       <a href="#overview" data-view="overview" class="active"><span class="nav-icon">◫</span>总览<span class="nav-arrow">↗</span></a>
@@ -18,59 +18,59 @@
       <a href="#connections" data-server-page="statistics"><span class="nav-icon">▥</span>服务器统计 ↗</a>
       <a href="#connections" data-view="connections"><span class="nav-icon">⌘</span>接入与检查</a>
     </nav>
-    <div class="sidebar-note"><span class="small-spark">✧</span><p>从一次开始<br>到每一个好结果。</p><small>MuMu · 本地识别 · 可恢复运行</small></div>
-    <div class="sidebar-bottom"><span class="local-dot"></span><span>仅本机访问<small>LOCAL WORKSPACE</small></span></div>
+
+
   </aside>
   <div class="workspace">
     <header class="topbar"><div><span class="breadcrumb">工作空间</span><span class="slash">/</span><b id="page-name">总览</b></div><div class="topbar-right"><a id="server-admin" class="button secondary small" href="#connections" target="_blank" rel="noopener">打开服务器 ↗</a><span id="connection" class="connection"><i></i>正在连接</span><button id="quit" class="button secondary small" title="关闭控制台，并请求本控制台的游戏任务安全暂停">关闭控制台</button><button id="refresh" class="icon-button" title="刷新状态" aria-label="刷新状态">↻</button></div></header>
     <main>
       <div id="notice" class="notice" role="status" hidden></div>
       <section class="view" id="view-overview">
-        <div class="page-heading"><div><div class="eyebrow">YOUR LOCAL CONTROL ROOM</div><h1>你的 OurNotes 工作台<span>。</span></h1><p>运行与账号管理，连接同一份服务器成果。</p></div><a class="button secondary" href="#accounts">查询账号 <span>→</span></a></div>
+        <div class="page-heading"><div><h1>你的 OurNotes 工作台<span>。</span></h1></div><a class="button secondary" href="#accounts">查询账号 <span>→</span></a></div>
         <div class="metrics">
-          <article class="metric"><div class="metric-label">本批已处理<span>▦</span></div><strong id="valid-accounts">—</strong><small>本机调度累计处理数量</small></article>
+          <article class="metric"><div class="metric-label">本批已处理<span>▦</span></div><strong id="valid-accounts">—</strong></article>
           <article class="metric"><div class="metric-label">云端已确认<span>◷</span></div><strong id="batch-complete">—</strong><small id="batch-goal">尚未读取批次</small></article>
-          <article class="metric"><div class="metric-label">上传待确认<span>✧</span></div><strong id="art-count">—</strong><small>仅显示发送队列数量</small></article>
-          <article class="metric"><div class="metric-label">运行实例<span>⌁</span></div><strong id="excluded-accounts">—</strong><small>本批配置的实例数量</small></article>
+          <article class="metric"><div class="metric-label">上传待确认<span>✧</span></div><strong id="art-count">—</strong></article>
+          <article class="metric"><div class="metric-label">运行实例<span>⌁</span></div><strong id="excluded-accounts">—</strong></article>
         </div>
         <div class="overview-grid">
           <div>
-            <section class="panel batch-panel"><div class="panel-head"><div><div class="eyebrow">CURRENT SESSION</div><h2>当前批次</h2></div><span class="badge batch-state">—</span></div><p class="batch-description muted">正在读取运行状态…</p><div class="lane-list"></div><div class="panel-footer"><span class="subtle batch-time"></span><a href="#runner" class="text-link">前往运行控制 →</a></div></section>
-            <section class="quick-section"><div class="section-title"><h2>常用操作</h2><span>少一些命令，多一些专注</span></div><div class="quick-grid">
-              <a class="quick-card" href="#accounts"><span class="quick-icon purple">▧</span><div><h3>查询账号</h3><p>按编号查看云端成果</p></div><b>↗</b></a>
-              <a class="quick-card" href="#presets"><span class="quick-icon blue">◇</span><div><h3>共享预设</h3><p>查看与编辑服务器抽卡计划</p></div><b>↗</b></a>
-              <a class="quick-card" href="#connections" data-server-page="statistics"><span class="quick-icon pink">▥</span><div><h3>服务器统计</h3><p>按云端完整成果统计</p></div><b>↗</b></a>
-              <button class="quick-card" data-folder="results"><span class="quick-icon green">▱</span><div><h3>打开结果目录</h3><p>查看运行记录与核查证据</p></div><b>↗</b></button>
+            <section class="panel batch-panel"><div class="panel-head"><div><h2>当前批次</h2></div><span class="badge batch-state">—</span></div><p class="batch-description muted">正在读取运行状态…</p><div class="lane-list"></div><div class="panel-footer"><span class="subtle batch-time"></span><a href="#runner" class="text-link">前往运行控制 →</a></div></section>
+            <section class="quick-section"><div class="section-title"><h2>常用操作</h2></div><div class="quick-grid">
+              <a class="quick-card" href="#accounts"><span class="quick-icon purple">▧</span><div><h3>查询账号</h3></div><b>↗</b></a>
+              <a class="quick-card" href="#presets"><span class="quick-icon blue">◇</span><div><h3>共享预设</h3></div><b>↗</b></a>
+              <a class="quick-card" href="#connections" data-server-page="statistics"><span class="quick-icon pink">▥</span><div><h3>服务器统计</h3></div><b>↗</b></a>
+              <button class="quick-card" data-folder="results"><span class="quick-icon green">▱</span><div><h3>打开结果目录</h3></div><b>↗</b></button>
             </div></section>
           </div>
-          <section class="panel activity-panel"><div class="panel-head"><div><div class="eyebrow">ACTIVITY</div><h2>最近任务</h2></div><span class="tiny-tag">本次启动</span></div><div class="job-list"></div><div class="activity-note">任务在后台执行。关闭浏览器页面不会中断任务。</div></section>
+          <section class="panel activity-panel"><div class="panel-head"><div><h2>最近任务</h2></div><span class="tiny-tag">本次启动</span></div><div class="job-list"></div></section>
         </div>
       </section>
       <section class="view" id="view-runner" hidden>
-        <div class="page-heading"><div><div class="eyebrow">RUN CONTROL</div><h1>安排下一轮。</h1><p>一个调度器，独立实例；沿用已保存的账号和交易状态。</p></div><span class="badge batch-state"></span></div>
-        <section class="panel"><div class="panel-head"><h2>当前运行</h2><span id="process-state" class="tiny-tag">—</span></div><p class="batch-description muted"></p><div class="lane-list"></div><div class="control-bar"><button data-action="resume" class="button primary">▷ 恢复已有批次</button><button data-action="pause" class="button secondary">Ⅱ 安全暂停</button><button data-action="finish" class="button secondary">本账号后结束</button><button data-action="cancel" class="button secondary">结束当前批次</button><button data-folder="batch" class="button plain">打开本批结果 ↗</button></div><p class="help">已处理表示本机调度数量；云端已确认表示服务器接受的完整成果。暂停会等待必要的结算收尾和状态保存。</p><p id="counter-summary" class="help"></p></section>
-        <form id="run-form" class="panel form-panel"><div class="panel-head"><div><div class="eyebrow">NEW SESSION</div><h2>新批次配置</h2></div><button type="button" id="add-lane" class="button secondary small">＋ 添加实例</button></div>
-          <p class="help"><a href="#presets" class="text-link">查看与编辑预设内容 →</a> · 下拉列表显示计划的实际总抽数。</p><div class="lane-form-head"><span>启用</span><span>MuMu 编号</span><span>抽卡预设</span><span></span></div><div id="lane-inputs"></div>
-          <div class="form-grid"><label>账号区段<select id="channel"><option value="test">测试账号</option><option value="formal">正式账号</option></select></label><label>所有实例总账号数<input id="run-count" type="number" value="1" min="0" max="10000" required><small>所有实例共享额度；0 表示持续运行</small></label><label class="check-field"><input id="async-start" type="checkbox"><span>错峰启动<small>相邻实例间隔随机 60～90 秒</small></span></label></div>
-          <label class="check-field"><input id="debug-mode" type="checkbox"><span>开启调试模式<small>记录逐步骤耗时，仅保留最近一次调试批次；恢复沿用批次设置。</small></span></label><button type="button" id="debug-details" class="button secondary" hidden>查看调试步骤</button>
-          <p id="storage-policy" class="help">成功账号自动精简；保留最近 3 个结束批次，日志无损压缩。</p>
-          <div class="panel-footer"><div><b id="run-summary">—</b><p id="start-hint" class="help">点击开始将启动所选模拟器并分配新账号。</p></div><button type="submit" id="start" class="button primary">▷ 开始新批次</button></div>
+        <div class="page-heading"><div><h1>安排下一轮。</h1></div><span class="badge batch-state"></span></div>
+        <section class="panel"><div class="panel-head"><h2>当前运行</h2><span id="process-state" class="tiny-tag">—</span></div><p class="batch-description muted"></p><div class="lane-list"></div><div class="control-bar"><button data-action="resume" class="button primary">▷ 恢复已有批次</button><button data-action="pause" class="button secondary">Ⅱ 安全暂停</button><button data-action="finish" class="button secondary">本账号后结束</button><button data-action="cancel" class="button secondary">结束当前批次</button><button data-folder="batch" class="button plain">打开本批结果 ↗</button></div></section>
+        <form id="run-form" class="panel form-panel"><div class="panel-head"><div><h2>新批次配置</h2></div><button type="button" id="add-lane" class="button secondary small">＋ 添加实例</button></div>
+          <p class="help"><a href="#presets" class="text-link">查看与编辑预设内容 →</a></p><div class="lane-form-head"><span>启用</span><span>MuMu 编号</span><span>抽卡预设</span><span></span></div><div id="lane-inputs"></div>
+          <div class="form-grid"><label>账号区段<select id="channel"><option value="test">测试账号</option><option value="formal">正式账号</option></select></label><label>所有实例总账号数<input id="run-count" type="number" value="1" min="0" max="10000" required></label><label class="check-field"><input id="async-start" type="checkbox"><span>错峰启动</span></label></div>
+          <label class="check-field"><input id="debug-mode" type="checkbox"><span>开启调试模式</span></label><button type="button" id="debug-details" class="button secondary" hidden>查看调试步骤</button>
+
+          <div class="panel-footer"><div><b id="run-summary">—</b><p id="start-hint" class="help" role="status" hidden></p></div><button type="submit" id="start" class="button primary">▷ 开始新批次</button></div>
         </form>
       </section>
       <section class="view" id="view-presets" hidden>
-        <div class="page-heading"><div><div class="eyebrow">DRAW PRESETS</div><h1>查看与编辑抽卡预设</h1><p>按执行顺序核对卡池、资源和抽数；名称与计划总抽数分别显示。</p></div><button id="presets-refresh" class="button secondary">刷新预设 ↻</button></div>
+        <div class="page-heading"><div><h1>查看与编辑抽卡预设</h1></div><button id="presets-refresh" class="button secondary">刷新预设 ↻</button></div>
         <p id="presets-notice" class="notice" role="status">正在读取预设…</p>
         <div class="preset-layout"><section class="panel preset-sidebar"><div class="panel-head"><h2>预设列表</h2><button type="button" id="preset-create" class="button secondary small" disabled>＋ 增加预设</button></div><nav id="preset-list" aria-label="选择抽卡预设"></nav></section>
-          <form id="preset-form" class="panel"><div class="panel-head"><div><h2 id="preset-name">选择一个预设</h2><p id="preset-id" class="help"></p><p id="preset-summary" class="help"></p></div><div class="control-bar"><button type="button" id="preset-edit" class="button secondary" disabled>编辑预设</button><button type="button" id="preset-delete" class="button secondary" disabled>删除预设</button></div></div>
+          <form id="preset-form" class="panel"><div class="panel-head"><div><h2 id="preset-name">选择一个预设</h2><p id="preset-summary" class="help"></p></div><div class="control-bar"><button type="button" id="preset-edit" class="button secondary" disabled>编辑预设</button><button type="button" id="preset-delete" class="button secondary" disabled>删除预设</button></div></div>
             <p id="preset-validation" class="preset-warning" hidden></p><fieldset id="preset-fields" disabled><label id="preset-new-name-field" class="field" hidden>预设名称<input id="preset-new-name" maxlength="80" disabled placeholder="填写一个不重复的名称"></label><label class="field">预设说明<textarea id="preset-description" maxlength="500" rows="2"></textarea></label><div id="preset-entries"></div><button type="button" id="preset-add" class="button secondary small">＋ 添加项目</button></fieldset>
-            <div id="preset-edit-actions" class="panel-footer" hidden><p class="help">十连和剩余单抽由抽数自动计算。保存用于新批次，已分配账号继续原计划。</p><div class="control-bar"><button type="button" id="preset-cancel" class="button secondary">取消修改</button><button type="submit" id="preset-save" class="button primary">检查并保存</button></div></div>
+            <div id="preset-edit-actions" class="panel-footer" hidden><div class="control-bar"><button type="button" id="preset-cancel" class="button secondary">取消修改</button><button type="submit" id="preset-save" class="button primary">检查并保存</button></div></div>
           </form></div>
         <section class="panel report-section"><div class="panel-head"><h2>本批已分配账号的实际计划</h2><span class="tiny-tag">只读</span></div><p id="preset-plans-note" class="help"></p><div id="preset-saved-plans"></div></section>
       </section>
       <section class="view" id="view-accounts" hidden>
-        <div class="page-heading"><div><div class="eyebrow">ACCOUNT MANAGEMENT</div><h1>账号管理</h1><p>按编号查询服务器完整成果，管理所有管理员名下的账号。</p></div></div>
+        <div class="page-heading"><div><h1>账号管理</h1></div></div>
         <section id="account-management" class="panel">
-          <div class="panel-head"><span class="tiny-tag">云端完整成果</span></div>
+
           <label class="field">账号 index<input id="account-index" type="number" min="0" max="9007199254740991" placeholder="例如 198" value="198"></label>
           <div id="account-toolbar" class="control-bar account-toolbar"><button id="query-account" class="button primary">查询账号</button><button id="make-preview" class="button primary">查看服务器展示图</button><button id="find-email" class="button secondary">查询邮箱</button><button id="mark-account-used" class="button secondary">标记已使用</button><button id="toggle-account-booked" class="button secondary">标记已拍下</button></div>
           <div class="account-management-layout">
@@ -86,20 +86,20 @@
         </section>
       </section>
       <section class="view" id="view-connections" hidden>
-        <div class="page-heading"><div><div class="eyebrow">CONNECTIONS</div><h1>开始前，都就绪。</h1><p>查看本机环境，需要时再执行连接检查。</p></div><button class="button secondary" data-folder="logs">打开日志目录 ↗</button></div>
+        <div class="page-heading"><div><h1>开始前，都就绪。</h1></div><button class="button secondary" data-folder="logs">打开日志目录 ↗</button></div>
         <div id="environment" class="environment-grid"></div>
-        <div class="two-column"><section class="panel"><div class="panel-head"><h2>MuMu 实例</h2></div><label class="field">实例编号<input id="check-instance" type="number" min="0" max="255" value="0"></label><button id="mumu-check" class="button primary">读取实例信息</button><p class="help">只读取实例信息，不启动模拟器，不输入游戏操作。</p></section><section class="panel"><div class="panel-head"><h2>云端连接</h2></div><form id="cloud-settings"><label class="field">服务地址<input id="service-url" type="url" required placeholder="https://服务器IP"></label><label class="field">本机独立接入凭据<input id="cloud-credential" type="password" autocomplete="new-password" required></label><button class="button primary">保存连接</button></form><button class="button secondary" data-action="gmail_check">检查云端收码服务</button></section></div>
-        <section class="panel"><div class="panel-head"><h2>后台通知</h2></div><label class="check-field"><input id="background-notifications" type="checkbox"><span>启用后台通知</span></label><p class="help">等待邮箱确认、换绑完成或异常暂停时提醒。不显示邮箱、验证码或密码。系统勿扰模式可能抑制弹窗。</p><button id="notification-test" class="button secondary">发送测试通知</button><p id="notification-status" class="help" role="status"></p></section>
-        <section class="panel"><div class="panel-head"><h2>手动更新游戏</h2><span class="tiny-tag">仅手动触发</span></div><p class="help">先安全暂停批次。选择实例后，自动查询官方最新客户端地址、下载并覆盖安装；保留应用数据，不恢复批次。原本关闭的实例会临时启动，更新后关闭。</p><form id="game-update-form"><label class="field">MuMu 实例编号（逗号分隔）<input id="game-update-instances" required placeholder="1,2,3,4" pattern="[0-9,， ]+"></label><button id="game-update-start" class="button primary">查找官方版本并更新</button><button id="game-update-cancel" type="button" class="button secondary" hidden>取消后续更新</button></form><p id="game-update-progress" class="help" role="status" aria-live="polite">尚未手动更新。</p><details id="game-update-history" hidden><summary id="game-update-history-title">上次更新结果</summary><p id="game-update-result-message" class="help"></p><ul id="game-update-results"></ul><button id="game-update-dismiss" class="button plain small">收起旧结果</button></details></section>
-        <section class="panel"><div class="panel-head"><h2>稳定版更新</h2><span id="update-state" class="tiny-tag">待检查</span></div><p class="help">启动时自动检查。更新仅提示，由你点击后下载并安装；安装前先结束运行和后台任务。</p><div class="control-bar"><button id="update-check" class="button secondary">检查更新</button><button id="update-download" class="button primary" disabled>下载更新</button><button id="update-install" class="button primary" disabled>退出并安装</button></div></section>
+        <div class="two-column"><section class="panel"><div class="panel-head"><h2>MuMu 实例</h2></div><label class="field">实例编号<input id="check-instance" type="number" min="0" max="255" value="0"></label><button id="mumu-check" class="button primary">读取实例信息</button></section><section class="panel"><div class="panel-head"><h2>云端连接</h2></div><form id="cloud-settings"><label class="field">服务地址<input id="service-url" type="url" required placeholder="https://服务器IP"></label><label class="field">本机独立接入凭据<input id="cloud-credential" type="password" autocomplete="new-password" required></label><button class="button primary">保存连接</button></form><button class="button secondary" data-action="gmail_check">检查云端收码服务</button></section></div>
+        <section class="panel"><div class="panel-head"><h2>后台通知</h2></div><label class="check-field"><input id="background-notifications" type="checkbox"><span>启用后台通知</span></label><button id="notification-test" class="button secondary">发送测试通知</button><p id="notification-status" class="help" role="status"></p></section>
+        <section class="panel"><div class="panel-head"><h2>手动更新游戏</h2></div><form id="game-update-form"><label class="field">MuMu 实例编号（逗号分隔）<input id="game-update-instances" required placeholder="1,2,3,4" pattern="[0-9,， ]+"></label><button id="game-update-start" class="button primary">查找官方版本并更新</button><button id="game-update-cancel" type="button" class="button secondary" hidden>取消后续更新</button></form><p id="game-update-progress" class="help" role="status" aria-live="polite">尚未手动更新。</p><details id="game-update-history" hidden><summary id="game-update-history-title">上次更新结果</summary><p id="game-update-result-message" class="help"></p><ul id="game-update-results"></ul><button id="game-update-dismiss" class="button plain small">收起旧结果</button></details></section>
+        <section class="panel"><div class="panel-head"><h2>稳定版更新</h2><span id="update-state" class="tiny-tag">待检查</span></div><div class="control-bar"><button id="update-check" class="button secondary">检查更新</button><button id="update-download" class="button primary" disabled>下载更新</button><button id="update-install" class="button primary" disabled>退出并安装</button></div></section>
       </section>
-      <footer><span>✧ OurNotes Assistant</span><span>所有运行控制都留在本机<span class="footer-sep">·</span><span id="last-read">等待读取</span></span></footer>
+      <footer><span>✧ OurNotes Assistant</span><span><span id="last-read">等待读取</span></span></footer>
     </main>
   </div>
   <div id="toast" role="status" aria-live="polite" hidden></div>
   <dialog id="account-action-dialog"><div class="dialog-head"><h2 id="account-action-title"></h2></div><p id="account-action-summary"></p><p id="account-action-warning" class="help"></p><p id="account-action-progress" class="help account-action-progress" role="status" aria-live="polite"></p><div class="control-bar"><button id="account-action-cancel" class="button secondary">取消</button><button id="account-action-confirm" class="button danger">确认标记</button></div></dialog>
-  <dialog id="cancel-dialog"><div class="dialog-head"><h2>结束当前批次</h2></div><p id="cancel-summary"></p><p class="help">结束后该批次不可再恢复。已有抽卡记录、未完成账号和账号计数均保留；未完成账号不会计为完成。新批次将继续分配新 index。</p><div class="control-bar"><button id="keep-batch" class="button secondary">暂不结束</button><button id="confirm-cancel" class="button primary">确认结束当前批次</button></div></dialog>
-  <dialog id="job-dialog"><div class="dialog-head"><div><div class="eyebrow">TASK DETAILS</div><h2 id="job-title">任务详情</h2></div><button id="close-job" class="icon-button" aria-label="关闭任务详情">×</button></div><div id="job-summary"></div><pre id="job-log"></pre><p class="help">显示最近日志片段；完整记录保存在 state/webui/jobs。</p></dialog>
+  <dialog id="cancel-dialog"><div class="dialog-head"><h2>结束当前批次</h2></div><p id="cancel-summary"></p><div class="control-bar"><button id="keep-batch" class="button secondary">暂不结束</button><button id="confirm-cancel" class="button primary">确认结束当前批次</button></div></dialog>
+  <dialog id="job-dialog"><div class="dialog-head"><div><h2 id="job-title">任务详情</h2></div><button id="close-job" class="icon-button" aria-label="关闭任务详情">×</button></div><div id="job-summary"></div><pre id="job-log"></pre></dialog>
   <dialog id="preset-save-dialog"><div class="dialog-head"><h2 id="preset-save-title">确认保存预设</h2></div><p id="preset-save-summary" class="help"></p><div class="control-bar"><button id="preset-save-back" class="button secondary">返回编辑</button><button id="preset-save-confirm" class="button primary">确认保存</button></div></dialog>
 </body>
 </html>

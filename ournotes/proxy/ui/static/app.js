@@ -27,7 +27,7 @@
     $('clash-progress').max=threshold; $('clash-progress').value=Math.min(used,threshold);
     $('clash-progress').setAttribute('aria-label',`当前节点24小时已发信 ${used} 次，在途预留 ${reserved} 次`);
     $('clash-countdown').textContent=`在途预留 ${reserved} 次 · 可用额度 ${Math.max(threshold-used-reserved,0)} 次${r.batch_id?` · 本批已处理 ${r.processed} 个账号（${labels[r.batch_state] || '状态待确认'}）`:''}`;
-    $('clash-expiry').textContent=r.earliest_available_at?`额度最早可恢复：${new Date(r.earliest_available_at*1000).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false})}（北京时间）；不会自动恢复任务。`:'';
+    $('clash-expiry').textContent=r.earliest_available_at?`额度最早可恢复：${new Date(r.earliest_available_at*1000).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false})}（北京时间）`:'';
     const rows=document.createDocumentFragment();
     for(const node of r.nodes || []) {
       const row=document.createElement('tr');

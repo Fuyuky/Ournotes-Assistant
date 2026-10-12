@@ -19,7 +19,7 @@ from ournotes.runtime.store import RuntimeStore
 
 def batch_state(root, status='running'):
     db = RuntimeStore(root)
-    batch = create_batch(db, [(1, 'MyGO only'), (3, 'Mujica only')], 'test', 2)
+    batch = create_batch(db, [(1, '都抽'), (3, 'millsage 一期活动')], 'test', 2)
     batch['status'] = status
     db.save_batch(batch)
     atomic_json(root / 'state/runner-status.json', {
