@@ -50,6 +50,8 @@ async function check() {
   reads[5].resolve({index:1048});await new Promise(resolve=>setImmediate(resolve));
   assert.match(nodes.summary.textContent,/编号不一致/);
   assert.equal(nodes.cards.hidden,true);
+  const noHistory=flow.query();reads[6].resolve({index:1952,ssr_total:0,cards:[],historical_preset:{status:'not_recorded'},pool_keys:['internal-pool'],draw_labels:['internal-label']});await noHistory;
+  assert.doesNotMatch(nodes.preset.textContent,/历史卡池|internal-pool|internal-label/);
   console.log('Account query client checks passed');
 }
 check().catch(error=>{console.error(error);process.exitCode=1;});

@@ -76,3 +76,26 @@ def test_start_after_stopped_rebind_leaves_old_subpages_without_sending(monkeypa
     flow.login_form()
     assert calls[-1] == ('login_options', 800, 546)
     assert not any(page in ('confirm_b', 'bind_form', 'verify_a') and y > 500 for page, x, y in calls)
+
+
+def test_initial_notification_prompt_is_closed_before_navigation(monkeypatch):
+    flow, taps = navigation(monkeypatch, lambda now, count: 'enable_prompt' if not count else 'title')
+    flow.observation = SimpleNamespace(find=lambda label, exact: SimpleNamespace(center=(983, 261)))
+    assert flow.until(lambda page: page == 'title') == 'title'
+    assert taps == [('enable_prompt', 983, 261)]
+
+
+def test_notification_prompt_dismissal_is_bounded(monkeypatch):
+    flow, taps = navigation(monkeypatch, lambda now, count: 'enable_prompt')
+    flow.observation = SimpleNamespace(find=lambda label, exact: SimpleNamespace(center=(983, 261)))
+    with pytest.raises(ValueError, match='通知弹窗未能关闭'):
+        flow.until(lambda page: page == 'title')
+    assert len(taps) == 3
+
+
+def test_notification_prompt_requires_recognized_close_control(monkeypatch):
+    flow, taps = navigation(monkeypatch, lambda now, count: 'enable_prompt')
+    flow.observation = SimpleNamespace(find=lambda label, exact: None)
+    with pytest.raises(ValueError, match='关闭按钮未确认'):
+        flow.until(lambda page: page == 'title')
+    assert not taps

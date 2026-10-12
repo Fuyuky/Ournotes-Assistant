@@ -69,8 +69,6 @@ function createAccountQuery({api, getIndex, input, button, result, summary, pres
       preset.textContent = saved?.status === 'recorded'
         ? `使用预设：${saved.name}${saved.planned_pulls == null ? '' : ` · 保存计划 ${saved.planned_pulls} 抽`}`
         : saved?.status === 'unavailable' ? '预设记录暂时不可读，请稍后重试。'
-        : value.draw_labels?.length ? `历史卡池：${value.draw_labels.join('、')}`
-        : value.pool_keys?.length ? `历史卡池：${value.pool_keys.join('、')}`
         : '云端成果未记录历史预设。';
       if (value.owner_username) preset.textContent += ` · 管理员 ${value.owner_username}`;
       if (value.activity?.name) preset.textContent += ` · 活动 ${value.activity.name}`;

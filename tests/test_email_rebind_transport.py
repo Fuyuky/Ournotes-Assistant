@@ -87,3 +87,14 @@ def test_fast_failures_stop_after_six_attempts(preparing):
     assert flow.client.request.call_count == 6 and waits == [2, 4, 8, 16, 30]
     assert len({c.args[2]['request_id'] for c in flow.client.request.call_args_list}) == 1
 
+
+
+def test_pre_send_retry_status_is_preparation_not_receiving_failure(preparing):
+    flow, _, _, stages = preparing
+    flow.client.request.side_effect = [CloudError('unavailable', 'synthetic'), {'ticket_id': 'ready-ticket'}]
+    assert flow.prepare('login') == 'ready-ticket'
+    assert all(state == 'preparing_mail' for state, message in stages)
+    assert '尚未发送' in stages[0][1] and '重试中' in stages[1][1]
+    assert '已就绪' in stages[-1][1]
+    assert all('失败' not in message for state, message in stages)
+    flow.device.tap.assert_not_called()

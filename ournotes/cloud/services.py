@@ -47,7 +47,9 @@ def mount(app, store, identity_dependency, *, validator, presets, activities, ev
         image = validator.images[f'{kind}:{identifier}']
         if image.stat().st_size > 5 * 1024 * 1024:
             raise Unavailable('Card image is too large')
-        return FileResponse(image, headers={'Cache-Control': 'no-store'})
+        media_type = {'.png': 'image/png', '.jpg': 'image/jpeg',
+                      '.jpeg': 'image/jpeg', '.webp': 'image/webp'}[image.suffix.lower()]
+        return FileResponse(image, media_type=media_type, headers={'Cache-Control': 'no-store'})
 
     @app.get(PREFIX + '/presets')
     def read_presets(identity=identity_dependency):

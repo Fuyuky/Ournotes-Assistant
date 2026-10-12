@@ -427,3 +427,11 @@ def test_preset_snapshot_is_private_and_preserves_run_version(portal):
     value = client.get('/admin/api/accounts?index=' + str(account['index'])).json()['accounts'][0]
     assert value['result']['preset_snapshot'] == snapshot
     assert 'preset_snapshot' not in value['projection']
+
+
+def test_card_art_content_type_does_not_depend_on_host_mime_database(portal, monkeypatch):
+    _, _, client, _, _, legacy, _, _ = portal
+    monkeypatch.setattr('starlette.responses.guess_type', lambda *args, **kwargs: (None, None))
+    response = client.get(PREFIX + '/art/member/1', headers=bearer(legacy['token']))
+    assert response.status_code == 200
+    assert response.headers['content-type'] == 'image/png'

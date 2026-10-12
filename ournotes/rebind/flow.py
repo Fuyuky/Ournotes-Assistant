@@ -11,6 +11,7 @@ import numpy as np
 
 from ournotes.integrations.cloud_client import CloudError
 from ournotes.integrations.mumu import MuMuSdk, ensure_game
+from ournotes.rebind.vision import field_text, input_focused, registered_email, scene
 from ournotes.runtime.input_policy import InputPolicy
 from ournotes.runtime.mail import (
     MAIL_REQUEST_ATTEMPTS,
@@ -21,7 +22,6 @@ from ournotes.ui.fields import Fields
 from ournotes.ui.frame import Frame
 from ournotes.ui.observer import Observer
 from ournotes.vision.ocr import Observation
-from ournotes.rebind.vision import field_text, input_focused, registered_email, scene
 
 
 class Flow:
@@ -54,15 +54,28 @@ class Flow:
         self.observation = self.observer.read(self.image, phase='logout', account_id=self.task['id'])
         if self.observation.scene == 'network_error':
             raise ValueError('游戏网络连接失败；未重发邮件或登录，请核查后停止任务。')
-        if self.observation.scene == 'loading':
-            return 'loading'
+        if self.observation.scene in ('loading', 'enable_prompt'):
+            return self.observation.scene
         return page or self.observation.scene
 
+    def dismiss_enable_prompt(self):
+        control = self.observation.find('关闭额外弹窗', exact=True)
+        if control is None:
+            raise ValueError('通知弹窗关闭按钮未确认，未点击。')
+        self.tap('enable_prompt', *control.center)
+
     def until(self, predicate, timeout=30):
+        dismissals = 0
         deadline = time.monotonic() + timeout
         while True:
             current = self.read()
             self.last_scene = current
+            if current == 'enable_prompt':
+                if dismissals >= 3 or time.monotonic() >= deadline:
+                    raise ValueError('通知弹窗未能关闭，已停止自动输入。')
+                self.dismiss_enable_prompt()
+                dismissals += 1
+                continue
             if predicate(current):
                 return current
             if time.monotonic() >= deadline:
@@ -91,10 +104,16 @@ class Flow:
         # Retry only this reversible navigation, and only on a freshly observed title.
         started = time.monotonic()
         deadline = started + 30
-        next_tap, attempts = 0, 0
+        next_tap, attempts, dismissals = 0, 0, 0
         while True:
             current = self.read()
             self.last_scene = current
+            if current == 'enable_prompt':
+                if dismissals >= 3 or time.monotonic() >= deadline:
+                    raise ValueError('通知弹窗未能关闭，已停止自动输入。')
+                self.dismiss_enable_prompt()
+                dismissals += 1
+                continue
             if current in wanted:
                 return current
             now = time.monotonic()
@@ -138,6 +157,7 @@ class Flow:
 
     def prepare(self, purpose):
         self.last_step = '准备原邮箱登录收码票据' if purpose == 'login' else '准备原邮箱认证票据'
+        self.service.stage('preparing_mail', '正在建立云端收码监听；尚未发送游戏邮件。')
         body = {'index': self.task['index'], 'request_id': uuid.uuid4().hex, 'purpose': purpose}
         deadline = time.monotonic() + MAIL_REQUEST_BUDGET_SECONDS
         for attempt in range(MAIL_REQUEST_ATTEMPTS):
@@ -148,6 +168,7 @@ class Flow:
             try:
                 value = self.client.request('POST', '/rebind/tickets', body, timeout=remaining)
                 self.tickets.append(value['ticket_id'])
+                self.service.stage('preparing_mail', '云端收码监听已就绪，准备发送游戏邮件。')
                 return value['ticket_id']
             except CloudError as error:
                 remaining = deadline - time.monotonic()
@@ -156,7 +177,7 @@ class Flow:
                 delay = random.uniform(base, base * 1.2)
                 if not transient or attempt + 1 == MAIL_REQUEST_ATTEMPTS or delay >= remaining:
                     raise
-                self.service.stage('preparing_mail', '云端收码连接暂时失败，正在重试同一票据；尚未发送游戏邮件。')
+                self.service.stage('preparing_mail', '正在建立云端收码监听，连接重试中；尚未发送游戏邮件。')
                 self.service.wait(delay)
 
     def arm(self, ticket):
