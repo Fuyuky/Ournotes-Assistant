@@ -15,7 +15,8 @@
 .account-management-layout{display:grid;grid-template-columns:minmax(210px,1fr) minmax(0,2fr);gap:24px}.account-management-tools,.account-management-content{min-width:0}
 .account-query-result{padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--bg);font-size:13px;line-height:1.7;overflow-wrap:anywhere}
 .account-query-result p{margin:5px 0 0;color:var(--muted)}
-.account-management-tools #account-rebind-toggle{margin-top:16px}
+.account-rebind-card{margin-top:24px}
+.cloud-connection-actions{display:flex;flex-wrap:nowrap;gap:12px}.cloud-connection-actions .button{white-space:nowrap}
 .account-card-group+.account-card-group{margin-top:22px}.account-card-group h3{font-size:13px;margin-bottom:12px}
 .account-card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:14px}.account-card-grid.support{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}
 .account-owned-card{margin:0;min-width:0}.account-card-art{position:relative;border-radius:8px;overflow:hidden;background:var(--bg);aspect-ratio:3/4}.support .account-card-art{aspect-ratio:16/9}.account-card-art img{display:block;width:100%;height:100%;object-fit:contain}

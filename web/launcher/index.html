@@ -15,7 +15,6 @@
       <a href="#runner" data-view="runner"><span class="nav-icon">▷</span>运行控制</a>
       <a href="#presets" data-view="presets"><span class="nav-icon">◇</span>抽卡预设</a>
       <a href="#accounts" data-view="accounts"><span class="nav-icon">▦</span>账号管理</a>
-      <a href="#connections" data-server-page="statistics"><span class="nav-icon">▥</span>服务器统计 ↗</a>
       <a href="#connections" data-view="connections"><span class="nav-icon">⌘</span>接入与检查</a>
     </nav>
 
@@ -39,7 +38,6 @@
             <section class="quick-section"><div class="section-title"><h2>常用操作</h2></div><div class="quick-grid">
               <a class="quick-card" href="#accounts"><span class="quick-icon purple">▧</span><div><h3>查询账号</h3></div><b>↗</b></a>
               <a class="quick-card" href="#presets"><span class="quick-icon blue">◇</span><div><h3>共享预设</h3></div><b>↗</b></a>
-              <a class="quick-card" href="#connections" data-server-page="statistics"><span class="quick-icon pink">▥</span><div><h3>服务器统计</h3></div><b>↗</b></a>
               <button class="quick-card" data-folder="results"><span class="quick-icon green">▱</span><div><h3>打开结果目录</h3></div><b>↗</b></button>
             </div></section>
           </div>
@@ -71,24 +69,24 @@
         <div class="page-heading"><div><h1>账号管理</h1></div></div>
         <section id="account-management" class="panel">
 
-          <label class="field">账号 index<input id="account-index" type="number" min="0" max="9007199254740991" placeholder="例如 198" value="198"></label>
+          <label class="field">账号 index<input id="account-index" type="number" min="0" max="9007199254740991" placeholder="输入账号编号"></label>
           <div id="account-toolbar" class="control-bar account-toolbar"><button id="query-account" class="button primary">查询账号</button><button id="make-preview" class="button primary">查看服务器展示图</button><button id="find-email" class="button secondary">查询邮箱</button><button id="mark-account-used" class="button secondary">标记已使用</button><button id="toggle-account-booked" class="button secondary">标记已拍下</button></div>
           <div class="account-management-layout">
             <div class="account-management-tools">
               <div id="account-query-result" class="account-query-result" role="status" aria-live="polite" hidden><b id="account-query-summary"></b><p id="account-query-preset"></p></div>
               <div id="email-result" class="email-result" hidden><code id="email-value"></code><button id="copy-email" class="button plain small">复制</button></div>
-              <div id="account-rebind-slot"></div>
             </div>
             <div class="account-management-content">
               <div id="account-query-cards" aria-label="账号持有的 SSR 卡牌" hidden></div>
             </div>
           </div>
         </section>
+        <section class="panel account-rebind-card" aria-label="账号换绑"><div id="account-rebind-slot"></div></section>
       </section>
       <section class="view" id="view-connections" hidden>
         <div class="page-heading"><div><h1>开始前，都就绪。</h1></div><button class="button secondary" data-folder="logs">打开日志目录 ↗</button></div>
         <div id="environment" class="environment-grid"></div>
-        <div class="two-column"><section class="panel"><div class="panel-head"><h2>MuMu 实例</h2></div><label class="field">实例编号<input id="check-instance" type="number" min="0" max="255" value="0"></label><button id="mumu-check" class="button primary">读取实例信息</button></section><section class="panel"><div class="panel-head"><h2>云端连接</h2></div><form id="cloud-settings"><label class="field">服务地址<input id="service-url" type="url" required placeholder="https://服务器IP"></label><label class="field">本机独立接入凭据<input id="cloud-credential" type="password" autocomplete="new-password" required></label><button class="button primary">保存连接</button></form><button class="button secondary" data-action="gmail_check">检查云端收码服务</button></section></div>
+        <div class="two-column"><section class="panel"><div class="panel-head"><h2>MuMu 实例</h2></div><label class="field">实例编号<input id="check-instance" type="number" min="0" max="255" value="0"></label><button id="mumu-check" class="button primary">读取实例信息</button></section><section class="panel"><div class="panel-head"><h2>云端连接</h2></div><form id="cloud-settings"><label class="field">服务地址<input id="service-url" type="url" required placeholder="https://服务器IP"></label><label class="field">本机独立接入凭据<input id="cloud-credential" type="password" autocomplete="new-password" required></label><div class="control-bar cloud-connection-actions"><button type="submit" class="button primary">保存连接</button><button type="button" class="button secondary" data-action="gmail_check">检查云端收码服务</button></div></form></section></div>
         <section class="panel"><div class="panel-head"><h2>后台通知</h2></div><label class="check-field"><input id="background-notifications" type="checkbox"><span>启用后台通知</span></label><button id="notification-test" class="button secondary">发送测试通知</button><p id="notification-status" class="help" role="status"></p></section>
         <section class="panel"><div class="panel-head"><h2>手动更新游戏</h2></div><form id="game-update-form"><label class="field">MuMu 实例编号（逗号分隔）<input id="game-update-instances" required placeholder="1,2,3,4" pattern="[0-9,， ]+"></label><button id="game-update-start" class="button primary">查找官方版本并更新</button><button id="game-update-cancel" type="button" class="button secondary" hidden>取消后续更新</button></form><p id="game-update-progress" class="help" role="status" aria-live="polite">尚未手动更新。</p><details id="game-update-history" hidden><summary id="game-update-history-title">上次更新结果</summary><p id="game-update-result-message" class="help"></p><ul id="game-update-results"></ul><button id="game-update-dismiss" class="button plain small">收起旧结果</button></details></section>
         <section class="panel"><div class="panel-head"><h2>稳定版更新</h2><span id="update-state" class="tiny-tag">待检查</span></div><div class="control-bar"><button id="update-check" class="button secondary">检查更新</button><button id="update-download" class="button primary" disabled>下载更新</button><button id="update-install" class="button primary" disabled>退出并安装</button></div></section>
