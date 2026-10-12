@@ -162,7 +162,7 @@ def test_email_uses_allocations_and_four_tables_use_valid_cloud_results(portal):
     all_rows = client.get('/admin/api/statistics?scope=all').json()
     used_rows = client.get('/admin/api/statistics?scope=used').json()
     assert (all_rows['n'], used_rows['n']) == (2, 1)
-    assert len(all_rows['metrics']) == len(used_rows['metrics']) == 4
+    assert len(all_rows['metrics']) == len(used_rows['metrics']) == 5
     metrics = {m['key']: m for m in all_rows['metrics']}
     assert metrics['ssr_total']['max'] == 3
     assert metrics['unique_characters']['max'] == 2
@@ -179,5 +179,45 @@ def test_empty_scope_is_four_empty_tables(portal):
     _, client, _, _, _, _ = portal
     assert login(client).status_code == 200
     value = client.get('/admin/api/statistics?scope=used').json()
-    assert value['n'] == 0 and len(value['metrics']) == 4
+    assert value['n'] == 0 and len(value['metrics']) == 5
     assert all(m['max'] is None and m['histogram'] == [] for m in value['metrics'])
+
+
+def test_statistics_saved_up_and_combined_preset_usage_filters(portal):
+    from test_cloud_service import result
+
+    from ournotes.cloud.store import encoded
+
+    store, client, _, _, _, _ = portal
+    for n, key in enumerate(('0', '1', None)):
+        a = store.allocate('node', {'account_id': f'stats{n}', 'request_id': f'stats{n}', 'channel': 'formal'})
+        value = result(a)
+        value['cards'][0]['count'] = 2
+        value['totals']['member'].update(SSR=2, R=41)
+        if key is not None:
+            value['preset_snapshot'] = {'key': key, 'version': 1,
+                                       'plan': [{'pool_key': 'example', 'resource': 'stars', 'pulls': 43}]}
+        store.upload('node', a['account_id'], {'event_id': f'stats{n}', 'version': 1, 'result': value})
+        # Persist a synthetic historical activity; independent of the currently selected pool.
+        with store.transaction() as db:
+            payload = json.loads(db.execute('SELECT payload FROM results WHERE account_id=?', (a['account_id'],)).fetchone()[0])
+            payload.update(activity_id='saved-pool', activity={'id': 'saved-pool', 'label': '一期',
+                           'pool_key': 'saved-pool', 'gacha_id': 1, 'name': 'Saved pool',
+                           'pickup_card_keys': ['member:1', 'support:1']})
+            db.execute('UPDATE results SET payload=? WHERE account_id=?', (encoded(payload), a['account_id']))
+        if n == 1:
+            store.usage('node', a['account_id'], {'request_id': 'stats-book', 'expected_version': 1,
+                                                 'target_status': 'booked'})
+    assert login(client).status_code == 200
+    all_rows = client.get('/admin/api/statistics').json()
+    up = next(m for m in all_rows['metrics'] if m['key'] == 'current_up_count')
+    assert up['max'] == up['mean'] == 1 and up['histogram'][1]['count'] == 3
+    assert [m['key'] for m in all_rows['metrics']][2:4] == ['mygo_characters', 'mujica_characters']
+    assert client.get('/admin/api/statistics?scope=unused').json()['n'] == 2
+    assert client.get('/admin/api/statistics?scope=unused&preset_id=0').json()['n'] == 1
+    assert client.get('/admin/api/statistics?scope=unused&preset_id=1').json()['n'] == 0
+    assert client.get('/admin/api/statistics?scope=used&preset_id=1').json()['n'] == 1
+    assert client.get('/admin/api/statistics?preset_id=__unknown__').json()['n'] == 1
+    assert client.get('/admin/api/statistics?preset_id=0&owner_username=Other').json()['n'] == 0
+    assert client.get('/admin/api/statistics?preset_id=bad').status_code == 422
+    assert {x['id'] for x in all_rows['preset_options']} == {'0', '1', '__unknown__'}

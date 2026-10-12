@@ -74,8 +74,8 @@ function accountsBusy(value) {
   $('previous').disabled = value || offset === 0;
   $('next').disabled = value || offset + accountPageSize >= total;
 }
-function accountPresets(values) {
-  const select = $('account-preset'), prior = select.value;
+function accountPresets(values, id = 'account-preset') {
+  const select = $(id), prior = select.value;
   select.replaceChildren(new Option('全部预设', ''));
   for (const value of values) {
     const label = value.id === '__unknown__' ? value.name : `#${value.id} · ${value.name}${value.deleted ? '（已删除）' : ''}`;
@@ -188,8 +188,11 @@ async function detail(index) {
 async function statistics() {
   const request = ++reportRequest; $('refresh').disabled = true;
   try {
-    const report = await api('statistics?scope=' + $('scope').value + '&owner_username=' + encodeURIComponent($('statistics-owner').value || ''));
+    const params = new URLSearchParams({scope: $('scope').value, owner_username: $('statistics-owner').value || ''});
+    if ($('statistics-preset').value) params.set('preset_id', $('statistics-preset').value);
+    const report = await api('statistics?' + params);
     if (request !== reportRequest) return;
+    accountPresets(report.preset_options || [], 'statistics-preset');
     const fragment = document.createDocumentFragment();
     for (const metric of report.metrics) {
       const card = node('article', undefined, 'metric'); card.append(node('h3', metric.label));
@@ -202,7 +205,7 @@ async function statistics() {
       }
       table.append(tbody); card.append(table);
       if (!metric.histogram.length) card.append(node('p', '暂无完整账号。', 'muted'));
-      if (metric.indices.length) {const d = node('details'); d.append(node('summary', `最高记录编号 · ${metric.indices.length} 个账号`), node('p', metric.indices.join('、'))); card.append(d);}
+      if (metric.indices.length) {const d = node('details'); d.append(node('summary', '最高记录编号'), node('p', metric.indices.join('、'))); card.append(d);}
       fragment.append(card);
     }
     $('tables').replaceChildren(fragment); $('sample').textContent = `${report.n.toLocaleString()} 个账号`;
@@ -338,7 +341,7 @@ $('logout').addEventListener('click', async () => {try {await api('logout', {});
 $('accounts-refresh').addEventListener('click', () => accounts().catch(e => notice(e.message)));
 $('previous').addEventListener('click', () => {if (!accountsLoading && offset > 0) accounts(Math.max(0, offset - accountPageSize)).catch(e => notice(e.message));});
 $('next').addEventListener('click', () => {if (!accountsLoading && offset + accountPageSize < total) accounts(offset + accountPageSize).catch(e => notice(e.message));});
-$('scope').addEventListener('change', statistics); $('statistics-owner').addEventListener('change', statistics); $('refresh').addEventListener('click', statistics);
+$('statistics-preset').addEventListener('change', statistics); $('scope').addEventListener('change', statistics); $('statistics-owner').addEventListener('change', statistics); $('refresh').addEventListener('click', statistics);
 $('activity-select').addEventListener('change', activityDetails); $('preset-select').addEventListener('change', () => editPreset($('preset-select').value));
 $('preset-new').addEventListener('click', () => {if (!presetsBusy) {editPreset(''); $('preset-name').focus();}});
 $('preset-add-entry').addEventListener('click', () => {if (!presetsBusy && $('preset-entries').children.length < 64) entryFields();});

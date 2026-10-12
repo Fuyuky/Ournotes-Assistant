@@ -25,9 +25,10 @@ from ournotes.paths import ROOT
 SESSION_SECONDS = 30 * 24 * 60 * 60
 COOKIE = 'ournotes_admin_session'
 METRICS = {'ssr_total': 'SSR 总张数（角色卡＋支援卡）',
+           'unique_characters': '不同 SSR 角色数',
            'mygo_characters': '不同 MyGO SSR 角色数',
            'mujica_characters': '不同 Mujica SSR 角色数',
-           'unique_characters': '不同 SSR 角色数'}
+           'current_up_count': '当期 UP 数量'}
 WEB = ROOT / 'web/admin'
 __all__ = ['password_record']
 
@@ -281,16 +282,19 @@ def mount(app, store, credential, catalog, publisher=None, *, presets=None, acti
         return {'index': index, 'email': value['email']}
 
     @app.get('/admin/api/statistics')
-    def report(scope: Literal['all', 'used'] = 'all', owner_username: str | None = Query(default=None, max_length=80),
+    def report(scope: Literal['all', 'used', 'unused'] = 'all', owner_username: str | None = Query(default=None, max_length=80),
+               preset_id: str | None = Query(default=None, pattern=r'^(__unknown__|0|[1-9][0-9]{0,15})$'),
                username=authenticated_dependency):
-        source = store.results(owner_username=owner_username)
+        source = store.results(owner_username=owner_username, preset_id=preset_id)
         rows, excluded = [], 0
         for item in source['results']:
             value = item['result']
-            if scope == 'used' and not value['used']:
+            if (scope == 'used' and not value['used']) or (scope == 'unused' and value['used']):
                 continue
             try:
-                rows.append(index.account({**value, 'status': 'complete', 'alias_index': value['index']}))
+                row = index.account({**value, 'status': 'complete', 'alias_index': value['index']})
+                row['current_up_count'] = (row.get('activity') or {}).get('up_count', 0)
+                rows.append(row)
             except (ValueError, KeyError, TypeError):
                 excluded += 1
         metrics = []
@@ -303,5 +307,7 @@ def mount(app, store, credential, catalog, publisher=None, *, presets=None, acti
                 'mean': statistics.mean(values) if values else None,
                 'histogram': [{'value': n, 'count': counts[n], 'percent': counts[n] / len(rows) * 100}
                               for n in range(high + 1)] if values else []})
-        return {'scope': scope, 'n': len(rows), 'excluded': excluded, 'revision': source['revision'],
+        return {'scope': scope, 'preset_id': preset_id,
+                'preset_options': store.admin_result_page(owner_username=owner_username, limit=1)['preset_options'],
+                'n': len(rows), 'excluded': excluded, 'revision': source['revision'],
                 'observed_at': store.clock(), 'metrics': metrics}

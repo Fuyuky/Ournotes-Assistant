@@ -130,5 +130,14 @@ const page = offset => ({total:45,offset,limit:20,preset_options:options,account
   const text = history.children.map(value => value.textContent).join(' ');
   assert.doesNotMatch(text, /预设 #0|pool-12/, 'A server-resolved unknown historical identity must not be inferred from a numeric name');
   assert.match(text, /合成梦限卡池/);
+  nodes['scope'].value = 'unused'; nodes['statistics-preset'].value = '0';
+  const stats = run('statistics()');
+  const req = requests.at(-1);
+  assert.match(req.url, /scope=unused/); assert.match(req.url, /preset_id=0/);
+  req.reply({n:1,observed_at:1000,preset_options:options,metrics:[{key:'current_up_count',label:'当期 UP 数量',max:1,mean:1,indices:[8],histogram:[{value:1,count:1,percent:100}]}]});
+  await stats;
+  const record = nodes.tables.children[0].children.find(x => x.tagName === 'DETAILS');
+  assert.equal(record.children[0].textContent, '最高记录编号');
+  assert.equal(nodes['statistics-preset'].value, '0');
   console.log('Admin client checks passed: pagination guards, failure recovery, preset filters, numeric identity, pool resources and CRUD.');
 })().catch(error => {console.error(error); process.exitCode = 1;});

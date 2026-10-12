@@ -35,3 +35,5 @@ button:focus-visible,.admin-nav a:focus-visible,header .brand:focus-visible{outl
 @media print{header,#tabs,#notice,.account-list,.pagination,#accounts-form,#account-count,#accounts-refresh,.private-email,.mail-panel,#account-detail button,#account-detail details{display:none!important}main{margin:0;padding:0}.panel{border:0;box-shadow:none;padding:0}.ssr-cards{grid-template-columns:repeat(5,1fr)}.ssr-cards figure{break-inside:avoid}.view> .heading{display:none}#account-detail{border:0;margin:0;padding:0}}
 
 #activity-form{display:flex;align-items:end;gap:12px;margin:20px 0}#activity-form label{flex:1;min-width:0}#activity-form select{display:block;width:100%;margin-top:6px}
+
+.statistics .actions{flex-wrap:wrap;justify-content:flex-end}

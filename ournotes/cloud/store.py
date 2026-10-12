@@ -388,7 +388,7 @@ class Store:
         except (ValueError, TypeError, KeyError):
             return False
 
-    def results(self, account_id=None, *, owner_username=None, index_no=None):
+    def results(self, account_id=None, *, owner_username=None, index_no=None, preset_id=None):
         owner_username = owner_username or None
         if index_no is not None and (type(index_no) is not int or not 0 <= index_no <= 2**53 - 1):
             raise ValueError('Invalid result index')
@@ -400,7 +400,19 @@ class Store:
                 if not row or not self.final(row):
                     raise KeyError(account_id)
                 return self.envelope(row)
-            if index_no is not None:
+            if preset_id is not None:
+                cutover = int(self.meta(db, 'presets_numeric_version') or 2**63 - 1)
+                key = "json_extract(r.payload,'$.preset_snapshot.key')"
+                resolved = (f"CASE WHEN json_extract(r.payload,'$.preset_snapshot.version')>=? "
+                            f"AND ({key}='0' OR (substr({key},1,1) BETWEEN '1' AND '9' "
+                            f"AND length({key})<=16 AND {key} NOT GLOB '*[^0-9]*')) "
+                            f"THEN CAST({key} AS INTEGER) ELSE pa.preset_id END")
+                clause = 'IS NULL' if preset_id == '__unknown__' else '= ?'
+                parameters = [cutover] if preset_id == '__unknown__' else [cutover, int(preset_id)]
+                rows = db.execute('SELECT r.* FROM results r LEFT JOIN allocations a ON a.account_id=r.account_id '
+                                  f'LEFT JOIN preset_aliases pa ON pa.key={key} '
+                                  f'WHERE ({resolved}) {clause} ORDER BY a.index_no', parameters).fetchall()
+            elif index_no is not None:
                 rows = db.execute('SELECT r.* FROM allocations a JOIN results r ON r.account_id=a.account_id '
                                   'WHERE a.index_no=?', (index_no,)).fetchall()
             else:
