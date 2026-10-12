@@ -87,3 +87,5 @@
 - 本机启动不执行存储整理。服务器自动发布完整成果，本机不下载永久副本、不提供商品、网站发布、本地筛选或Gmail授权页面。
 - 客户端发行无业务variant；仅windows-x64和macos-arm64，公开GitHub匿名更新。Mac实机验收不能由Windows测试替代。
 - 当前数据与权限协议以[云端账号与管理员](docs/云端账号与管理员.md)为准。历史档案维护仅为显式迁移兼容，不得重新启用本机永久存储。
+
+- Git 提交信息遵循 Angular 规范：`type(scope): subject`，scope 可省略；使用 feat、fix、docs、refactor、perf、test、build、ci、chore、revert 等类型，破坏性变更按规范注明。
