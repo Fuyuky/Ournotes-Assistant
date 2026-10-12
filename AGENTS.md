@@ -32,7 +32,7 @@
 | 账号筛选、使用状态、价格 | `ournotes/accounts/index.py`、`ournotes/accounts/browser.py`、`ournotes/accounts/used.py`、`ournotes/accounts/quality.py`、`ournotes/accounts/pricing.py` |
 | 服务器自动发布 | `ournotes/accounts/site.py`、`ournotes/cloud/publication.py`、`web/account-browser/`、`deploy/cloud/` |
 | 统计和步骤台账 | `ournotes/reports/statistics.py`、`ournotes/reports/performance.py` |
-| 私有历史导入准备、证据复核 | `ournotes_dev/cloud_bootstrap.py`、`ournotes_dev/review.py`；开发包独立，不进入发行客户端 |
+| 私有历史导入准备、证据复核 | `devtools/cloud_bootstrap.py`、`devtools/review.py`；开发包独立，不进入发行客户端 |
 
 目录职责总表见 [架构与部署](docs/架构与部署.md)。运行入口只有 `ournotes/runtime/scheduler.py`，`runner.py` 与各flow均为内部组件，不提供独立Runner CLI。展示图与网站目录业务分别位于 `ournotes/accounts/preview.py` 和 `ournotes/catalogs/site.py`；scripts只保留薄入口及构建工具。
 

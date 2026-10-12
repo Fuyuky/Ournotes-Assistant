@@ -42,7 +42,7 @@ Gmail 日常读取和刷新在服务器。首次授权由 Fuyuki 使用项目之
 - `ournotes/runtime`：运行和未决恢复；`control`：本机控制台和 `/agent`。
 - `ournotes/cloud`：服务器；`rebind`、`proxy`：共用换绑和代理；`platforms`：平台适配。
 - `data/catalog`：不可变运行快照及网站素材投影；`config`：应用默认配置。
-- `ournotes_dev`：离线诊断、历史导入准备与证据复核，不进入发行包。
+- `devtools`：离线诊断、历史导入准备与证据复核，不进入发行包。
 - [接手指南](HANDOFF.md)、[长期维护要求](AGENTS.md)、[架构](docs/架构与部署.md)、[云端账号与管理员](docs/云端账号与管理员.md)、[发行构建](docs/客户端构建与更新.md)、[迁移维护](docs/迁移与维护.md)。
 
 `state/runtime.sqlite3` 保留恢复和未决信息，`state/cloud-sync.sqlite3` 保留待上传成果及已确认哈希回执。服务器保存永久完整成果。本机凭据由 Windows DPAPI 或 macOS Keychain 保护，凭据、已有状态、账号、日志与个人配置不得进入公开仓库或发行包。

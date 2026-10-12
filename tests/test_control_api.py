@@ -2,8 +2,8 @@ from types import SimpleNamespace
 
 from fastapi.testclient import TestClient
 
+from devtools.api import create_app
 from ournotes.control.operations import OperationStore
-from ournotes_dev.api import create_app
 
 
 def test_machine_session_auth_version_and_explicit_command_identity(tmp_path):

@@ -4,8 +4,8 @@ from types import SimpleNamespace
 import pytest
 from PIL import Image
 
+from devtools.diagnostics import Diagnostics
 from ournotes.control.operations import OperationStore
-from ournotes_dev.diagnostics import Diagnostics
 
 
 class Service:

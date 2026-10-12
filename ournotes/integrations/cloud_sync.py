@@ -180,6 +180,7 @@ class SyncWorker:
         if self.observer:
             self.observer(self.observed_states)
         self.revision = remote.get('revision')
+        self.status.pop('reason', None)
         self.status = {**self.status, 'state': 'connected', 'revision': self.revision, **sent,
                        'event_revision': self.event_revision, 'events': self.events.state,
                        'updated_at': time.time()}

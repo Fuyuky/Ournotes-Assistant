@@ -3,9 +3,9 @@ import json
 import pytest
 from test_storage_policy import batch
 
+from devtools.storage_cleanup import apply_database, plan, rewrite_indexes, verify
 from ournotes.common.files import file_hash
 from ournotes.runtime.store import RuntimeStore
-from ournotes_dev.storage_cleanup import apply_database, plan, rewrite_indexes, verify
 
 
 def test_explicit_cleanup_preserves_success_and_numbering(tmp_path):

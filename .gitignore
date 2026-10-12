@@ -38,6 +38,9 @@ configs/
 assets/login-history/history-*.png
 ournotes/integrations/oauth_setup.py
 ournotes/integrations/browser.py
-ournotes_dev/marketplace/
+devtools/marketplace/
 scripts/account_browser.py
 scripts/export_account_site.py
+
+# Local-only helper workspace.
+private-workspace/

@@ -3,12 +3,12 @@ from unittest.mock import Mock
 
 import pytest
 
+from devtools.review import review
 from ournotes.common.files import atomic_json, file_hash
 from ournotes.common.secrets import SecretStore
 from ournotes.runtime.recognition_queue import RecognitionQueue
 from ournotes.runtime.runner import Runner
 from ournotes.runtime.store import RuntimeStore
-from ournotes_dev.review import review
 
 
 @pytest.fixture

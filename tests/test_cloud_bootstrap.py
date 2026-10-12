@@ -3,9 +3,9 @@ import json
 import pytest
 from test_account_browser import folders as build_folders
 
+from devtools.cloud_bootstrap import digest, prepare
 from ournotes.common.files import atomic_json
 from ournotes.runtime.store import RuntimeStore
-from ournotes_dev.cloud_bootstrap import digest, prepare
 
 
 @pytest.fixture

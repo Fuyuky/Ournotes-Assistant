@@ -45,8 +45,10 @@ def test_worker_uses_sparse_endpoint_and_unchanged_revision(integration, monkeyp
     worker = SyncWorker(root)
     worker.run_once()
     assert worker.revision == 0
+    worker.status = {'state': 'pending', 'reason': 'http_error'}
     worker.run_once()
     assert worker.status['state'] == 'connected'
+    assert 'reason' not in worker.status
     assert not (root / 'results/archive/accounts').exists()
 
 

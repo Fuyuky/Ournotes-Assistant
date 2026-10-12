@@ -11,10 +11,10 @@ from test_email_rebind import Cloud, Driver, wait
 from ournotes.common.devices import instance_leases, lock_held, rebind_lease
 from ournotes.common.files import atomic_json
 from ournotes.common.secrets import SecretStore
+from ournotes.rebind.service import Service, idle_batch
 from ournotes.runtime.pools import make_plan
 from ournotes.runtime.scheduler import create_batch
 from ournotes.runtime.store import RuntimeStore
-from ournotes.rebind.service import Service, idle_batch
 
 
 def batch_state(root, status='running'):
@@ -190,7 +190,7 @@ def test_shutdown_only_targets_owned_instances(monkeypatch):
 
 
 def test_diagnostics_cannot_bypass_rebind_instance_lock(tmp_path):
-    from ournotes_dev.diagnostics import Diagnostics
+    from devtools.diagnostics import Diagnostics
     service = SimpleNamespace(root=tmp_path, running=lambda: False,
                               runtime=lambda: {'error': None, 'version': 'v', 'lanes': [], 'unresolved': []})
     sdk = Mock(side_effect=AssertionError('no device connection'))

@@ -7,7 +7,7 @@
 | 功能 | 入口 |
 |---|---|
 | 本机控制台 | `scripts/webui.py`、`启动控制台.cmd`；127.0.0.1:8766 |
-| 机器接口 | `ournotes/control/machine.py`，同一控制台 `/agent`；薄 CLI `ournotes_dev/cli.py` |
+| 机器接口 | `ournotes/control/machine.py`，同一控制台 `/agent`；薄 CLI `devtools/cli.py` |
 | 共用应用服务 | `ournotes/control/launcher.py`、`operations.py`、`query.py` |
 | 本机统一状态流 | `control/events.py`、`web/launcher/events.js`；远程通知 `integrations/cloud_events.py` |
 | 调度与恢复 | `runtime/scheduler.py` 唯一运行入口；runner及各flow为内部组件 |
@@ -23,7 +23,8 @@
 | 素材 | `catalogs/runtime.py`、`catalogs/masterdata.py`、`catalogs/site.py`；`data/catalog` |
 | 更新与构建 | `updates/`、`scripts/build_release.py`、`deploy/client` |
 | 历史数据核对迁移 | `python -m ournotes.maintenance.cloud_storage`，默认只读；显式 `--apply` |
-| 离线诊断与证据复核 | `ournotes_dev`，不进入发行包 |
+| 离线诊断与证据复核 | `devtools`，不进入发行包 |
+| 本机私有辅助目录 | `private-workspace/gmail-authorization` 为独立授权工具，`private-workspace/public-source` 为独立公开 checkout；整体忽略，不进入发行包 |
 
 ## 关键边界
 

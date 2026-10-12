@@ -32,7 +32,8 @@ def test_client_source_excludes_server_admin_and_user_data(tmp_path):
     stage_source(target)
     assert (target / "ournotes/control/operations.py").is_file()
     assert (target / "scripts/webui.py").is_file()
-    for forbidden in ("ournotes_dev", "ournotes/cloud", "state", "results", "data", ".venv", "ournotes/dev_capture.py", "ournotes/runner_ui.py"):
+    for forbidden in ("ournotes_dev", "devtools", "ournotes/cloud", "state", "results", "data", ".venv",
+                      "ournotes/dev_capture.py", "ournotes/runner_ui.py"):
         assert not (target / forbidden).exists()
     assert {path.name for path in (target / "config").iterdir()} == {"presets.json", "input.json", "storage-policy.json"}
     assert (target / 'scripts/maintain_storage.py').is_file()
@@ -52,6 +53,7 @@ def test_one_client_contains_business_core_without_development_variant(tmp_path)
     target = tmp_path / "app"
     stage_source(target)
     assert not (target / 'ournotes_dev').exists()
+    assert not (target / 'devtools').exists()
     assert (target / "ournotes/control/launcher.py").read_bytes() == Path("ournotes/control/launcher.py").read_bytes()
 
 

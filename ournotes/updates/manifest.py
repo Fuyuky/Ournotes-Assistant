@@ -35,7 +35,8 @@ def safe_member(name):
         raise ValueError("发布包包含平台保留或有歧义的路径。")
     if path.parts[0] not in ("app", "runtime"):
         raise ValueError("发布包不能覆盖用户数据或固定素材。")
-    if len(path.parts) > 1 and path.parts[0] == "app" and path.parts[1] in ("state", "results", "data", "ournotes_dev", ".venv"):
+    if (len(path.parts) > 1 and path.parts[0] == "app"
+            and path.parts[1] in ("state", "results", "data", "ournotes_dev", "devtools", ".venv")):
         raise ValueError("客户端更新夹带用户数据、素材或开发接口。")
     if path.parts[:3] == ("app", "ournotes", "cloud"):
         raise ValueError("客户端发布包不能夹带服务端。")

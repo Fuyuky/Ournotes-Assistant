@@ -83,6 +83,7 @@ def test_signed_install_preserves_user_data_and_old_version(tmp_path):
 
 
 @pytest.mark.parametrize("forbidden", ["../state/runtime.sqlite3", "app/data/catalog.json", "app/ournotes_dev/api.py",
+                                        "app/devtools/api.py",
                                         "app/state/runtime.sqlite3", "app/web/admin/index.html",
                                         "app/ournotes/integrations/oauth_setup.py", "app/client-connection.json"])
 def test_signed_bundle_cannot_overwrite_data_or_ship_agent(tmp_path, forbidden):
