@@ -38,7 +38,7 @@ def compact_account(report):
             'cards': cards, 'used': report.get('used', False),
             'pool_keys': sorted({step['pool_key'] for step in report.get('plan', []) if step.get('pool_key')}
                                 | set(report.get('pool_keys', []))),
-            **({'preset_snapshot': {'key': report['preset'], 'version': report.get('preset_version'),
+            **({'preset_snapshot': {'key': report.get('preset_key') or report['preset'], 'version': report.get('preset_version'),
                                      'plan': report['plan']}}
                if report.get('preset') and report.get('plan') else {}),
             **{k: report[k] for k in ('pull_count', 'node_id') if k in report}}

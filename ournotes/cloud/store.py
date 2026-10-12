@@ -54,6 +54,22 @@ CREATE TABLE IF NOT EXISTS receipts(node_id TEXT NOT NULL,scope TEXT NOT NULL,re
 CREATE TABLE IF NOT EXISTS results(account_id TEXT PRIMARY KEY,node_id TEXT NOT NULL,source_version INTEGER NOT NULL,
  version INTEGER NOT NULL,payload TEXT NOT NULL,usage_status TEXT NOT NULL DEFAULT 'available',
  usage_changed INTEGER NOT NULL DEFAULT 0);
+CREATE TABLE IF NOT EXISTS admin_result_index(account_id TEXT PRIMARY KEY,complete INTEGER NOT NULL,
+ index_no INTEGER,ssr_total INTEGER,activity_payload TEXT,preset_key TEXT,preset_version INTEGER);
+CREATE INDEX IF NOT EXISTS admin_result_index_order ON admin_result_index(index_no,account_id) WHERE complete=1;
+CREATE INDEX IF NOT EXISTS admin_result_index_preset ON admin_result_index(preset_key,index_no) WHERE complete=1;
+CREATE TRIGGER IF NOT EXISTS admin_result_insert AFTER INSERT ON results BEGIN
+ DELETE FROM admin_result_index WHERE account_id=NEW.account_id;
+ INSERT INTO metadata VALUES('admin_result_index_dirty','1') ON CONFLICT(key) DO UPDATE SET value='1';
+END;
+CREATE TRIGGER IF NOT EXISTS admin_result_update AFTER UPDATE OF payload,account_id ON results BEGIN
+ DELETE FROM admin_result_index WHERE account_id IN (OLD.account_id,NEW.account_id);
+ INSERT INTO metadata VALUES('admin_result_index_dirty','1') ON CONFLICT(key) DO UPDATE SET value='1';
+END;
+CREATE TRIGGER IF NOT EXISTS admin_result_delete AFTER DELETE ON results BEGIN
+ DELETE FROM admin_result_index WHERE account_id=OLD.account_id;
+ INSERT INTO metadata VALUES('admin_result_index_dirty','1') ON CONFLICT(key) DO UPDATE SET value='1';
+END;
 CREATE TABLE IF NOT EXISTS tickets(id TEXT PRIMARY KEY,node_id TEXT NOT NULL,account_id TEXT NOT NULL,
  alias TEXT NOT NULL,created REAL NOT NULL,expires REAL NOT NULL,state TEXT NOT NULL,
  baseline TEXT NOT NULL,rule TEXT NOT NULL,message_id TEXT,code TEXT);
@@ -93,8 +109,13 @@ class Store:
             if 'usage_changed' not in columns:
                 db.execute('ALTER TABLE results ADD COLUMN usage_changed INTEGER NOT NULL DEFAULT 0')
                 db.execute('UPDATE results SET usage_changed=1 WHERE version>source_version')
+            index_columns = {row['name'] for row in db.execute('PRAGMA table_info(admin_result_index)')}
+            if 'preset_version' not in index_columns:
+                db.execute('ALTER TABLE admin_result_index ADD COLUMN preset_version INTEGER')
+            db.execute('CREATE INDEX IF NOT EXISTS results_owner ON results(owner_username,account_id)')
             for key, value in {"allocation_enabled": "false", "test_next_index": "8",
-                               "formal_next_index": str(1 << 20), "revision": "0"}.items():
+                               "formal_next_index": str(1 << 20), "revision": "0",
+                               "admin_result_index_dirty": "1"}.items():
                 db.execute("INSERT OR IGNORE INTO metadata VALUES (?,?)", (key, value))
             stored = db.execute("SELECT value FROM metadata WHERE key='mailbox'").fetchone()
             if stored and stored[0] != self.mailbox:
@@ -367,8 +388,10 @@ class Store:
         except (ValueError, TypeError, KeyError):
             return False
 
-    def results(self, account_id=None, *, owner_username=None):
+    def results(self, account_id=None, *, owner_username=None, index_no=None):
         owner_username = owner_username or None
+        if index_no is not None and (type(index_no) is not int or not 0 <= index_no <= 2**53 - 1):
+            raise ValueError('Invalid result index')
         with self.connection() as db:
             db.execute("BEGIN")
             revision = int(self.meta(db, "revision"))
@@ -377,10 +400,134 @@ class Store:
                 if not row or not self.final(row):
                     raise KeyError(account_id)
                 return self.envelope(row)
-            rows = db.execute('SELECT r.* FROM results r LEFT JOIN allocations a ON a.account_id=r.account_id '
-                              'ORDER BY a.index_no').fetchall()
+            if index_no is not None:
+                rows = db.execute('SELECT r.* FROM allocations a JOIN results r ON r.account_id=a.account_id '
+                                  'WHERE a.index_no=?', (index_no,)).fetchall()
+            else:
+                rows = db.execute('SELECT r.* FROM results r LEFT JOIN allocations a ON a.account_id=r.account_id '
+                                  'ORDER BY a.index_no').fetchall()
             return {"revision": revision, "results": [self.envelope(row) for row in rows if self.final(row)
                       and (owner_username is None or row['owner_username'] == owner_username)]}
+
+    def prepare_admin_results(self, validator):
+        """Validate existing server results once; later writes invalidate only their own derived row."""
+        self._admin_result_validator = validator
+        # Bump the format version when result validation or the cached activity projection changes.
+        signature = {'format': 2, 'definitions': validator.definitions, 'characters': validator.characters,
+                     'rosters': {key: sorted(value) for key, value in validator.rosters.items()}}
+        self._admin_result_signature = hashlib.sha256(encoded(signature).encode()).hexdigest()
+        with self.transaction() as db:
+            self._refresh_admin_results(db)
+
+    def _admin_results_ready(self, db):
+        return (self.meta(db, 'admin_result_index_signature') == self._admin_result_signature
+                and self.meta(db, 'admin_result_index_dirty') == '0')
+
+    def _refresh_admin_results(self, db):
+        if self._admin_results_ready(db):
+            return
+        if self.meta(db, 'admin_result_index_signature') != self._admin_result_signature:
+            db.execute('DELETE FROM admin_result_index')
+        rows = db.execute('SELECT r.* FROM results r LEFT JOIN admin_result_index i '
+                          'ON i.account_id=r.account_id WHERE i.account_id IS NULL').fetchall()
+        for row in rows:
+            entry = (row['account_id'], 0, None, None, None, None, None)
+            try:
+                value = Result.model_validate(json.loads(row['payload'])).model_dump()
+                if value['account_id'] != row['account_id']:
+                    raise ValueError('Result identity mismatch')
+                projection = self._admin_result_validator.account(
+                    {**value, 'status': 'complete', 'alias_index': value['index']})
+                snapshot = value.get('preset_snapshot')
+                preset_version = snapshot.get('version') if snapshot else None
+                entry = (row['account_id'], 1, value['index'], projection['ssr_total'],
+                         encoded(projection['activity']), snapshot['key'] if snapshot else None,
+                         min(preset_version, 2**63 - 1) if preset_version is not None else None)
+            except (ValueError, TypeError, KeyError):
+                pass  # Invalid and unfinished payloads remain excluded, including from SQL counts.
+            db.execute('INSERT INTO admin_result_index VALUES(?,?,?,?,?,?,?)', entry)
+        self.set_meta(db, 'admin_result_index_signature', self._admin_result_signature)
+        self.set_meta(db, 'admin_result_index_dirty', '0')
+
+    def admin_result_page(self, *, index_no=None, owner_username=None, preset_id=None, offset=0, limit=20):
+        """Count, filter and page compact server metadata from a consistent SQLite snapshot."""
+        if type(offset) is not int or offset < 0 or type(limit) is not int or not 1 <= limit <= 100:
+            raise ValueError('Invalid result pagination')
+        if index_no is not None and (type(index_no) is not int or not 0 <= index_no <= 2**53 - 1):
+            raise ValueError('Invalid result index')
+        if preset_id is not None and (not isinstance(preset_id, str)
+                                      or not re.fullmatch(r'__unknown__|0|[1-9][0-9]{0,15}', preset_id)):
+            raise ValueError('Invalid numeric preset filter')
+        arguments = (index_no, owner_username or None, preset_id, offset, limit)
+        with self.connection() as db:
+            db.execute('BEGIN')
+            if self._admin_results_ready(db):
+                return self._admin_result_page(db, *arguments)
+        # Only startup/catalog changes and results whose payload changed require validation.
+        with self.transaction() as db:
+            self._refresh_admin_results(db)
+            return self._admin_result_page(db, *arguments)
+
+    def _admin_result_page(self, db, index_no, owner_username, preset_id, offset, limit):
+        cutover = int(self.meta(db, 'presets_numeric_version') or 2**63 - 1)
+        resolved_preset = (f"CASE WHEN i.preset_version>={cutover} AND (i.preset_key='0' OR "
+                           "(substr(i.preset_key,1,1) BETWEEN '1' AND '9' "
+                           "AND length(i.preset_key)<=16 AND i.preset_key NOT GLOB '*[^0-9]*')) "
+                           "THEN CAST(i.preset_key AS INTEGER) ELSE pa.preset_id END")
+        tables = ('FROM admin_result_index i JOIN results r ON r.account_id=i.account_id '
+                  'LEFT JOIN preset_aliases pa ON pa.key=i.preset_key ')
+        conditions, parameters = ['i.complete=1'], []
+        if owner_username is not None:
+            conditions.append('r.owner_username=?')
+            parameters.append(owner_username)
+        owner_where, owner_parameters = ' AND '.join(conditions), list(parameters)
+        options = []
+        for row in db.execute(
+            f"SELECT {resolved_preset} AS resolved_preset_id,json_extract(p.payload,'$.name') AS name,COUNT(*) AS count "
+            f'{tables}LEFT JOIN shared_presets p ON p.id=({resolved_preset}) '
+            f'WHERE {owner_where} GROUP BY resolved_preset_id '
+            'ORDER BY resolved_preset_id IS NULL,resolved_preset_id', owner_parameters,
+        ):
+            identifier = row['resolved_preset_id']
+            options.append({'id': str(identifier) if identifier is not None else '__unknown__',
+                            'name': row['name'] or ('历史未记录/未匹配' if identifier is None else '历史预设'),
+                            'deleted': identifier is not None and row['name'] is None, 'count': row['count']})
+        if index_no is not None:
+            conditions.append('i.index_no=?')
+            parameters.append(index_no)
+        if preset_id == '__unknown__':
+            conditions.append(f'({resolved_preset}) IS NULL')
+        elif preset_id is not None:
+            conditions.append(f'({resolved_preset})=?')
+            parameters.append(int(preset_id))
+        where = ' AND '.join(conditions)
+        total = db.execute(f'SELECT COUNT(*) {tables}WHERE {where}', parameters).fetchone()[0]
+        columns = (f'r.*,({resolved_preset}) AS resolved_preset_id' if index_no is not None else
+                   'r.account_id,r.node_id,r.owner_username,r.version,r.source_version,r.usage_status,'
+                   'i.index_no,i.ssr_total,i.activity_payload')
+        rows = (() if offset >= total else db.execute(f'SELECT {columns} {tables}WHERE {where} '
+                   'ORDER BY i.index_no,i.account_id LIMIT ? OFFSET ?', [*parameters, limit, offset]))
+        if index_no is not None:
+            values, preset_names = [], {option['id']: option for option in options}
+            for row in rows:
+                value = self.envelope(row)
+                identifier = row['resolved_preset_id']
+                option = preset_names[str(identifier) if identifier is not None else '__unknown__']
+                snapshot = value['result'].get('preset_snapshot')
+                value['historical_preset'] = {'id': str(identifier) if identifier is not None else None,
+                                              'name': option['name'], 'deleted': option['deleted'],
+                                              'version': snapshot.get('version') if snapshot else None}
+                values.append(value)
+        else:
+            values = [{'result': {'account_id': row['account_id'], 'index': row['index_no'],
+                                  'used': row['usage_status'] != 'available'},
+                       'owner_username': row['owner_username'], 'node_id': row['node_id'],
+                       'usage_status': row['usage_status'], 'version': row['version'],
+                       'source_version': row['source_version'],
+                       'projection': {'ssr_total': row['ssr_total'],
+                                      'activity': json.loads(row['activity_payload'])}} for row in rows]
+        return {'revision': int(self.meta(db, 'revision')), 'total': total, 'offset': offset, 'limit': limit,
+                'results': values, 'preset_options': options}
 
     def result_by_index(self, index):
         """Resolve one shared index through its existing unique allocation index."""

@@ -5,13 +5,11 @@ import hashlib
 import json
 import sqlite3
 import time
-import uuid
 from contextlib import closing
 from copy import deepcopy
 
 from ournotes.control.query import read_json
-from ournotes.runtime.draw_strategy import validate_strategy
-from ournotes.runtime.presets import canonical_preset, expand_preset
+from ournotes.runtime.presets import canonical_preset, expand_preset, validate_plan
 
 
 class PresetCatalog:
@@ -31,9 +29,9 @@ class PresetCatalog:
         return {p['price'] for p in pool['products'] if p['itemType'] == 12 and p['drawCount'] == pulls}
 
     def validate(self, plan):
-        validate_strategy(plan, self)
+        validate_plan(plan, self)
         for e in plan:
-            keys = [e['pool_key']] + ([e['fallback_pool_key']] if e.get('fallback_pool_key') else [])
+            keys = [e['pool_key']]
             for key in keys:
                 pool = self.get(key)
                 if e['resource'] == 'stars':
@@ -87,7 +85,7 @@ class PresetEditor:
                     account = json.loads(row[0])
                     if account.get('run_id') != run['id'] or account.get('batch_id') != batch['id']:
                         raise ValueError('保存账号的归属不一致。')
-                    plan = [{k: e[k] for k in ('pool_key', 'resource', 'pulls', 'until_owned', 'fallback_pool_key') if k in e}
+                    plan = [{k: e[k] for k in ('pool_key', 'resource', 'pulls') if k in e}
                             for e in account.get('plan', [])]
                     draws = [{'ordinal': r[0], 'status': r[1]} for r in db.execute(
                         'SELECT ordinal,status FROM draws WHERE account_id=? ORDER BY ordinal', (account['id'],))] if 'draws' in tables else []
@@ -151,8 +149,8 @@ class PresetEditor:
                 chosen = canonical_preset(value)
                 catalog = PresetCatalog(self.root)
                 catalog.validate(expand_preset(chosen))
-                key = 'preset-' + uuid.uuid4().hex if creating else previous['key']
-                snapshot = client.save_preset(key, chosen, current['version'])
+                snapshot = (client.create_preset(chosen, current['version']) if creating else
+                            client.save_preset(previous['key'], chosen, current['version']))
             self.launcher._preset_snapshot = {'version': snapshot['version'],
                                              'presets': [{**preset, 'key': key}
                                                          for key, preset in snapshot['presets'].items()]}

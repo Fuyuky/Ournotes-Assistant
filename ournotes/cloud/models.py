@@ -51,6 +51,18 @@ class ActivitySnapshot(Model):
         return self
 
 
+def _validate_preset_plan(plan, historical_fields=()):
+    import re
+    allowed = {'pool_key', 'resource', 'pulls'} | set(historical_fields)
+    for entry in plan:
+        if (set(entry) - allowed
+                or not isinstance(entry.get('pool_key'), str)
+                or not re.fullmatch(r'[a-z0-9-]{1,100}', entry['pool_key'])
+                or entry.get('resource') not in ('stars', 'ticket')
+                or type(entry.get('pulls')) is not int or not 1 <= entry['pulls'] <= 1000):
+            raise ValueError('Invalid preset plan snapshot')
+
+
 class PresetSnapshot(Model):
     key: str = Field(min_length=1, max_length=100)
     version: StrictInt | None = Field(default=None, ge=0)
@@ -58,14 +70,16 @@ class PresetSnapshot(Model):
 
     @model_validator(mode='after')
     def validate_plan(self):
-        import re
-        for entry in self.plan:
-            if (set(entry) - {'pool_key', 'resource', 'pulls', 'until_owned', 'fallback_pool_key'}
-                    or not isinstance(entry.get('pool_key'), str)
-                    or not re.fullmatch(r'[a-z0-9-]{1,100}', entry['pool_key'])
-                    or entry.get('resource') not in ('stars', 'ticket')
-                    or type(entry.get('pulls')) is not int or not 1 <= entry['pulls'] <= 1000):
-                raise ValueError('Invalid preset plan snapshot')
+        _validate_preset_plan(self.plan)
+        return self
+
+
+class SavedPresetSnapshot(PresetSnapshot):
+    """Keep historical result metadata verbatim; never use it to make new plans."""
+
+    @model_validator(mode='after')
+    def validate_plan(self):
+        _validate_preset_plan(self.plan, ('until_owned', 'fallback_pool_key'))
         return self
 
 
@@ -82,7 +96,7 @@ class Result(Model):
     used: StrictBool
     activity_id: str | None = Field(default=None, max_length=100)
     activity: ActivitySnapshot | None = None
-    preset_snapshot: PresetSnapshot | None = None
+    preset_snapshot: SavedPresetSnapshot | None = None
 
     @model_serializer(mode='wrap')
     def compatible_payload(self, handler):

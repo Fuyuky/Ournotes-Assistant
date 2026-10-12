@@ -1,17 +1,13 @@
 /* Shared cloud preset editor. Saved account plans remain read-only. */
 (() => {
-  const page = {data:null, name:null, draft:null, editing:false, creating:false, deleting:false, loading:false, saving:false, sequence:0};
+  const page = {data:null, key:null, draft:null, editing:false, creating:false, deleting:false, loading:false, saving:false, sequence:0};
   const resourceName = r => r === 'stars' ? '免费星钻' : '招募券';
   const batches = pulls => {
     const n=Math.max(0,Math.min(1000,Math.trunc(Number(pulls) || 0)));
     return [...Array(Math.floor(n/10)).fill(10),...Array(n%10).fill(1)];
   };
   const pool = key => page.data?.pools.find(p => p.key === key || `bdon-gacha-${p.gacha_id}` === key);
-  const selected = () => page.data?.presets.find(p => p.name === page.name);
-  const cardLabel = key => {
-    const c = page.data?.cards[key];
-    return c ? `${c.kind === 'member' ? '角色卡' : '支援卡'} ${c.name}${c.title ? '【'+c.title+'】' : ''} (${key})` : key;
-  };
+  const selected = () => page.data?.presets.find(p => p.key === page.key);
   function totals(entries) {
     const value = {pulls:0, transactions:0, stars:0, tickets:0, cost:0};
     for (const e of entries) {
@@ -32,7 +28,7 @@
   }
   function entryNote(e) {
     const p = pool(e.pool_key);
-    return `${splitText(Number(e.pulls) || 0)} · ${e.resource === 'ticket' ? (p?.ticket_name || '券种待核验') : '仅使用免费星钻'}${e.until_owned ? ' · 集齐目标后转池' : ''}`;
+    return `${splitText(Number(e.pulls) || 0)} · ${e.resource === 'ticket' ? (p?.ticket_name || '券种待核验') : '仅使用免费星钻'}`;
   }
   function updateSummary() {
     if (!page.draft) return;
@@ -42,10 +38,10 @@
     $('preset-add').disabled = page.draft.entries.length >= 64;
     $('preset-add').hidden = !page.editing;
   }
-  function poolSelect(value, starsOnly=false) {
+  function poolSelect(value) {
     const select = el('select');
     for (const p of page.data.pools) {
-      if ((!p.supported || !p.resources.length || starsOnly && !p.resources.includes('stars')) && p.key !== value) continue;
+      if ((!p.supported || !p.resources.length) && p.key !== value) continue;
       const option = el('option','',`${p.name} · #${p.gacha_id}${p.supported ? '' : '（暂不支持）'}`);
       option.value = p.key; select.append(option);
     }
@@ -57,30 +53,6 @@
   }
   function field(label, input) {
     const node = el('label','field',label); node.append(input); return node;
-  }
-  function policyView(e, row) {
-    const p = pool(e.pool_key);
-    if (!e.until_owned && (!page.editing || e.resource !== 'stars' || !p?.pickup_card_keys?.length)) return;
-    const label = el('label','preset-policy-toggle');
-    const enabled = el('input'); enabled.type='checkbox'; enabled.checked=!!e.until_owned;
-    enabled.disabled = e.resource !== 'stars' || !p?.pickup_card_keys?.length;
-    label.append(enabled,el('span','',`集齐本池 ${p?.pickup_card_keys?.length || 0} 张 UP 后，将剩余星钻招募转池`));
-    enabled.addEventListener('change',()=>{
-      if (enabled.checked) {
-        e.until_owned = [...p.pickup_card_keys];
-        e.fallback_pool_key = page.data.pools.find(v=>v.key==='our-notes-standard' && v.key!==p.key && v.supported && v.resources.includes('stars'))?.key
-          || page.data.pools.find(v=>v.key!==p.key && v.supported && v.resources.includes('stars'))?.key;
-      } else {delete e.until_owned; delete e.fallback_pool_key;}
-      renderEntries(); updateSummary();
-    });
-    row.append(label);
-    if (e.until_owned) {
-      const targets = el('div','preset-targets');
-      for (const key of e.until_owned) targets.append(el('span','',cardLabel(key)));
-      const fallback = poolSelect(e.fallback_pool_key,true);
-      fallback.addEventListener('change',()=>{e.fallback_pool_key=fallback.value;});
-      row.append(targets,field('转入卡池',fallback),el('p','help','仅依据本账号已完整识别的结果判断集齐；先消耗剩余招募券，再执行转池星钻招募。'));
-    }
   }
   function renderEntries() {
     const rows = page.draft.entries.map((e,i)=>{
@@ -104,30 +76,30 @@
       pools.addEventListener('change',()=>{
         e.pool_key=pools.value;
         if (!pool(e.pool_key)?.resources.includes(e.resource)) e.resource=pool(e.pool_key)?.resources[0] || 'stars';
-        delete e.until_owned;delete e.fallback_pool_key;renderEntries();updateSummary();
+        renderEntries();updateSummary();
       });
       const resource = el('select');
       for (const key of new Set([...(pool(e.pool_key)?.resources || []),e.resource])) {
         const option=el('option','',resourceName(key));option.value=key;resource.append(option);
       }
       resource.value=e.resource;
-      resource.addEventListener('change',()=>{e.resource=resource.value;delete e.until_owned;delete e.fallback_pool_key;renderEntries();updateSummary();});
+      resource.addEventListener('change',()=>{e.resource=resource.value;renderEntries();updateSummary();});
       const pulls=el('input');pulls.type='number';pulls.min='1';pulls.max='1000';pulls.step='1';pulls.required=true;pulls.value=e.pulls;
       const note=el('p','help',entryNote(e));
       pulls.addEventListener('input',()=>{e.pulls=Number(pulls.value);note.textContent=entryNote(e);updateSummary();});
       grid.append(field('卡池',pools),field('资源',resource),field('抽数',pulls));
-      row.append(grid,note);policyView(e,row);return row;
+      row.append(grid,note);return row;
     });
     $('preset-entries').replaceChildren(...rows);
   }
   function renderList() {
     $('preset-create').disabled=!page.data.editable || page.editing || page.loading || page.saving || !page.data.pools.some(p=>p.supported && p.resources.length);
     $('preset-list').replaceChildren(...page.data.presets.map(p=>{
-      const button=el('button',`preset-choice${p.name===page.name?' active':''}`);
+      const button=el('button',`preset-choice${p.key===page.key?' active':''}`);
       button.type='button';button.disabled=page.editing || page.loading || page.saving;
-      button.append(el('b','',p.name),el('small','',`实际 ${p.total_pulls} 抽 · ${p.transactions} 笔交易${p.validation_errors.length?' · 需要检查':''}`));
-      button.setAttribute('aria-current',p.name===page.name?'true':'false');
-      button.addEventListener('click',()=>{page.name=p.name;renderPreset();});return button;
+      button.append(el('b','',`#${p.key} · ${p.name}`),el('small','',`实际 ${p.total_pulls} 抽 · ${p.transactions} 笔交易${p.validation_errors.length?' · 需要检查':''}`));
+      button.setAttribute('aria-current',p.key===page.key?'true':'false');
+      button.addEventListener('click',()=>{page.key=p.key;renderPreset();});return button;
     }));
   }
   function renderPreset() {
@@ -135,6 +107,7 @@
     page.draft=preset ? structuredClone(preset) : null;page.editing=false;page.creating=false;page.deleting=false;
     $('preset-new-name-field').hidden=true;$('preset-new-name').disabled=true;$('preset-new-name').required=false;
     $('preset-name').textContent=preset?.name || '尚无共享预设';
+    $('preset-id').textContent=preset ? `预设编号：${preset.key}` : '预设编号：保存后分配';
     $('preset-description').value=preset?.description || '';
     const notes=[...(preset?.validation_errors || [])];
     const named=preset?.name.match(/(\d+)\s*抽/);
@@ -160,7 +133,6 @@
         const row=el('tr'),status=item.draws.find(d=>d.ordinal===i)?.status;
         for(const text of [i+1,pool(e.pool_key)?.name || e.pool_key,resourceName(e.resource),e.pulls,{complete:'已识别',submitted:'已提交',captured:'待识别',needs_review:'待核查',planned:'已规划'}[status] || '未执行']) row.append(el('td','',String(text)));
         table.append(row);
-        if(e.until_owned){const policy=el('tr');const td=el('td','',`集齐 ${e.until_owned.map(cardLabel).join('、')} 后转入 ${pool(e.fallback_pool_key)?.name || e.fallback_pool_key}`);td.colSpan=5;policy.append(td);table.append(policy);}
       });const scroll=el('div','table-scroll');scroll.append(table);details.append(scroll);return details;
     }));
     if (!saved.plans.length) $('preset-saved-plans').append(el('p','help','本批没有可展示的活动账号计划。'));
@@ -174,7 +146,7 @@
     try {
       const data=await api('presets');if(sequence!==page.sequence)return;
       page.data=data;
-      if (!selected()) page.name=data.presets[0]?.name;
+      if (!selected()) page.key=data.presets[0]?.key;
       page.loading=false;
       $('presets-notice').textContent=data.blocked_reason || `共享版本 ${data.version}；保存用于后续分配，活动账号继续原计划。资源不足时跳过该项，不购买资源。`;
       renderPreset();renderSaved();
@@ -191,7 +163,7 @@
     const p=page.data.pools.find(p=>p.supported && p.resources.length);if(!p)return;
     page.creating=true;page.deleting=false;page.editing=true;
     page.draft={name:'',description:'',entries:[{pool_key:p.key,resource:p.resources[0],pulls:1}]};
-    $('preset-name').textContent='增加预设';$('preset-description').value='';
+    $('preset-name').textContent='增加预设';$('preset-id').textContent='预设编号：保存后分配';$('preset-description').value='';
     $('preset-validation').hidden=true;$('preset-fields').disabled=false;
     $('preset-new-name-field').hidden=false;$('preset-new-name').disabled=false;
     $('preset-new-name').required=true;$('preset-new-name').value='';$('preset-new-name').setCustomValidity('');
@@ -222,7 +194,7 @@
     const old=selected(),t=totals(page.draft.entries);
     $('preset-save-title').textContent='确认保存预设';$('preset-save-back').textContent='返回编辑';
     $('preset-save-confirm').textContent='确认保存';
-    $('preset-save-summary').textContent=page.creating?`增加「${page.draft.name}」：${t.pulls} 抽，${t.transactions} 笔交易。星钻招募 ${t.stars} 抽，券招募 ${t.tickets} 抽。保存后可在新批次中选择。`:`${page.name}：${old.total_pulls} → ${t.pulls} 抽，${old.transactions} → ${t.transactions} 笔交易。星钻招募 ${t.stars} 抽，券招募 ${t.tickets} 抽。保存将用于新批次，已分配账号和交易保持原样。`;
+    $('preset-save-summary').textContent=page.creating?`增加「${page.draft.name}」：${t.pulls} 抽，${t.transactions} 笔交易。星钻招募 ${t.stars} 抽，券招募 ${t.tickets} 抽。保存后分配编号，可在新批次中选择。`:`#${old.key} · ${old.name}：${old.total_pulls} → ${t.pulls} 抽，${old.transactions} → ${t.transactions} 笔交易。星钻招募 ${t.stars} 抽，券招募 ${t.tickets} 抽。保存将用于新批次，已分配账号和交易保持原样。`;
     $('preset-save-dialog').showModal();
   });
   $('preset-save-back').addEventListener('click',()=>{if(!page.saving)$('preset-save-dialog').close();});
@@ -230,7 +202,7 @@
     if (!selected() || !page.data?.editable || page.editing || page.loading || page.saving) return;
     page.deleting=true;
     $('preset-save-title').textContent='确认删除预设';$('preset-save-back').textContent='取消';
-    $('preset-save-summary').textContent=`从共享列表删除「${page.name}」。后续批次将不能选择此预设；已分配账号继续保存的原计划。`;
+    $('preset-save-summary').textContent=`从共享列表删除「#${selected().key} · ${selected().name}」。后续批次将不能选择此预设；已分配账号继续保存的原计划。`;
     $('preset-save-confirm').textContent='确认删除';
     $('preset-save-dialog').showModal();
   });
@@ -239,10 +211,10 @@
     if(page.saving)return;page.saving=true;
     const confirm=$('preset-save-confirm');confirm.disabled=true;confirm.classList.add('is-loading');confirm.textContent='正在校验并保存…';
     $('preset-save-back').disabled=true;$('preset-fields').disabled=true;$('preset-cancel').disabled=true;
-    const value={operation:page.deleting?'delete':page.creating?'create':'update',key:selected()?.key,name:page.creating?page.draft.name:page.name,description:page.draft.description || '',expected_version:page.data.version,
-      entries:page.draft.entries.map(e=>Object.fromEntries(['pool_key','resource','pulls','until_owned','fallback_pool_key'].filter(k=>k in e).map(k=>[k,e[k]])))};
+    const value={operation:page.deleting?'delete':page.creating?'create':'update',key:page.creating?undefined:selected()?.key,name:page.draft.name,description:page.draft.description || '',expected_version:page.data.version,
+      entries:page.draft.entries.map(e=>Object.fromEntries(['pool_key','resource','pulls'].map(k=>[k,e[k]])))};
     try {
-      const data=await api('presets',value);page.data=data;page.name=data.presets.some(p=>p.name===value.name)?value.name:data.presets[0]?.name;page.saving=false;page.deleting=false;
+      const data=await api('presets',value);page.data=data;page.key=data.presets.find(p=>page.creating?p.name===value.name:p.key===value.key)?.key ?? data.presets[0]?.key;page.saving=false;page.deleting=false;
       renderPreset();renderSaved();$('presets-refresh').disabled=false;
       $('presets-notice').textContent=data.message;toast(data.message);$('preset-save-dialog').close();
       await refresh();runSummary();

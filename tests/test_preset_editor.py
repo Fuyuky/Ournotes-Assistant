@@ -22,7 +22,7 @@ def editor(setup, monkeypatch):
         {'pool_key': 'standard', 'resource': 'ticket', 'pulls': 10}]})
     other = canonical_preset({'name': '另一个预设', 'entries': [
         {'pool_key': 'standard', 'resource': 'ticket', 'pulls': 1}]})
-    snapshot = {'version': 7, 'presets': {'test-preset': preset, 'other-preset': other}}
+    snapshot = {'version': 7, 'presets': {'0': preset, '1': other}}
     writes = []
     class Cloud:
         def presets(self):
@@ -34,6 +34,8 @@ def editor(setup, monkeypatch):
             snapshot['presets'][key] = canonical_preset(value)
             snapshot['version'] += 1
             return copy.deepcopy(snapshot)
+        def create_preset(self, value, expected_version):
+            return self.save_preset('2', value, expected_version)
         def delete_preset(self, key, expected_version):
             if expected_version != snapshot['version']:
                 raise CloudError('version_conflict', '共享版本已变化。')
@@ -89,7 +91,7 @@ def test_read_shared_presets_and_fixed_active_plan_without_writes(editor):
     before = checksums(root)
     data = client.get('/api/launcher/presets').json()
     assert data['editable'] and data['version'] == 7
-    assert data['presets'][0]['key'] == 'test-preset'
+    assert data['presets'][0]['key'] == '0'
     assert data['presets'][0]['total_pulls'] == 30 and data['presets'][0]['validation_errors'] == []
     assert data['saved']['plans'][0]['matches_preset']
     assert 'private-sentinel' not in json.dumps(data) and 'game_uid' not in json.dumps(data)
@@ -106,7 +108,7 @@ def test_cloud_edit_during_active_batch_does_not_rewrite_saved_plan(editor):
     data = response.json()
     assert data['version'] == 8 and data['presets'][0]['total_pulls'] == 33
     assert not data['saved']['plans'][0]['matches_preset']
-    assert writes == [('save', 'test-preset', 7)] and snapshot['presets']['test-preset']['total_pulls'] == 33
+    assert writes == [('save', '0', 7)] and snapshot['presets']['0']['total_pulls'] == 33
     assert service.presets[0]['total_pulls'] == 33
     assert checksums(root) == before and not (root/'state/preset-history').exists() and not calls
     assert client.post('/api/launcher/presets', json=value).status_code == 409
@@ -122,7 +124,7 @@ def test_create_and_delete_global_preset_by_stable_key(editor):
     response = client.post('/api/launcher/presets', json=value)
     assert response.status_code == 200
     new = next(p for p in response.json()['presets'] if p['name'] == '新增预设')
-    assert new['key'].startswith('preset-')
+    assert new['key'] == '2'
     response = client.post('/api/launcher/presets', json={
         'operation': 'delete', 'name': new['name'], 'key': new['key'], 'expected_version': 8})
     assert response.status_code == 200 and response.json()['version'] == 9

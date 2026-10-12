@@ -29,14 +29,6 @@ class DrawFlow:
             return pending[-1]
         if r.pause_reason or (r.stop and r.stop.is_set()):
             raise PauseRun('暂停期间禁止创建新抽卡交易。')
-        from ournotes.runtime.draw_strategy import redirect_after_pickups
-        redirected = redirect_after_pickups(r.account['plan'], draws, r.account['id'])
-        if redirected:
-            plan, audit = redirected
-            r.account['plan'] = plan
-            r.account.setdefault('plan_changes', []).append(dict(audit, time=time.time()))
-            r.save()
-            r.log.event('pickup_targets_complete', **audit)
         ordinal = len(draws)
         if ordinal >= len(r.account["plan"]):
             return None

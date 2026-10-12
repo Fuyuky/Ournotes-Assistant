@@ -51,11 +51,13 @@ def create_batch(db, lanes, channel, count, *, carry_from=None, debug_mode=False
         raise ValueError("必须指定互不重复、非负的 MuMu 实例编号。")
     from ournotes.integrations.cloud_client import CloudClient, CloudClientConfig
     from ournotes.runtime.presets import expand_preset
+    preset_keys = {}
     if preset_version is not None or CloudClientConfig.load(db.root) is not None:
         snapshot = CloudClient.from_root(db.root).presets()
         if preset_version is not None and snapshot['version'] != preset_version:
             raise ValueError('共享预设已更新，请刷新后重新启动。')
         definitions = {p['name']: p for p in snapshot['presets'].values()}
+        preset_keys = {p['name']: key for key, p in snapshot['presets'].items()}
         try:
             plans = {name: expand_preset(definitions[name]) for _, name in lanes}
         except KeyError:
@@ -94,7 +96,7 @@ def create_batch(db, lanes, channel, count, *, carry_from=None, debug_mode=False
         for instance, preset in lanes:
             run = db.create_run(preset, channel, None)
             run.update(instance=instance, batch_id=batch["id"], debug_mode=debug_mode,
-                       preset_plan=plans[preset], preset_version=preset_version)
+                       preset_plan=plans[preset], preset_version=preset_version, preset_key=preset_keys.get(preset))
             if instance in carried:
                 old_run, account = carried[instance]
                 audit = {'from_batch': carry_from, 'from_run': old_run['id'],

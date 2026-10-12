@@ -18,6 +18,23 @@ from ournotes.runtime.store import RuntimeStore
 from ournotes.vision.ocr import Vision
 
 
+def test_cloud_preset_id_zero_is_pinned_independently_of_name(tmp_path, monkeypatch):
+    from ournotes.runtime.presets import canonical_preset
+    definition = canonical_preset({'name': 'Editable name', 'entries': [
+        {'pool_key': 'example', 'resource': 'stars', 'pulls': 10}]})
+    snapshot = {'version': 4, 'presets': {'0': definition}}
+    monkeypatch.setattr('ournotes.integrations.cloud_client.CloudClient.from_root',
+                        lambda _: SimpleNamespace(presets=lambda: snapshot))
+    db = RuntimeStore(tmp_path)
+    try:
+        batch = create_batch(db, [(0, 'Editable name')], 'test', 1, preset_version=4)
+        snapshot['presets']['0']['name'] = 'Changed later'
+        run = db.get_run(batch['lanes'][0]['run_id'])
+        assert (run['preset_key'], run['preset'], run['preset_version']) == ('0', 'Editable name', 4)
+    finally:
+        db.close()
+
+
 def test_worker_keeps_actionable_initialization_error_and_trace(tmp_path, monkeypatch):
     with_store = RuntimeStore(tmp_path)
     batch = create_batch(with_store, [(1, '主抽 mygo 60 抽')], 'test', 200)

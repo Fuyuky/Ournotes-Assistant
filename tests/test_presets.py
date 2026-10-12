@@ -5,8 +5,28 @@ from PIL import Image
 
 from ournotes.paths import REFERENCE
 from ournotes.runtime.pools import AVE, MEMBER, MYGO, SR, SSR, STANDARD, make_plan, validate_confirmation
+from ournotes.runtime.presets import canonical_preset, read_presets
 from ournotes.runtime.store import RuntimeStore
 from ournotes.vision.ocr import Observation, TextBox
+
+
+@pytest.mark.parametrize('retired_fields', [
+    {'until_owned': ['member:61']},
+    {'fallback_pool_key': STANDARD},
+    {'until_owned': ['member:61'], 'fallback_pool_key': STANDARD},
+    {'until_owned': None, 'fallback_pool_key': None},
+])
+def test_new_presets_reject_retired_conditional_fields(retired_fields):
+    preset = {'name': 'fixed', 'entries': [
+        {'pool_key': MYGO, 'resource': 'stars', 'pulls': 20, **retired_fields}]}
+    with pytest.raises(ValueError, match='未知字段'):
+        canonical_preset(preset)
+
+
+def test_all_bundled_presets_expand_to_fixed_draw_entries():
+    for preset in read_presets()['presets']:
+        plan = make_plan(preset['name'])
+        assert all(set(entry) == {'pool_key', 'resource', 'pulls'} for entry in plan)
 
 
 def test_both_uses_20_tickets_and_40_stars_with_correct_resources():

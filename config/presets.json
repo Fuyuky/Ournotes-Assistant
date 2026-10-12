@@ -275,57 +275,6 @@
       ]
     },
     {
-      "name": "梦限大四UP转常驻 60 抽",
-      "total_pulls": 62,
-      "transactions": 8,
-      "description": "新池逐次十连，集齐四张UP后将剩余星钻十连移至常驻；最多新池40抽，常驻券20抽及两种SSR必得券各1抽，总62抽",
-      "entries": [
-        {
-          "pool_key": "bdon-gacha-10",
-          "pulls": 40,
-          "batches": [
-            10,
-            10,
-            10,
-            10
-          ],
-          "resource": "stars",
-          "until_owned": [
-            "member:61",
-            "member:62",
-            "support:62",
-            "support:63"
-          ],
-          "fallback_pool_key": "our-notes-standard"
-        },
-        {
-          "pool_key": "launch-ssr-guaranteed-ticket",
-          "pulls": 1,
-          "batches": [
-            1
-          ],
-          "resource": "ticket"
-        },
-        {
-          "pool_key": "launch-ssr-member-guaranteed-ticket",
-          "pulls": 1,
-          "batches": [
-            1
-          ],
-          "resource": "ticket"
-        },
-        {
-          "pool_key": "our-notes-standard",
-          "pulls": 20,
-          "batches": [
-            10,
-            10
-          ],
-          "resource": "ticket"
-        }
-      ]
-    },
-    {
       "name": "mygo + mujica 60 抽",
       "total_pulls": 62,
       "transactions": 8,

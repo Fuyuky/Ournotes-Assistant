@@ -55,6 +55,7 @@ def mount(app, store, credential, catalog, publisher=None, *, presets=None, acti
     directory = Administrators(store, credential)
     app.state.administrators = directory
     index = AccountIndex(Path(catalog) / 'unused-admin-source', catalog)
+    store.prepare_admin_results(index)
     attempts, lock = {}, threading.Lock()
 
     @app.middleware('http')
@@ -154,21 +155,22 @@ def mount(app, store, credential, catalog, publisher=None, *, presets=None, acti
     @app.get('/admin/api/accounts')
     def accounts(index_no: int | None = Query(default=None, alias='index', ge=0, le=2**53 - 1),
                  owner_username: str | None = Query(default=None, max_length=80),
-                 offset: int = Query(default=0, ge=0), limit: int = Query(default=50, ge=1, le=100),
+                 preset_id: str | None = Query(default=None, pattern=r'^(__unknown__|0|[1-9][0-9]{0,15})$'),
+                 offset: int = Query(default=0, ge=0), limit: int = Query(default=20, ge=1, le=100),
                  username=authenticated_dependency):
-        source = store.results(owner_username=owner_username)
+        source = store.admin_result_page(index_no=index_no, owner_username=owner_username,
+                                         preset_id=preset_id, offset=offset, limit=limit)
         values = source['results']
+        selected = values
         if index_no is not None:
-            values = [item for item in values if item['result']['index'] == index_no]
-        total = len(values)
-        selected = []
-        for envelope in values[offset:offset + limit]:
-            value = envelope['result']
-            projection = index.account({**value, 'status': 'complete', 'alias_index': value['index']})
-            selected.append({**envelope, 'projection': {**projection, 'price': quote(projection)},
-                             'ssr_cards': [{**index.cards[c['key']], 'count': c['count']}
-                                           for c in projection['cards']]})
-        return {'revision': source['revision'], 'total': total, 'offset': offset, 'accounts': selected}
+            selected = []
+            for envelope in values:
+                value = envelope['result']
+                projection = index.account({**value, 'status': 'complete', 'alias_index': value['index']})
+                selected.append({**envelope, 'projection': {**projection, 'price': quote(projection)},
+                                 'ssr_cards': [{**index.cards[c['key']], 'count': c['count']}
+                                               for c in projection['cards']]})
+        return {key: value for key, value in {**source, 'accounts': selected}.items() if key != 'results'}
 
     @app.get('/admin/api/art/{kind}/{identifier}')
     def art(kind: Literal['member', 'support'], identifier: int, username=authenticated_dependency):
@@ -202,6 +204,13 @@ def mount(app, store, credential, catalog, publisher=None, *, presets=None, acti
     @app.get('/admin/api/presets')
     def shared_presets(username=authenticated_dependency):
         return presets.snapshot()
+
+    @app.post('/admin/api/presets')
+    def create_preset(body: PresetUpdate, request: Request, username=authenticated_dependency):
+        same_origin(request)
+        value = presets.create(body.preset, body.expected_version)
+        events.notify('presets.changed', value['version'])
+        return value
 
     @app.put('/admin/api/presets/{key}')
     def save_preset(key: str, body: PresetUpdate, request: Request, username=authenticated_dependency):

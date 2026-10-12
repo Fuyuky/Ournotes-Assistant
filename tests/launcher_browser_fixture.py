@@ -29,8 +29,9 @@ def main():
 
     preset = canonical_preset({'name': '测试共享预设', 'description': '仅供页面检查', 'entries': [
         {'pool_key': 'fixture-pool', 'resource': 'stars', 'pulls': 43}]})
-    presets = {'version': 1, 'presets': {'fixture-preset': preset}}
+    presets = {'version': 1, 'presets': {'0': preset}}
     class Cloud:
+        next_preset_id = 1
         def presets(self):
             return json.loads(json.dumps(presets))
         def get_result_by_index(self, index):
@@ -50,6 +51,11 @@ def main():
             output = io.BytesIO()
             Image.new('RGB', (220, 280), '#bbade0' if kind == 'member' else '#92bbc7').save(output, 'PNG')
             return output.getvalue(), 'image/png'
+        def create_preset(self, chosen, expected_version):
+            key = str(Cloud.next_preset_id)
+            value = self.save_preset(key, chosen, expected_version)
+            Cloud.next_preset_id += 1
+            return {**value, 'created_id': int(key)}
         def save_preset(self, key, chosen, expected_version):
             if expected_version != presets['version']:
                 raise ValueError('共享版本已变化。')

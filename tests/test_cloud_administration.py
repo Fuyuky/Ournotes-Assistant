@@ -218,15 +218,15 @@ def test_shared_presets_cas_delete_and_saved_run_snapshot_are_independent(portal
     headers = bearer(legacy['token'])
     initial = client.get(PREFIX + '/presets', headers=headers).json()
     preset = {'name': 'Synthetic cloud preset', 'entries': [{'pool_key': 'bdon-gacha-10', 'resource': 'stars', 'pulls': 12}]}
-    path = PREFIX + '/presets/synthetic'
-    saved = client.put(path, headers=headers, json={'expected_version': initial['version'], 'preset': preset})
+    saved = client.post(PREFIX + '/presets', headers=headers, json={'expected_version': initial['version'], 'preset': preset})
+    path = PREFIX + '/presets/' + str(saved.json()['created_id'])
     assert saved.status_code == 200
-    snapshot = saved.json()['presets']['synthetic']
+    snapshot = saved.json()['presets'][str(saved.json()['created_id'])]
     assert snapshot['total_pulls'] == 12 and snapshot['entries'][0]['batches'] == [10, 1, 1]
     assert client.put(path, headers=headers, json={'expected_version': initial['version'], 'preset': preset}).status_code == 409
     assert client.delete(path + '?expected_version=' + str(initial['version']), headers=headers).status_code == 409
     deleted = client.delete(path + '?expected_version=' + str(saved.json()['version']), headers=headers)
-    assert deleted.status_code == 200 and 'synthetic' not in deleted.json()['presets']
+    assert deleted.status_code == 200 and str(saved.json()['created_id']) not in deleted.json()['presets']
     assert snapshot['total_pulls'] == 12  # The previously pinned snapshot is not mutated by CRUD.
 
 

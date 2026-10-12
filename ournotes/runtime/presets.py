@@ -18,6 +18,17 @@ def read_presets(root=None):
     return preset_document(root)[0]
 
 
+def validate_plan(plan, catalog):
+    """Check saved pool identities without changing the plan or its metadata."""
+    for entry in plan:
+        key = entry['pool_key']
+        pool = catalog.get(key)
+        if not pool:
+            raise ValueError(f'计划卡池不在固定目录中：{key}')
+        if pool.get('unsupported_card_keys'):
+            raise ValueError(f'计划卡池包含尚不支持识别的卡牌：{key}')
+
+
 def preset_document(root=None):
     try:
         raw = preset_source(root).read_bytes()
@@ -32,7 +43,7 @@ def preset_document(root=None):
 
 def canonical_entry(entry):
     if not isinstance(entry, dict) or set(entry) - {
-            'pool_key', 'resource', 'pulls', 'batches', 'until_owned', 'fallback_pool_key'}:
+            'pool_key', 'resource', 'pulls', 'batches'}:
         raise ValueError('预设项目包含未知字段。')
     pulls = entry.get('pulls')
     if type(pulls) is not int or not 1 <= pulls <= 1000:
@@ -48,14 +59,6 @@ def canonical_entry(entry):
         raise ValueError('预设抽数或十连分批规则无效。')
     result = {k: entry[k] for k in ('pool_key', 'pulls', 'resource')}
     result['batches'] = batches
-    if 'until_owned' in entry or 'fallback_pool_key' in entry:
-        targets, fallback = entry.get('until_owned'), entry.get('fallback_pool_key')
-        if (entry['resource'] != 'stars' or not isinstance(targets, list) or not targets
-                or any(not isinstance(k, str) or not re.fullmatch(r'(member|support):[1-9]\d*', k) for k in targets)
-                or len(targets) != len(set(targets)) or not isinstance(fallback, str)
-                or not re.fullmatch(r'[a-z0-9-]{1,100}', fallback) or fallback == key):
-            raise ValueError('集齐转池策略无效。')
-        result.update(until_owned=list(targets), fallback_pool_key=fallback)
     return result
 
 
@@ -80,7 +83,7 @@ def expand_preset(preset):
     if (preset.get('total_pulls') != canonical['total_pulls']
             or preset.get('transactions') != canonical['transactions']):
         raise ValueError('预设总抽数或交易数无效。')
-    return [{**{k: e[k] for k in ('pool_key', 'resource', 'until_owned', 'fallback_pool_key') if k in e}, 'pulls': n}
+    return [{**{k: e[k] for k in ('pool_key', 'resource')}, 'pulls': n}
             for e in canonical['entries'] for n in e['batches']]
 
 

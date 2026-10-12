@@ -78,6 +78,13 @@ def test_archive_merges_duplicates_preserves_namespaces_and_omits_runtime():
     assert all(e['card']['rarity'] != 'R' for e in value['cards'])
 
 
+def test_archive_uses_pinned_numeric_preset_id_including_zero():
+    report = dict(sample(), preset='Editable name', preset_key='0', preset_version=3,
+                  plan=[{'pool_key': 'example', 'resource': 'stars', 'pulls': 10}])
+    assert compact_account(report)['preset_snapshot'] == {
+        'key': '0', 'version': 3, 'plan': report['plan']}
+
+
 @pytest.mark.parametrize('change', [{'status': 'running'}, {'unknown_slots': 1}])
 def test_archive_rejects_unfinished_or_falsely_complete(change):
     with pytest.raises(ValueError):

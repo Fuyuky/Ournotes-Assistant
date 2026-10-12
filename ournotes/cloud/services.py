@@ -32,10 +32,8 @@ def mount(app, store, identity_dependency, *, validator, presets, activities, ev
     @app.get(PREFIX + '/accounts')
     def accounts(index: int | None = Query(default=None, ge=0, le=2**53 - 1),
                  owner_username: str | None = Query(default=None, max_length=80), identity=identity_dependency):
-        source = store.results(owner_username=owner_username)
+        source = store.results(owner_username=owner_username, index_no=index)
         values = source['results']
-        if index is not None:
-            values = [item for item in values if item['result']['index'] == index]
         return {'revision': source['revision'], 'accounts': values}
 
     @app.get(PREFIX + '/accounts/{account_id}')
@@ -54,6 +52,12 @@ def mount(app, store, identity_dependency, *, validator, presets, activities, ev
     @app.get(PREFIX + '/presets')
     def read_presets(identity=identity_dependency):
         return presets.snapshot()
+
+    @app.post(PREFIX + '/presets')
+    def create_preset(body: PresetUpdate, identity=identity_dependency):
+        value = presets.create(body.preset, body.expected_version)
+        events.notify('presets.changed', value['version'])
+        return value
 
     @app.put(PREFIX + '/presets/{key}')
     def save_preset(key: str, body: PresetUpdate, identity=identity_dependency):

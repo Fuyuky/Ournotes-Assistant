@@ -92,8 +92,6 @@ class PresetEntry(StrictModel):
     pool_key: str = Field(min_length=1, max_length=100)
     resource: Literal['stars', 'ticket']
     pulls: int = Field(ge=1, le=1000, strict=True)
-    until_owned: list[str] | None = Field(default=None, min_length=1, max_length=100)
-    fallback_pool_key: str | None = Field(default=None, min_length=1, max_length=100)
 
 
 class PresetUpdate(StrictModel):

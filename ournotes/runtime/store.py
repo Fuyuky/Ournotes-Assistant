@@ -153,6 +153,7 @@ class RuntimeStore:
                            "alias_index": index, "run_id": run["id"], "status": "running", "phase": "switch_account",
                            "created_at": created_at, "started_at": created_at, "active_seconds": 0.0,
                            "preset": run["preset"], "preset_version": run.get('preset_version'),
+                           "preset_key": run.get('preset_key'),
                            "plan": plan, "context": {}, "skipped": [], "game_uid": None,
                            "schema_version": SCHEMA_VERSION, "node_id": allocation['node_id'], "recognition_source": "settlement"}
             account.update(instance=run.get("instance", 0), batch_id=run.get("batch_id"))

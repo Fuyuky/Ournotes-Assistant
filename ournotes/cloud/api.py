@@ -53,7 +53,7 @@ def create_app(store, admin_token, *, backend=None, rule=None, publisher=None, c
     from ournotes.cloud.manual_mail import ManualMail
     from ournotes.cloud.presets import Presets
     events = Events(store)
-    presets = Presets(store)
+    presets = Presets(store, catalog=activity_catalog or catalog)
     activities = Activities(store, activity_catalog or catalog)
     manual_mail = ManualMail(store, backend, rule, manual_confirmer)
     from ournotes.cloud.rebind import RebindTickets

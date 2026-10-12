@@ -26,6 +26,7 @@ from ournotes.runtime.memory_maintenance import recycle_between_accounts, requir
 from ournotes.runtime.model import LOGIN_FORM_FIELDS, MAIL_LIMIT_MESSAGE, PauseRun
 from ournotes.runtime.pool_navigation import PoolNavigator
 from ournotes.runtime.pools import PoolFinder, make_plan
+from ournotes.runtime.presets import validate_plan
 from ournotes.runtime.recognition_queue import RecognitionQueue
 from ournotes.runtime.runlog import RunLog
 from ournotes.runtime.store import RuntimeStore
@@ -152,8 +153,7 @@ class Runner:
         self.layout = ResultLayout()
         self.result_stability = None
         self.pools = PoolFinder(self.catalog_directory)
-        from ournotes.runtime.draw_strategy import validate_strategy
-        validate_strategy(self.account['plan'] if self.account else self.planned_draws(), self.pools.catalog)
+        validate_plan(self.account['plan'] if self.account else self.planned_draws(), self.pools.catalog)
         self.mail = RunnerMail(observer=lambda **fields: self.log.event('mail_transport', **fields))
         self.executor = concurrent.futures.ThreadPoolExecutor(max_workers=1, thread_name_prefix="gmail")
         self.mail_job = None

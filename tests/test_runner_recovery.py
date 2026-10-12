@@ -643,9 +643,17 @@ def test_finished_old_and_new_presets_persist_actual_pull_tag(controller, preset
     assert r.db.get_run()['completed'] == 1
 
 
-def test_conditional_plan_is_saved_before_next_transaction_and_reused_after_restart(controller):
+@pytest.mark.parametrize('historical_metadata', [False, True])
+def test_completed_results_preserve_fixed_plan_and_next_transaction_after_restart(controller, historical_metadata):
+    from copy import deepcopy
+
     r = controller
-    r.account['plan'] = make_plan('梦限大四UP转常驻 60 抽')
+    r.account['plan'] = make_plan('主抽梦限大 60 抽')
+    if historical_metadata:
+        for entry in r.account['plan'][:4]:
+            entry.update(until_owned=['member:61', 'member:62', 'support:62', 'support:63'],
+                         fallback_pool_key='our-notes-standard')
+    original = deepcopy(r.account['plan'])
     r.save()
     first = r.draw_flow.current_draw()
     keys = ['member:61', 'member:62', 'support:62', 'support:63'] + ['member:1'] * 6
@@ -654,15 +662,16 @@ def test_conditional_plan_is_saved_before_next_transaction_and_reused_after_rest
     r.db.save_draw(first)
     next_draw = r.draw_flow.current_draw()
     saved = r.db.account(r.account['id'])
-    assert next_draw['pool_key'] == 'launch-ssr-guaranteed-ticket'
+    assert next_draw['pool_key'] == 'bdon-gacha-10'
     assert saved['plan'][next_draw['ordinal']]['pool_key'] == next_draw['pool_key']
-    assert saved['plan_changes'][0]['redirected_pulls'] == 30
+    assert saved['plan'] == original
+    assert 'plan_changes' not in saved
     assert sum(e['pulls'] for e in saved['plan']) == 62
     resumed = Runner()
     resumed.db, resumed.account = r.db, saved
     assert resumed.draw_flow.current_draw()['id'] == next_draw['id']
     assert len(r.db.draws(saved['id'])) == 2
-    assert len(saved['plan_changes']) == 1
+    assert resumed.db.account(saved['id'])['plan'] == original
 
 
 def test_future_state_version_is_rejected(tmp_path):

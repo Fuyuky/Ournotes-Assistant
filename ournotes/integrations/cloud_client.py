@@ -159,6 +159,9 @@ class CloudClient:
             raise CloudError('invalid_art', '云端卡图格式或大小不符合要求。')
         return content, media
 
+    def create_preset(self, preset, expected_version):
+        return self.request("POST", "/presets", {"expected_version": expected_version, "preset": preset})
+
     def save_preset(self, key, preset, expected_version):
         return self.request("PUT", "/presets/" + quote(key, safe=""),
                             {"expected_version": expected_version, "preset": preset})

@@ -6,8 +6,8 @@ import pytest
 
 from ournotes.catalogs.cards import TABLES, _rows
 from ournotes.catalogs.runtime import EXTRA_TABLES, asset_url, compile_pools, current_catalog
-from ournotes.runtime.draw_strategy import validate_strategy
 from ournotes.runtime.pools import PoolCatalog, confirm_identity
+from ournotes.runtime.presets import validate_plan
 
 
 def test_unsupported_rarity_only_blocks_plans_using_its_pool():
@@ -24,14 +24,11 @@ def test_unsupported_rarity_only_blocks_plans_using_its_pool():
     catalog = SimpleNamespace(get=pools.get)
     supported = 'launch-mygo-pickup-20260831'
     assert pools['bdon-gacha-99999']['unsupported_card_keys'] == ['member:99999']
-    validate_strategy([{'pool_key': supported}], catalog)
+    validate_plan([{'pool_key': supported}], catalog)
     with pytest.raises(ValueError, match='尚不支持'):
-        validate_strategy([{'pool_key': 'bdon-gacha-99999'}], catalog)
-    with pytest.raises(ValueError, match='尚不支持'):
-        validate_strategy([{'pool_key': supported, 'until_owned': pools[supported]['pickup_card_keys'],
-                            'fallback_pool_key': 'bdon-gacha-99999'}], catalog)
+        validate_plan([{'pool_key': 'bdon-gacha-99999'}], catalog)
     with pytest.raises(ValueError, match='不在固定目录'):
-        validate_strategy([{'pool_key': 'missing'}], catalog)
+        validate_plan([{'pool_key': 'missing'}], catalog)
 
 
 def test_new_pool_prizes_resolve_to_new_cards_and_stable_legacy_keys():
