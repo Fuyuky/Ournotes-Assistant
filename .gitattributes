@@ -7,4 +7,4 @@
 
 *.yml text eol=lf
 
-assets/runtime-catalog/** -text
+assets/runtime-catalog/** binary

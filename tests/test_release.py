@@ -3,6 +3,12 @@ from pathlib import Path
 from scripts.build_release import stage_source
 
 
+def test_committed_runtime_catalog_matches_pinned_digests():
+    from ournotes.catalogs.runtime import current_catalog
+    source = Path(__file__).resolve().parents[1] / 'assets/runtime-catalog'
+    assert current_catalog(source).is_dir()
+
+
 def test_failed_build_discards_only_its_workspace(tmp_path, monkeypatch):
     import pytest
     from cryptography.hazmat.primitives import serialization
