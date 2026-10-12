@@ -261,6 +261,8 @@ class Runner:
         if title_start and title_wait and title_wait['account_id'] == self.account['id']:
             now = time.monotonic()
             if now - title_wait['started_at'] >= 90:
+                if self.recover_logout_title_stall(now):
+                    return False
                 raise PauseRun('TAP TO START 等待90秒仍未进入登录或主页；保留原账号核查。')
             if title_wait['attempts'] >= 3 or now - title_wait['last_tap_at'] < 10:
                 return False
@@ -650,10 +652,12 @@ class Runner:
                     self.login_flow.check_mail()
                 with self.log.timed("publish", phase=self.account["phase"]):
                     self.publish(scene=o.scene)
-                if self.recover_loading_stall(tick):
+                if self.recover_loading_stall(tick) or self.recover_logout_title_stall(time.monotonic()):
                     continue
                 with self.log.timed("step", phase=self.account["phase"], scene=o.scene):
                     self.step()
+                if self.observation is None:
+                    continue  # A restart during the step invalidates the captured frame.
                 if self.account:
                     with self.log.timed("checkpoint", phase=self.account["phase"]):
                         self.save()
@@ -771,17 +775,39 @@ class Runner:
             return False
         if now - episode[1] < 90:
             return False
+        return self.restart_stalled_game('连续90秒加载或黑屏；只重启游戏，保留原实例、账号和交易。')
+
+    def recover_logout_title_stall(self, now):
+        """A sent logout may leave the game's SDK login entry unresponsive."""
+        waiting = self.title_start_wait
+        if (not self.account or self.account['phase'] != 'logout'
+                or not self.ctx.get('logout_requested') or self.observation is None
+                or self.observation.scene != 'title'
+                or not waiting or waiting['account_id'] != self.account['id']
+                or now - waiting['started_at'] < 90 or self.pause_reason or self.stop.is_set()):
+            return False
+        draws = self.db.draws(self.account['id'])
+        if not draws or any(draw['status'] != 'complete' for draw in draws):
+            raise PauseRun('退出登录时抽卡交易未全部完成，禁止重启游戏；保留原交易核查。')
+        if self.ctx.get('login_network_uncertain'):
+            raise PauseRun('发码或登录请求结果尚未确认，禁止重启游戏；保留原票据核查。')
+        return self.restart_stalled_game(
+            '退出登录后TAP TO START等待90秒仍未进入登录页；只重启游戏，保留原账号和交易。')
+
+    def restart_stalled_game(self, reason):
+        """Share one durable automatic restart budget across known stalled pages."""
+        if self.pause_reason or self.stop.is_set():
+            return False
         if any(d['status'] in ('submitted', 'captured', 'needs_review')
                for d in self.db.draws(self.account['id'])):
-            raise PauseRun('持续加载且有未决抽卡或待复核结果，禁止重启游戏；保留交易核查。')
+            raise PauseRun('页面停滞且有未决抽卡或待复核结果，禁止重启游戏；保留交易核查。')
         if mail_limit_reached(self.run):
             raise PauseRun(MAIL_LIMIT_MESSAGE)
         if self.ctx.get('game_restart_attempts', 0) >= 1:
-            raise PauseRun('持续加载或黑屏，当前账号重启游戏一次后仍未恢复；停止自动重启。')
+            raise PauseRun('当前账号重启游戏一次后仍未恢复；停止自动重启。')
         self.ctx.update(game_restart_attempts=1, game_restart_at=time.time())
         # Persist the budget before any side effect; interruption cannot reset it.
         self.save()
-        reason = '连续90秒加载或黑屏；只重启游戏，保留原实例、账号和交易。'
         self.log.incident(reason, {'account_id': self.account['id'], 'phase': self.account['phase']})
         self.log.event('game_restart_intent', account=self.account['id'], instance=self.instance)
         self.device.close()
@@ -798,6 +824,7 @@ class Runner:
         self.result_stability = None
         self.pool_navigation.invalidate()
         self.loading_episode = None
+        self.title_start_wait = None
         self.last_progress = time.monotonic()
         self.log.event('game_restarted', account=self.account['id'], instance=self.instance)
         return True

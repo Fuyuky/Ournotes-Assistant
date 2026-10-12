@@ -1425,6 +1425,184 @@ def app_restart(controller, monkeypatch):
     return r, restart
 
 
+@pytest.fixture
+def logout_title_stall(app_restart):
+    r, restart = app_restart
+    r.account['phase'] = 'logout'
+    r.ctx.update(logout_requested=True, login_confirmed=True, login_submitted=True)
+    r.observation = SimpleNamespace(scene='title')
+    r.title_start_wait = {'account_id': r.account['id'], 'started_at': 0,
+                          'last_tap_at': 20, 'attempts': 3}
+    draw = r.draw_flow.current_draw()
+    draw.update(status='complete', result_exit_confirmed=True)
+    r.db.save_draw(draw)
+    r.save()
+    return r, restart, draw
+
+
+def test_logout_title_timeout_restarts_once_and_requires_verified_login(logout_title_stall, monkeypatch):
+    import copy
+    r, restart, draw = logout_title_stall
+    monkeypatch.setattr('ournotes.runtime.runner.time.monotonic', lambda: 90)
+    identity = copy.deepcopy(r.account)
+    old_device = r.device
+    r.finish_account = Mock()
+
+    def verify_persisted_budget(*args):
+        assert r.db.account(r.account['id'])['context']['game_restart_attempts'] == 1
+
+    restart.side_effect = verify_persisted_budget
+    assert not r.recover_logout_title_stall(89.9)
+    assert not Runner.action(r, 'TAP TO START', args=(1188, 732))
+    restart.assert_called_once_with(2, r.stop)
+    old_device.close.assert_called_once_with()
+    old_device.tap.assert_not_called()
+    assert all(r.account[k] == identity[k] for k in ('id', 'alias', 'alias_index', 'plan', 'phase'))
+    assert r.ctx['logout_requested'] and r.ctx['game_restart_attempts'] == 1
+    assert r.db.draws(r.account['id']) == [draw] and r.run['completed'] == 0
+    assert r.observation is None and r.title_start_wait is None
+    r.finish_account.assert_not_called()
+    r.observation = SimpleNamespace(scene='title')
+    r.login_flow.switch_account()
+    r.click.assert_called_once_with('TAP TO START', exact=True)
+    r.finish_account.assert_not_called()
+    r.observation.scene = 'login_options'
+    r.login_flow.switch_account()
+    r.finish_account.assert_called_once_with()
+
+
+def test_logout_title_restart_inside_action_discards_current_execute_cycle(logout_title_stall, monkeypatch):
+    from ournotes.vision.ocr import Observation, TextBox
+    r, restart, _ = logout_title_stall
+    monkeypatch.setattr('ournotes.runtime.runner.time.monotonic', lambda: 90)
+    r.resume = False
+    r.last_scene = r.last_known_scene = None
+    r.same_scene = 0
+    r.last_account_tick = r.last_progress = 89
+    r.publish, r.mail, r.executor = Mock(), Mock(), Mock()
+    r.check_memory = r.check_storage = r.wait_for_admission = Mock()
+    r.check_progress_timeout = Mock(side_effect=AssertionError('invalidated frame reached watchdog'))
+    frame = Image.new('RGB', (1600, 900))
+    old_device, new_device = Mock(), Mock()
+    old_device.capture.return_value = (frame, 0)
+    new_device.capture.side_effect = PauseRun('测试结束')
+    vision = Mock(last_mode='elements', last_metrics={})
+    vision.read.return_value = Observation(
+        frame, [TextBox('TAP TO START', 1, (1100, 710, 1276, 754))], 'title', 'title')
+    monkeypatch.setattr('ournotes.runtime.runner.ensure_game', Mock())
+    monkeypatch.setattr('ournotes.runtime.runner.DeviceClient', Mock(side_effect=[old_device, new_device]))
+    monkeypatch.setattr('ournotes.runtime.runner.Observer', lambda: vision)
+    r.action, r.click = Runner.action.__get__(r), Runner.click.__get__(r)
+    recover = r.recover_logout_title_stall
+    calls = []
+
+    def defer_pre_step(now):
+        calls.append(now)
+        # Simulate crossing the deadline after the loop's pre-step check.
+        return False if len(calls) == 1 else recover(now)
+
+    r.recover_logout_title_stall = defer_pre_step
+    r._execute()
+    assert r.run['pause_reason'] == '测试结束', r.log.incident.call_args
+    restart.assert_called_once_with(2, r.stop)
+    assert old_device.capture.call_count == 1 and new_device.capture.call_count == 1
+    r.check_progress_timeout.assert_not_called()
+    assert r.run['completed'] == 0 and r.run['status'] == 'paused'
+
+
+@pytest.mark.parametrize('status', ['planned', 'error', 'skipped', 'submitted', 'captured', 'needs_review'])
+def test_logout_title_restart_rejects_unresolved_draw(logout_title_stall, status):
+    r, restart, draw = logout_title_stall
+    draw['status'] = status
+    r.db.save_draw(draw)
+    with pytest.raises(PauseRun, match='禁止重启游戏'):
+        r.recover_logout_title_stall(90)
+    restart.assert_not_called()
+    r.device.close.assert_not_called()
+    assert r.db.draws(r.account['id']) == [draw]
+    assert 'game_restart_attempts' not in r.ctx
+
+
+def test_logout_title_restart_requires_existing_draws(logout_title_stall):
+    r, restart, draw = logout_title_stall
+    r.db.db.execute('DELETE FROM draws WHERE id=?', (draw['id'],))
+    with pytest.raises(PauseRun, match='交易未全部完成'):
+        r.recover_logout_title_stall(90)
+    restart.assert_not_called()
+    r.device.close.assert_not_called()
+    assert 'game_restart_attempts' not in r.ctx
+
+
+@pytest.mark.parametrize('guard', ['stop', 'pause', 'mail_limit', 'login_network_uncertain'])
+def test_logout_title_restart_respects_pause_and_request_guards(logout_title_stall, guard):
+    r, restart, _ = logout_title_stall
+    if guard == 'stop':
+        r.stop.set()
+    elif guard == 'pause':
+        r.pause_reason = '用户暂停'
+    elif guard == 'mail_limit':
+        r.run['mail_send_limit_reached'] = True
+    else:
+        r.ctx['login_network_uncertain'] = True
+    if guard in ('stop', 'pause'):
+        assert not r.recover_logout_title_stall(90)
+    else:
+        with pytest.raises(PauseRun):
+            r.recover_logout_title_stall(90)
+    restart.assert_not_called()
+    r.device.close.assert_not_called()
+    assert 'game_restart_attempts' not in r.ctx
+
+
+@pytest.mark.parametrize('first', ['loading', 'logout_title'])
+def test_loading_and_logout_title_share_restart_budget_after_reload(logout_title_stall, first):
+    r, restart, _ = logout_title_stall
+    if first == 'loading':
+        r.observation.scene = 'loading'
+        assert not r.recover_loading_stall(0)
+        assert r.recover_loading_stall(90)
+    else:
+        assert r.recover_logout_title_stall(90)
+    r.account = r.db.account(r.account['id'])
+    r.observation = SimpleNamespace(scene='title' if first == 'loading' else 'loading')
+    r.title_start_wait = {'account_id': r.account['id'], 'started_at': 100,
+                          'last_tap_at': 120, 'attempts': 3}
+    if first == 'loading':
+        with pytest.raises(PauseRun, match='一次后仍未恢复'):
+            r.recover_logout_title_stall(190)
+    else:
+        assert not r.recover_loading_stall(100)
+        with pytest.raises(PauseRun, match='一次后仍未恢复'):
+            r.recover_loading_stall(190)
+    assert restart.call_count == 1
+
+
+def test_failed_logout_title_restart_keeps_budget_and_never_replays(logout_title_stall):
+    r, restart, draw = logout_title_stall
+    restart.side_effect = RuntimeError('启动失败')
+    with pytest.raises(RuntimeError, match='启动失败'):
+        r.recover_logout_title_stall(90)
+    r.account = r.db.account(r.account['id'])
+    assert r.ctx['game_restart_attempts'] == 1 and r.device is None
+    with pytest.raises(PauseRun, match='一次后仍未恢复'):
+        r.recover_logout_title_stall(190)
+    assert restart.call_count == 1 and r.db.draws(r.account['id']) == [draw]
+    assert r.run['completed'] == 0
+
+
+@pytest.mark.parametrize('phase,requested', [('logout', False), ('switch_account', True),
+                                            ('login', True), ('rewards', True), ('draws', True)])
+def test_other_title_timeouts_do_not_restart(logout_title_stall, monkeypatch, phase, requested):
+    r, restart, _ = logout_title_stall
+    monkeypatch.setattr('ournotes.runtime.runner.time.monotonic', lambda: 90)
+    r.account['phase'] = phase
+    r.ctx['logout_requested'] = requested
+    with pytest.raises(PauseRun, match='等待90秒'):
+        Runner.action(r, 'TAP TO START', args=(1188, 732))
+    restart.assert_not_called()
+    assert 'game_restart_attempts' not in r.ctx
+
+
 def test_loading_restarts_only_game_once_and_preserves_identity_and_plan(app_restart):
     import copy
     r, restart = app_restart

@@ -44,3 +44,5 @@ scripts/export_account_site.py
 
 # Local-only helper workspace.
 private-workspace/
+
+config/emulator-local/
