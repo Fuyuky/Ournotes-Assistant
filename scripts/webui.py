@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 import threading
 import time
@@ -42,7 +43,7 @@ def main():
     from ournotes.paths import DATA_ROOT
     with SecretStore(DATA_ROOT / 'state').lock('client'):
         console_logs(DATA_ROOT).prepare()
-        if sys.stdout is None or sys.stderr is None:
+        if sys.stdout is None or sys.stderr is None or os.environ.get('OURNOTES_INSTALL_ROOT'):
             from ournotes.paths import DATA_ROOT
             folder = DATA_ROOT / "state/webui"
             folder.mkdir(parents=True, exist_ok=True)

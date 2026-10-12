@@ -43,6 +43,9 @@ def install(install_root, data_root, package, envelope, public_key, lock_factory
     root, data = Path(install_root).resolve(), Path(data_root).resolve()
     package = Path(package).resolve()
     manifest = verify(envelope, public_key, platform)
+    if manifest['schema'] == 3:
+        from ournotes.updates.portable import install_portable
+        return install_portable(root, data, package, envelope, public_key, lock_factory, platform)
     if package.stat().st_size != manifest["artifact"]["bytes"] or file_hash(package) != manifest["artifact"]["sha256"]:
         raise ValueError("发布包大小或SHA256校验失败。")
     versions = root / "versions"

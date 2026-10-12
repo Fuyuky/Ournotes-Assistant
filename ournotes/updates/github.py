@@ -51,3 +51,14 @@ class GitHubReleases:
         if type(identifier) is not int or identifier <= 0:
             raise ValueError("发布资产ID无效。")
         return self._request(f"/repos/{self.repository}/releases/assets/{identifier}", "application/octet-stream")
+
+    def package(self, version, name):
+        from ournotes.updates.manifest import version_tuple
+        version_tuple(version)
+        if name not in (f'ournotes-{version}-windows-x64.zip', f'ournotes-{version}-macos-arm64.zip'):
+            raise ValueError('发行包名称无效。')
+        url = f'https://github.com/{self.repository}/releases/download/v{version}/{name}'
+        headers = {'User-Agent': 'OurNotes-Updater'}
+        if self.transport:
+            return self.transport(url, headers)
+        return self.opener.open(urllib.request.Request(url, headers=headers), timeout=60)

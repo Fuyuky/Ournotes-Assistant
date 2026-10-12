@@ -20,10 +20,4 @@ if [[ ! -x "$python_path" || ! -f "$program_root/scripts/webui.py" ]]; then
   printf '%s\n' '当前版本缺少可执行的 Python 运行时或控制台入口。' >&2
   exit 1
 fi
-if [[ -f "$install_root/client-connection.json" ]]; then
-  "$python_path" -X utf8 "$install_root/configure_client.py"
-fi
-mkdir -p "$OURNOTES_DATA_ROOT/state/webui"
-cd -- "$program_root"
-nohup "$python_path" -X utf8 "$program_root/scripts/webui.py" \
-  >> "$OURNOTES_DATA_ROOT/state/webui/boot.log" 2>&1 < /dev/null &
+"$python_path" -X utf8 "$install_root/boot_client.py"

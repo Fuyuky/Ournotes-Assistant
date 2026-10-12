@@ -22,6 +22,7 @@
 | 共用代理 | `ournotes/proxy`，平台传输 `platforms/proxy.py` |
 | 素材 | `catalogs/runtime.py`、`catalogs/masterdata.py`、`catalogs/site.py`；`data/catalog` |
 | 更新与构建 | `updates/`、`scripts/build_release.py`、`deploy/client` |
+| 便携启动检查与 MuMu 路径 | `deploy/client/boot_client.py` 等待就绪并提示失败；`platforms/mumu_config.py` 检测安装、保存至数据根 `config/mumu.json` |
 | 历史数据核对迁移 | `python -m ournotes.maintenance.cloud_storage`，默认只读；显式 `--apply` |
 | 离线诊断与证据复核 | `devtools`，不进入发行包 |
 | 本机私有辅助目录 | `private-workspace/gmail-authorization` 为独立授权工具，`private-workspace/public-source` 为独立公开 checkout；整体忽略，不进入发行包 |
@@ -40,7 +41,7 @@ Fuyuki可增删管理员，无注册。所有管理员均可操作全部完整�
 
 手动邮件只面向完整账号，默认十分钟、可选二十四小时，每种用途只显示最新邮件和北京时间收件时间。服务器验证最新十分钟链接后执行，独立幂等回执；读取不执行，不消费自动收码票据。手工与自动不互查，标记已使用独立。Gmail授权只由项目外私有本机工具配合服务器维护凭据操作，网站只看健康。
 
-统一发行无业务variant，平台分Windows x64和macOS Apple Silicon。公开仓库Fuyuky/Ournotes-Assistant匿名检查稳定Release，固定公钥验证签名及平台，不自动安装。Mac适配代码和构建不等于Mac MuMu实机执行验收。
+统一发行无业务variant，平台分Windows x64和macOS Apple Silicon。GitHub Actions 分平台构建；每个平台一个完整 ZIP，初装与更新共用，签名清单内置，Release 不另发更新或校验附件。公开仓库Fuyuky/Ournotes-Assistant匿名检查稳定Release，固定公钥验证签名及平台，不自动安装。Mac适配代码和构建不等于Mac MuMu实机执行验收。
 
 ## 恢复和维护
 

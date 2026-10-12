@@ -21,6 +21,10 @@ from ournotes.platforms.system import SUPPORTED_PLATFORMS, current_platform
 from ournotes.updates.manifest import canonical, file_hash, verify, version_tuple
 
 PYTHON_VERSION = "3.12.10"
+RUNTIME_SHA256 = {
+    'windows-x64': '4acbed6dd1c744b0376e3b1cf57ce906f9dc9e95e68824584c8099a63025a3c3',
+    'macos-arm64': '2579c9ffcbb0a745f1de3d645612c7466269eb9a23316a54ece49d50c1c9122f',
+}
 RUNTIMES = {
     "windows-x64": (f"python-{PYTHON_VERSION}-embed-amd64.zip",
                     f"https://www.python.org/ftp/python/{PYTHON_VERSION}/python-{PYTHON_VERSION}-embed-amd64.zip"),
@@ -31,8 +35,8 @@ SCRIPT_NAMES = {"webui.py", "maintain_storage.py"}
 LOGIN_HISTORY_ASSETS = ("expand.png", "remove.png")
 CLIENT_PACKAGES = {"accounts", "catalogs", "common", "control", "integrations", "platforms",
                    "proxy", "rebind", "reports", "runtime", "ui", "updates", "vision"}
-BOOT_FILES = {"windows-x64": ("AGENTS.md", "启动控制台.cmd", "boot.ps1", "configure_client.py"),
-              "macos-arm64": ("AGENTS.md", "启动控制台.command", "boot.command", "configure_client.py")}
+BOOT_FILES = {"windows-x64": ("AGENTS.md", "启动控制台.cmd", "boot.ps1", "boot_client.py", "configure_client.py"),
+              "macos-arm64": ("AGENTS.md", "启动控制台.command", "boot.command", "boot_client.py", "configure_client.py")}
 
 
 def native_imports(path):
@@ -197,7 +201,9 @@ def extract_runtime(source, destination, platform):
 
 def stage_resources(destination):
     """Ship one current runtime snapshot, never the web/raw catalog or old history."""
-    source = ROOT / "data/catalog"
+    source = ROOT / "assets/runtime-catalog"
+    if not source.is_dir():
+        source = ROOT / "data/catalog"
     pointer = json.loads((source / "current.json").read_text("utf-8"))
     name = pointer["directory"]
     if not isinstance(name, str):
@@ -252,8 +258,6 @@ def pack_tree(folder, target, executables=()):
                 with path.open('rb') as source, archive.open(info, 'w') as output:
                     shutil.copyfileobj(source, output)
                 files[name] = file_hash(path)
-            elif path.is_dir() and not any(path.iterdir()):
-                archive.write(path, path.relative_to(folder).as_posix() + "/")
     return files
 
 
@@ -309,44 +313,34 @@ def build(output, version, runtime_zip, signing_key, *, install_dependencies=Tru
         site.mkdir(parents=True, exist_ok=True)
         (site / "sitecustomize.py").write_text("import os\nfrom pathlib import Path\n_dlls = []\nif os.name == 'nt':\n    for p in [Path(__file__).parent / 'pywin32_system32']:\n        if p.is_dir(): _dlls.append(os.add_dll_directory(str(p)))\n", "utf-8")
         trim_runtime(runtime)
-        artifact = output / f"ournotes-update-{version}-{platform}.zip"
-        files = pack_tree(stage, artifact, executables)
-        manifest = {"schema": 2, "product": "ournotes-assistant", "version": version, "channel": "stable",
-                    "platform": platform, "python": PYTHON_VERSION,
-                    "artifact": {"name": artifact.name, "bytes": artifact.stat().st_size, "sha256": file_hash(artifact)},
-                    "files": files, "executables": sorted(executables.intersection(files))}
-        envelope = {"manifest": manifest, "signature": base64.b64encode(key.sign(canonical(manifest))).decode()}
-        manifest_path = output / f"ournotes-manifest-{platform}.json"
-        manifest_path.write_text(json.dumps(envelope, ensure_ascii=False, indent=2), "utf-8")
         public = base64.b64encode(key.public_key().public_bytes(serialization.Encoding.Raw, serialization.PublicFormat.Raw)).decode()
-        verify(envelope, public, platform)
-        workspaces = [stage]
-        artifacts = [artifact]
         initial = output / ("client-" + platform + "-" + version)
         initial.mkdir()
         owned_workspaces.append(initial)
         shutil.copytree(stage, initial / "versions" / version)
-        # Explicit boot-file list prevents private connection seeds or loose tools from leaking.
         for name in BOOT_FILES[platform]:
             shutil.copy2(ROOT / 'deploy/client' / name, initial / name)
+        shutil.copy2(ROOT / 'deploy/client/README.txt', initial / 'README.txt')
         (initial / "current.json").write_text(json.dumps({"version": version, "platform": platform}), "utf-8")
         (initial / "update-public-key.txt").write_text(public, "utf-8")
-        (initial / "user-data/results/archive/accounts").mkdir(parents=True)
-        if initial_resources:
-            stage_resources(initial)
-        client_archive = output / f"ournotes-client-{version}-{platform}.zip"
-        pack_tree(initial, client_archive, {f'versions/{version}/' + name for name in executables})
-        artifacts.append(client_archive)
-        workspaces.append(initial)
-        if not keep_staging:
-            for package in artifacts:
-                with zipfile.ZipFile(package) as archive:
-                    if archive.testzip() is not None:
-                        raise ValueError('构建包校验失败，保留中间目录。')
-            for folder in workspaces:
-                remove_build_workspace(output, folder)
-        return {"artifact": str(artifact), "client": str(client_archive), "manifest": str(manifest_path),
-                "public_key": public, "platform": platform}
+        if not initial_resources:
+            raise ValueError('统一免安装包必须包含运行素材。')
+        stage_resources(initial)
+        artifact = output / f"ournotes-{version}-{platform}.zip"
+        executable_files = {f'versions/{version}/' + name for name in executables}
+        files = {path.relative_to(initial).as_posix(): file_hash(path)
+                 for path in sorted(initial.rglob('*')) if path.is_file()}
+        manifest = {"schema": 3, "product": "ournotes-assistant", "version": version, "channel": "stable",
+                    "platform": platform, "python": PYTHON_VERSION,
+                    "artifact": {"name": artifact.name}, "files": files,
+                    "executables": sorted(executable_files.intersection(files))}
+        envelope = {"manifest": manifest, "signature": base64.b64encode(key.sign(canonical(manifest))).decode()}
+        verify(envelope, public, platform)
+        (initial / 'release.json').write_text(json.dumps(envelope, ensure_ascii=False), 'utf-8')
+        pack_tree(initial, artifact, executable_files)
+        from ournotes.updates.portable import validate_package
+        validate_package(artifact, public, platform)
+        return {"artifact": str(artifact), "platform": platform}
     finally:
         if not keep_staging:
             for folder in owned_workspaces:
@@ -377,6 +371,8 @@ def main():
             stream.write(key.private_bytes(serialization.Encoding.PEM, serialization.PrivateFormat.PKCS8, serialization.NoEncryption()))
     runtime = args.runtime
     if args.download_runtime:
+        if args.runtime_sha256 is None:
+            args.runtime_sha256 = RUNTIME_SHA256[args.platform]
         runtime_name, url = RUNTIMES[args.platform]
         runtime = args.output / "cache" / runtime_name
         runtime.parent.mkdir(parents=True, exist_ok=True)

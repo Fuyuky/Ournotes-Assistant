@@ -17,7 +17,7 @@ from PIL import Image
 
 from ournotes.platforms.system import current_platform, default_mumu_root
 
-DEFAULT_ROOT = default_mumu_root()
+DEFAULT_ROOT = None
 GAME_PACKAGE = 'com.bilibili.sirius.official'
 
 
@@ -32,6 +32,7 @@ def _control(instance, *args, root=DEFAULT_ROOT, timeout=40):
 
 
 def launch_instance(instance, root=DEFAULT_ROOT):
+    root = Path(root) if root is not None else default_mumu_root()
     if type(instance) is not int or instance < 0:
         raise ValueError('MuMu实例编号无效。')
     if sys.platform == 'darwin':
@@ -43,6 +44,7 @@ def launch_instance(instance, root=DEFAULT_ROOT):
 
 
 def app_info(instance, package=GAME_PACKAGE, root=DEFAULT_ROOT):
+    root = Path(root) if root is not None else default_mumu_root()
     if not re.fullmatch(r'[A-Za-z0-9_.]+', package):
         raise ValueError('应用包名无效。')
     if sys.platform == 'darwin':
@@ -61,6 +63,7 @@ def app_info(instance, package=GAME_PACKAGE, root=DEFAULT_ROOT):
 
 
 def close_app(instance, package=GAME_PACKAGE, root=DEFAULT_ROOT):
+    root = Path(root) if root is not None else default_mumu_root()
     if not re.fullmatch(r'[A-Za-z0-9_.]+', package):
         raise ValueError('应用包名无效。')
     if sys.platform == 'darwin':
@@ -70,6 +73,7 @@ def close_app(instance, package=GAME_PACKAGE, root=DEFAULT_ROOT):
 
 
 def install_apk(instance, path, root=DEFAULT_ROOT):
+    root = Path(root) if root is not None else default_mumu_root()
     path = Path(path).resolve()
     if not path.is_file() or path.suffix.lower() != '.apk':
         raise ValueError('APK路径无效。')
@@ -98,6 +102,7 @@ class Device(Protocol):
 
 
 def instance_info(root: Path = DEFAULT_ROOT, instance: int = 0) -> dict:
+    root = Path(root) if root is not None else default_mumu_root()
     if sys.platform == 'darwin':
         from ournotes.platforms.mumu_macos import instance_info as mac_info
         return mac_info(root, instance)
@@ -112,6 +117,7 @@ def instance_info(root: Path = DEFAULT_ROOT, instance: int = 0) -> dict:
 
 def ensure_game(instance, stop, root=DEFAULT_ROOT, timeout=120):
     """CLI starts the emulator/app; readiness is polled, never assumed after a delay."""
+    root = Path(root) if root is not None else default_mumu_root()
     if sys.platform == 'darwin':
         from ournotes.platforms.mumu_macos import ensure_game as mac_ensure
         return mac_ensure(instance, stop, root, timeout)
@@ -162,6 +168,7 @@ def ensure_game(instance, stop, root=DEFAULT_ROOT, timeout=120):
 
 def restart_game(instance, stop, root=DEFAULT_ROOT, timeout=45):
     """Restart only Our Notes inside an already running Android instance."""
+    root = Path(root) if root is not None else default_mumu_root()
     if sys.platform == 'darwin':
         from ournotes.platforms.mumu_macos import restart_game as mac_restart
         return mac_restart(instance, stop, root, timeout)
@@ -200,6 +207,7 @@ def restart_game(instance, stop, root=DEFAULT_ROOT, timeout=45):
 
 def shutdown_instances(instances, root=DEFAULT_ROOT, timeout=45):
     """Close only devices controlled by this run, while it still holds their leases."""
+    root = Path(root) if root is not None else default_mumu_root()
     instances = list(instances)
     if any(type(instance) is not int or instance < 0 for instance in instances):
         raise ValueError('关机必须指定有效实例编号。')
@@ -264,6 +272,7 @@ class MuMuSdk:
     """
 
     def __new__(cls, root=DEFAULT_ROOT, instance=0, package='default'):
+        root = Path(root) if root is not None else default_mumu_root()
         if cls is MuMuSdk and sys.platform == 'darwin':
             current_platform()  # Reject Intel Mac rather than silently using Rosetta.
             from ournotes.platforms.mumu_macos import MacAdbDevice
@@ -271,6 +280,7 @@ class MuMuSdk:
         return super().__new__(cls)
 
     def __init__(self, root: Path = DEFAULT_ROOT, instance: int = 0, package: str = "default"):
+        root = Path(root) if root is not None else default_mumu_root()
         if os.name != "nt" or C.sizeof(C.c_void_p) != 8:
             raise RuntimeError("MuMu SDK 需要 Windows 和 64 位 Python。")
         if not instance_info(root, instance).get("is_android_started"):

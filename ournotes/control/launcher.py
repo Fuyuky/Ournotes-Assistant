@@ -354,13 +354,13 @@ class Launcher:
                     lane['recovery'][mode] = {'enabled': False, 'reason': reason}
         return runtime
 
-    @staticmethod
-    def mumu_available():
-        from ournotes.platforms.system import current_platform, default_mumu_root
-        directory = default_mumu_root()
-        if current_platform().startswith('windows'):
-            return (directory / 'nx_main/sdk/external_renderer_ipc.dll').is_file()
-        return directory.exists()
+    def mumu_available(self):
+        from ournotes.platforms.mumu_config import selected, valid
+        try:
+            directory = selected(self.root)
+            return bool(directory and valid(directory))
+        except (OSError, ValueError):
+            return False
 
     def catalog_available(self):
         from ournotes.catalogs.runtime import current_catalog

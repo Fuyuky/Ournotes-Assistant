@@ -47,6 +47,9 @@ def _worker(pipe, root, instance):
 
 class DeviceClient:
     def __init__(self, instance=0, root=DEFAULT_ROOT, timeout=8):
+        if root is None:
+            from ournotes.platforms.system import default_mumu_root
+            root = default_mumu_root()
         self.timeout = timeout
         self.lock = threading.Lock()
         context = mp.get_context("spawn")

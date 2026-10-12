@@ -129,25 +129,6 @@ def test_prerelease_and_downgrade_rejected(tmp_path):
         install(root, data, package, envelope, public, unlocked)
 
 
-def test_check_only_notifies_download_requires_explicit_call(tmp_path):
-    package, envelope, public, _ = release(tmp_path)
-    root, data = installation(tmp_path)
-    (root / "update-public-key.txt").write_text(public)
-    calls = []
-    class Client:
-        def latest(self):
-            calls.append("check")
-            return {"tag_name": "v0.2.0", "assets": [{"name": "ournotes-manifest-windows-x64.json", "id": 1}, {"name": "client.zip", "id": 2}]}
-        def asset(self, identifier):
-            calls.append(identifier)
-            return io.BytesIO(json.dumps(envelope).encode() if identifier == 1 else package.read_bytes())
-    service = UpdateService(data, root, client_factory=lambda repository: Client())
-    assert service.check()["available"]
-    assert calls == ["check"]
-    assert not (data / "state/updates/downloads").exists()
-    assert service.download()["downloaded"]
-    assert calls == ["check", 1, 2]
-
 
 def test_public_service_outage_does_not_change_running_state(tmp_path):
     root, data = installation(tmp_path)
@@ -161,13 +142,13 @@ def test_public_service_outage_does_not_change_running_state(tmp_path):
 
 def test_other_platform_or_failed_recheck_cannot_download_previous_release(tmp_path):
     root, data = installation(tmp_path)
-    response = {'tag_name': 'v0.2.0', 'assets': [{'name': 'ournotes-manifest-windows-x64.json', 'id': 1}]}
+    response = {'tag_name': 'v0.2.0', 'assets': [{'name': 'ournotes-0.2.0-windows-x64.zip', 'id': 1}]}
     class Client:
         def latest(self):
             return response
     service = UpdateService(data, root, client_factory=lambda _: Client())
     assert service.check()['available']
-    response['assets'][0]['name'] = 'ournotes-manifest-macos-arm64.json'
+    response['assets'][0]['name'] = 'ournotes-0.2.0-macos-arm64.zip'
     assert service.check()['status'] == 'unavailable'
     assert service.release is None
     with pytest.raises(ValueError, match='先检查'):

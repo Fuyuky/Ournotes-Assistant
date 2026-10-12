@@ -8,6 +8,26 @@ import sqlite3
 import pytest
 
 
+def test_mumu_directory_settings_are_guarded(setup, monkeypatch):
+    client, _, root, _, _ = setup
+    from ournotes.platforms import mumu_config
+    from ournotes.common.secrets import SecretStore
+    monkeypatch.setattr(mumu_config, 'valid', lambda path: path.is_dir())
+    folder = root / 'MuMu with spaces'
+    folder.mkdir()
+    request = {'root': str(folder)}
+    assert client.post('/api/launcher/mumu-settings', json=request,
+                       headers={'x-launcher-token': 'wrong'}).status_code == 403
+    launcher = client.app.state.launcher
+    monkeypatch.setattr(launcher, 'running', lambda: False)
+    assert client.post('/api/launcher/mumu-settings', json=request).status_code == 200
+    assert json.loads((root / 'config/mumu.json').read_text('utf-8'))['root'] == str(folder)
+    with SecretStore(root / 'state').lock('email-rebind'):
+        assert client.post('/api/launcher/mumu-settings', json=request).status_code == 409
+    monkeypatch.setattr(launcher, 'running', lambda: True)
+    assert client.post('/api/launcher/mumu-settings', json=request).status_code == 409
+
+
 def test_manual_update_and_notification_routes(setup, monkeypatch):
     client, _, _, _, _ = setup
     launcher = client.app.state.launcher

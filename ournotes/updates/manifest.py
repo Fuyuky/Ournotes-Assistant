@@ -23,7 +23,7 @@ def version_tuple(value):
     return tuple(int(part) for part in value.split("."))
 
 
-def safe_member(name):
+def safe_member(name, version=None):
     if not isinstance(name, str):
         raise TypeError("发布包路径必须是文本。")
     path = PurePosixPath(name)
@@ -33,6 +33,24 @@ def safe_member(name):
            {'CON', 'PRN', 'AUX', 'NUL', *(f'COM{i}' for i in range(1, 10)), *(f'LPT{i}' for i in range(1, 10))}
            for part in path.parts):
         raise ValueError("发布包包含平台保留或有歧义的路径。")
+    if version is not None:
+        if len(path.parts) == 1 and name in (
+            'current.json', 'update-public-key.txt', 'AGENTS.md', 'README.txt',
+            '启动控制台.cmd', 'boot.ps1', 'boot_client.py', 'configure_client.py',
+            '启动控制台.command', 'boot.command',
+        ):
+            return path
+        if path.parts[:3] == ('user-data', 'data', 'catalog'):
+            if path.parts[3:] == ('current.json',) or (
+                len(path.parts) >= 6 and path.parts[3] == 'snapshots'
+                and re.fullmatch(r'[a-f0-9]{32,64}', path.parts[4])
+            ):
+                return path
+            raise ValueError('发布包素材路径无效。')
+        if path.parts[:2] != ('versions', version):
+            raise ValueError('发布包不能覆盖用户配置、状态或其他版本。')
+        safe_member('/'.join(path.parts[2:]))
+        return path
     if path.parts[0] not in ("app", "runtime"):
         raise ValueError("发布包不能覆盖用户数据或固定素材。")
     if (len(path.parts) > 1 and path.parts[0] == "app"
@@ -60,7 +78,7 @@ def verify(envelope, public_key, expected_platform=None):
         key.verify(base64.b64decode(envelope["signature"], validate=True), canonical(manifest))
     except (ValueError, InvalidSignature) as error:
         raise ValueError("发布清单签名验证失败。") from error
-    if (manifest.get("schema") != 2 or manifest.get("channel") != "stable"
+    if (manifest.get("schema") not in (2, 3) or manifest.get("channel") != "stable"
             or manifest.get("product") != "ournotes-assistant" or "variant" in manifest):
         raise ValueError("只接收统一客户端的稳定更新。")
     target = manifest.get("platform")
@@ -68,17 +86,21 @@ def verify(envelope, public_key, expected_platform=None):
         raise ValueError("更新包平台与当前客户端不一致。")
     version_tuple(manifest["version"])
     artifact = manifest.get("artifact", {})
-    if not isinstance(artifact, dict) or not {'name', 'sha256', 'bytes'} <= artifact.keys():
+    portable = manifest['schema'] == 3
+    required = {'name'} if portable else {'name', 'sha256', 'bytes'}
+    if not isinstance(artifact, dict) or not required <= artifact.keys():
         raise ValueError("发布包身份不完整。")
-    if not re.fullmatch(r"[A-Za-z0-9_.-]+\.zip", artifact["name"]) or not re.fullmatch(r"[a-f0-9]{64}", artifact["sha256"]):
+    if not re.fullmatch(r"[A-Za-z0-9_.-]+\.zip", artifact["name"]) or (
+        not portable and not re.fullmatch(r"[a-f0-9]{64}", artifact["sha256"])
+    ):
         raise ValueError("发布包身份无效。")
-    if type(artifact["bytes"]) is not int or artifact["bytes"] <= 0:
+    if not portable and (type(artifact["bytes"]) is not int or artifact["bytes"] <= 0):
         raise ValueError("发布包大小无效。")
     files = manifest.get("files")
     if not isinstance(files, dict) or not files:
         raise ValueError("发布清单缺少文件。")
     for name, digest in files.items():
-        safe_member(name)
+        safe_member(name, manifest['version'] if portable else None)
         if not isinstance(digest, str) or not re.fullmatch(r"[a-f0-9]{64}", digest):
             raise ValueError("文件摘要无效。")
     if len({name.casefold() for name in manifest["files"]}) != len(manifest["files"]):

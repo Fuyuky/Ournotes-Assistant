@@ -1,7 +1,6 @@
 """Check on startup; download only after an explicit user command."""
 from __future__ import annotations
 
-import hashlib
 import json
 import os
 import subprocess
@@ -12,7 +11,7 @@ from pathlib import Path
 from ournotes.platforms.system import current_platform
 from ournotes.updates.github import PUBLIC_REPOSITORY, GitHubReleases
 from ournotes.updates.installer import atomic_json
-from ournotes.updates.manifest import verify, version_tuple
+from ournotes.updates.manifest import version_tuple
 
 
 class UpdateService:
@@ -43,9 +42,9 @@ class UpdateService:
                 version = release["tag_name"].removeprefix("v")
                 current = json.loads((self.install_root / "current.json").read_text("utf-8"))["version"]
                 available = version_tuple(version) > version_tuple(current)
-                if available and not any(asset.get('name') == f'ournotes-manifest-{self.platform}.json'
+                if available and not any(asset.get('name') == f'ournotes-{version}-{self.platform}.zip'
                                          for asset in release['assets']):
-                    raise ValueError('稳定发行版尚无当前平台的签名清单。')
+                    raise ValueError('稳定发行版尚无当前平台的完整 ZIP。')
                 self.release = release if available else None
                 self.state = {"status": "available" if available else "up_to_date", "available": available,
                               "version": version, "downloaded": False, "repository": PUBLIC_REPOSITORY,
@@ -62,44 +61,33 @@ class UpdateService:
                 raise ValueError("请先检查可用的稳定更新。")
             client = self.client_factory(PUBLIC_REPOSITORY)
             assets = {asset["name"]: asset for asset in self.release["assets"]}
-            manifest_asset = assets.get(f"ournotes-manifest-{self.platform}.json")
-            if not manifest_asset:
-                raise ValueError("发行版缺少签名清单。")
-            with client.asset(manifest_asset["id"]) as response:
-                raw = response.read(2 * 1024 * 1024 + 1)
-            if len(raw) > 2 * 1024 * 1024:
-                raise ValueError("发行版清单过大。")
-            try:
-                envelope = json.loads(raw)
-            except (ValueError, UnicodeError) as error:
-                raise ValueError('发行版清单不是有效的JSON。') from error
-            public_key = (self.install_root / "update-public-key.txt").read_text("utf-8").strip()
-            try:
-                manifest = verify(envelope, public_key, self.platform)
-            except (TypeError, KeyError) as error:
-                raise ValueError('发行版清单格式无效。') from error
-            if manifest["version"] != self.release["tag_name"].removeprefix("v"):
-                raise ValueError("签名版本与发行版不一致。")
-            asset = assets.get(manifest["artifact"]["name"])
-            if not asset:
-                raise ValueError("发行版缺少发布包。")
-            folder = self.data_root / "state/updates/downloads" / manifest["version"]
+            version = self.release['tag_name'].removeprefix('v')
+            name = f'ournotes-{version}-{self.platform}.zip'
+            asset = assets.get(name)
+            if not asset or type(asset.get('size')) is not int or not 0 < asset['size'] <= 2 * 1024**3:
+                raise ValueError('发行版缺少完整 ZIP 或大小无效。')
+            folder = self.data_root / 'state/updates/downloads' / version
             folder.mkdir(parents=True, exist_ok=True)
-            target = folder / manifest["artifact"]["name"]
-            temporary = target.with_suffix(".partial")
-            digest, size = hashlib.sha256(), 0
+            target = folder / name
+            temporary = target.with_suffix('.partial')
+            size = 0
             try:
-                with client.asset(asset["id"]) as response, temporary.open("wb") as output:
+                with client.package(version, name) as response, temporary.open('wb') as output:
                     while chunk := response.read(1024 * 1024):
                         size += len(chunk)
-                        if size > manifest["artifact"]["bytes"]:
-                            raise ValueError("下载超过签名包大小。")
-                        digest.update(chunk)
+                        if size > asset['size']:
+                            raise ValueError('下载超过发行包大小。')
                         output.write(chunk)
-                if size != manifest["artifact"]["bytes"] or digest.hexdigest() != manifest["artifact"]["sha256"]:
-                    raise ValueError("下载包摘要验证失败。")
+                if size != asset['size']:
+                    raise ValueError('发行包下载不完整。')
+                from ournotes.updates.portable import validate_package
+                public_key = (self.install_root / 'update-public-key.txt').read_text('utf-8').strip()
+                envelope = validate_package(temporary, public_key, self.platform)
+                manifest = envelope['manifest']
+                if manifest['version'] != version or manifest['artifact']['name'] != name:
+                    raise ValueError('签名版本与发行版不一致。')
                 os.replace(temporary, target)
-                atomic_json(folder / "manifest.json", envelope)
+                atomic_json(folder / 'manifest.json', envelope)
             finally:
                 temporary.unlink(missing_ok=True)
             self.state.update(status="downloaded", downloaded=True, package=str(target), manifest=str(folder / "manifest.json"))

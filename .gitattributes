@@ -2,3 +2,9 @@
 *.py text eol=lf
 *.md text eol=lf
 *.toml text eol=lf
+
+*.command text eol=lf
+
+*.yml text eol=lf
+
+assets/runtime-catalog/** -text

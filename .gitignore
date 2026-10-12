@@ -30,6 +30,7 @@ assets/reference/
 .scratch/
 tmp/
 config/client.json
+config/mumu.json
 config/mail-rule.local.json
 # External emulator machine identity, not application defaults.
 configs/

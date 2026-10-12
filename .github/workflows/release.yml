@@ -1,0 +1,94 @@
+name: Portable release
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Stable version
+        default: '0.1.0'
+        required: true
+        type: string
+      publish:
+        description: Publish both verified ZIP files
+        default: false
+        type: boolean
+permissions:
+  contents: read
+concurrency:
+  group: portable-release
+  cancel-in-progress: false
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-2022
+            platform: windows-x64
+          - os: macos-15
+            platform: macos-arm64
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12.10'
+      - name: Install build tools and locked dependencies
+        run: |
+          python -m pip install uv==0.9.9
+          uv sync --locked --group client --group dev
+      - name: Test packaging and updater
+        run: uv run python -m pytest tests/test_release.py tests/test_updates.py tests/test_portable_release.py tests/test_client_bootstrap.py tests/test_platforms.py tests/test_mumu_config.py -q
+      - name: Build signed portable ZIP
+        shell: pwsh
+        env:
+          RELEASE_SIGNING_KEY: ${{ secrets.RELEASE_SIGNING_KEY }}
+          RELEASE_VERSION: ${{ inputs.version }}
+          RELEASE_PLATFORM: ${{ matrix.platform }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          if ($env:RELEASE_VERSION -notmatch '^\d+\.\d+\.\d+$') { throw 'Invalid version' }
+          if (-not $env:RELEASE_SIGNING_KEY) { throw 'Missing signing secret' }
+          $keyPath = Join-Path $env:RUNNER_TEMP 'ournotes-release.pem'
+          [IO.File]::WriteAllText($keyPath, $env:RELEASE_SIGNING_KEY)
+          try {
+            uv run python scripts/build_release.py --version $env:RELEASE_VERSION --platform $env:RELEASE_PLATFORM --output dist --download-runtime --signing-key $keyPath
+            if ($LASTEXITCODE -ne 0) { throw 'Build failed' }
+          } finally { Remove-Item -LiteralPath $keyPath -ErrorAction SilentlyContinue }
+      - name: Verify bundled runtime and WebUI
+        shell: pwsh
+        env:
+          RELEASE_VERSION: ${{ inputs.version }}
+          RELEASE_PLATFORM: ${{ matrix.platform }}
+        run: |
+          uv run python scripts/verify_release.py --package "dist/ournotes-$env:RELEASE_VERSION-$env:RELEASE_PLATFORM.zip" --public-key deploy/client/update-public-key.txt --platform $env:RELEASE_PLATFORM
+          if ($LASTEXITCODE -ne 0) { throw 'Portable runtime verification failed' }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.platform }}
+          path: dist/*.zip
+          if-no-files-found: error
+          retention-days: 7
+          compression-level: 0
+  publish:
+    if: inputs.publish
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/download-artifact@v4
+        with:
+          path: release-assets
+          merge-multiple: true
+      - name: Publish only the two platform ZIP files
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_VERSION: ${{ inputs.version }}
+        run: |
+          set -euo pipefail
+          test "$(find release-assets -type f | wc -l)" -eq 2
+          test -f "release-assets/ournotes-${RELEASE_VERSION}-windows-x64.zip"
+          test -f "release-assets/ournotes-${RELEASE_VERSION}-macos-arm64.zip"
+          gh release create "v${RELEASE_VERSION}" --draft --target "$GITHUB_SHA" --title "OurNotes Assistant ${RELEASE_VERSION}" --notes-file deploy/client/RELEASE_NOTES.md release-assets/*.zip
+          gh release edit "v${RELEASE_VERSION}" --draft=false --latest

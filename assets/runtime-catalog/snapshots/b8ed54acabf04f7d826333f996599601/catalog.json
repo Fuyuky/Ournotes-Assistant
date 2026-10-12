@@ -1,0 +1,2418 @@
+{
+  "schema_version": 1,
+  "retrieved_at": "2026-10-11T13:04:01.201015+00:00",
+  "source": "https://bdon.moe/",
+  "reference_commit": "14f6680152a6e7e5299047d87f832c682179df82",
+  "note": "一次性本地快照；成员和留影均包含R/SR/SSR；游戏美术版权归原权利人。",
+  "tables": [
+    {
+      "file": "raw/MasterMemberCard.json",
+      "url": "https://raw.githubusercontent.com/StarMoe-org/moenotes-masterdata/f33a44a51c8ce2b5dd122ad58824e4fc21e6fce2/hk-tw-mo/MasterMemberCard.json",
+      "sha256": "a9381d52af254bb62a7ca75df0b076964f3c1e687eb59782163dba96d5b8bb54"
+    },
+    {
+      "file": "raw/MasterSupportCard.json",
+      "url": "https://raw.githubusercontent.com/StarMoe-org/moenotes-masterdata/f33a44a51c8ce2b5dd122ad58824e4fc21e6fce2/hk-tw-mo/MasterSupportCard.json",
+      "sha256": "f1af094319e2b5b372dfb73a0dd169fa8329faaccedc1000f07d111ce2907373"
+    },
+    {
+      "file": "raw/MasterText.json",
+      "url": "https://raw.githubusercontent.com/StarMoe-org/moenotes-masterdata/f33a44a51c8ce2b5dd122ad58824e4fc21e6fce2/hk-tw-mo/MasterText.json",
+      "sha256": "7fd2ed7cffe05aa42394b930bba5a890da04db83d1b5d4c0c0a7b497e34451f1"
+    },
+    {
+      "file": "raw/MasterCharacter.json",
+      "url": "https://raw.githubusercontent.com/StarMoe-org/moenotes-masterdata/f33a44a51c8ce2b5dd122ad58824e4fc21e6fce2/hk-tw-mo/MasterCharacter.json",
+      "sha256": "21eee3f8521ae8719494250deb49fbc8fc29c1d47e6fd0635b0bc7e07d7cc323"
+    }
+  ],
+  "cards": [
+    {
+      "key": "member:1",
+      "id": 1,
+      "kind": "member",
+      "asset_id": 1,
+      "rarity": "R",
+      "title": "我们现在就在这里",
+      "name": "高松灯",
+      "display_name": "高松灯",
+      "image": "images/member-1.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/1/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/1",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "c76d9f38c4d4b0bcc6f516dba36a6e04573cbe9fb28ada642a087289642889e1"
+    },
+    {
+      "key": "member:2",
+      "id": 2,
+      "kind": "member",
+      "asset_id": 2,
+      "rarity": "R",
+      "title": "心情宛如C位☆",
+      "name": "千早爱音",
+      "display_name": "千早爱音",
+      "image": "images/member-2.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/2/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/2",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "b32e691b3e91d89fb876a95323c74c2dd7dde292872b9caddf36a7ae3eeb1ec7"
+    },
+    {
+      "key": "member:3",
+      "id": 3,
+      "kind": "member",
+      "asset_id": 3,
+      "rarity": "R",
+      "title": "归宿、我找到了",
+      "name": "要乐奈",
+      "display_name": "要乐奈",
+      "image": "images/member-3.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/3/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/3",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "8733e272b4a01f0ca25628e465b2372fd97124c780c08b9f7e5f68ae454aa0cd"
+    },
+    {
+      "key": "member:4",
+      "id": 4,
+      "kind": "member",
+      "asset_id": 4,
+      "rarity": "R",
+      "title": "指尖编织出的微风",
+      "name": "长崎爽世",
+      "display_name": "长崎爽世",
+      "image": "images/member-4.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/4/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/4",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "e0d8b4672de4b8075896564713115e289e8a50239c337c5f090553f7783dfbe9"
+    },
+    {
+      "key": "member:5",
+      "id": 5,
+      "kind": "member",
+      "asset_id": 5,
+      "rarity": "R",
+      "title": "不坦率的狼",
+      "name": "椎名立希",
+      "display_name": "椎名立希",
+      "image": "images/member-5.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/5/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/5",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "7fbb9ee8312ef9c7c5658d4c8722967e5ea5f45769f36e0bcc8620a5ef941113"
+    },
+    {
+      "key": "member:6",
+      "id": 6,
+      "kind": "member",
+      "asset_id": 6,
+      "rarity": "R",
+      "title": "将这首歌、送给你",
+      "name": "三角初华",
+      "display_name": "Doloris",
+      "image": "images/member-6.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/6/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/6",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "498b6a245f326b3b3928ccb3a5cec7b1ecf3c166da935fa5b26b1f9d383dac7c"
+    },
+    {
+      "key": "member:7",
+      "id": 7,
+      "kind": "member",
+      "asset_id": 7,
+      "rarity": "R",
+      "title": "常伴左右",
+      "name": "若叶睦",
+      "display_name": "Mortis",
+      "image": "images/member-7.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/7/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/7",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "cb2c2a6cff80a18600b4c4119d4d5a925ab472f482ae9bb13ac3e77bcfb0d861"
+    },
+    {
+      "key": "member:8",
+      "id": 8,
+      "kind": "member",
+      "asset_id": 8,
+      "rarity": "R",
+      "title": "准备万全",
+      "name": "八幡海铃",
+      "display_name": "Timoris",
+      "image": "images/member-8.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/8/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/8",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "051db38f71076b862f4cceb3d53279c912fa2d060ceea761817aa4b61442747c"
+    },
+    {
+      "key": "member:9",
+      "id": 9,
+      "kind": "member",
+      "asset_id": 9,
+      "rarity": "R",
+      "title": "以玩乐之心编排节拍",
+      "name": "祐天寺若麦",
+      "display_name": "Amoris",
+      "image": "images/member-9.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/9/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/9",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "dbcfa4660326b53198bdd3e138c01fde5cb421b654fd2833032b5eeb41db8a7c"
+    },
+    {
+      "key": "member:10",
+      "id": 10,
+      "kind": "member",
+      "asset_id": 10,
+      "rarity": "R",
+      "title": "琴键前的屈膝礼",
+      "name": "丰川祥子",
+      "display_name": "Oblivionis",
+      "image": "images/member-10.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/10/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/10",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "f95b093e6dde0117aceddfbe582c7e7b198bc9d14894a83e93da407747796d13"
+    },
+    {
+      "key": "member:11",
+      "id": 11,
+      "kind": "member",
+      "asset_id": 11,
+      "rarity": "R",
+      "title": "梦想即力量！",
+      "name": "仲町阿拉蕾",
+      "display_name": "仲町阿拉蕾",
+      "image": "images/member-11.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/11/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/11",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "a993abbd75a005c53e3dd96549931ab6a3572e4ce68183132787374f2eeaef87"
+    },
+    {
+      "key": "member:12",
+      "id": 12,
+      "kind": "member",
+      "asset_id": 12,
+      "rarity": "R",
+      "title": "小野乃驾到",
+      "name": "宫永野乃花",
+      "display_name": "宫永野乃花",
+      "image": "images/member-12.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/12/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/12",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "b90fa279222ce77f4831edbe7ca6c03fee0d4593a35bb199755755f3f6a11d12"
+    },
+    {
+      "key": "member:13",
+      "id": 13,
+      "kind": "member",
+      "asset_id": 13,
+      "rarity": "R",
+      "title": "小熊兜帽下的优等生",
+      "name": "峰月律",
+      "display_name": "峰月律",
+      "image": "images/member-13.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/13/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/13",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "599d1d5037685eeafaa3e77398e599ca81b1892774e475f9f9ff264ae53e63dd"
+    },
+    {
+      "key": "member:14",
+      "id": 14,
+      "kind": "member",
+      "asset_id": 14,
+      "rarity": "R",
+      "title": "和丸君一起",
+      "name": "藤都子",
+      "display_name": "藤都子",
+      "image": "images/member-14.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/14/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/14",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "832ad8b6e8b24b9d3cb656afb80c1a19cd56917820edb7d7ef6f6486727f5d77"
+    },
+    {
+      "key": "member:15",
+      "id": 15,
+      "kind": "member",
+      "asset_id": 15,
+      "rarity": "R",
+      "title": "引爆全场的少女",
+      "name": "千石由乃",
+      "display_name": "千石由乃",
+      "image": "images/member-15.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/15/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/15",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "2526e12e4ca9aeaf1acb5e3197030b1c607fb32d30b4216986218ac3344c7ecf"
+    },
+    {
+      "key": "member:16",
+      "id": 16,
+      "kind": "member",
+      "asset_id": 16,
+      "rarity": "R",
+      "title": "内心温柔的天才",
+      "name": "汐见萤",
+      "display_name": "汐见萤",
+      "image": "images/member-16.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/16/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/16",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "6e26eb6c219695d7df09d8c5b3344403af57866b7f9da8f07345c9399727252c"
+    },
+    {
+      "key": "member:17",
+      "id": 17,
+      "kind": "member",
+      "asset_id": 17,
+      "rarity": "R",
+      "title": "好战的吉他手",
+      "name": "伊泽枣",
+      "display_name": "伊泽枣",
+      "image": "images/member-17.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/17/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/17",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "1a0bc75f02af968dfd50692a75fe216867d9242c35f6544c01bb5b8458c89608"
+    },
+    {
+      "key": "member:18",
+      "id": 18,
+      "kind": "member",
+      "asset_id": 18,
+      "rarity": "R",
+      "title": "清冽凛然",
+      "name": "琴平凪",
+      "display_name": "琴平凪",
+      "image": "images/member-18.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/18/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/18",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "0659a8651c322b44b81369828711f800fb716676b2518239865dabc2a29173a8"
+    },
+    {
+      "key": "member:19",
+      "id": 19,
+      "kind": "member",
+      "asset_id": 19,
+      "rarity": "R",
+      "title": "将心意相连",
+      "name": "滨崎茉幌",
+      "display_name": "滨崎茉幌",
+      "image": "images/member-19.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/19/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/19",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "ceb21dfb82289ad8fdfa658d918b8512f45c525bb3709d28fb279171245c3de7"
+    },
+    {
+      "key": "member:20",
+      "id": 20,
+      "kind": "member",
+      "asset_id": 20,
+      "rarity": "R",
+      "title": "识才慧眼",
+      "name": "和泉朋花",
+      "display_name": "和泉朋花",
+      "image": "images/member-20.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/20/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/20",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "b252b5e6ab9e1c8728c18514f18fbf57cc7a9e4973edd7c63025dc84e7110d33"
+    },
+    {
+      "key": "member:21",
+      "id": 21,
+      "kind": "member",
+      "asset_id": 21,
+      "rarity": "R",
+      "title": "Family第一！",
+      "name": "须贺蕾叶",
+      "display_name": "须贺蕾叶",
+      "image": "images/member-21.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/21/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/21",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "59499c9a4b6cb0f7295c83b01e4f5aa7e6f418dc8ce89722d49b39ad2ee2e9fc"
+    },
+    {
+      "key": "member:22",
+      "id": 22,
+      "kind": "member",
+      "asset_id": 22,
+      "rarity": "R",
+      "title": "带着微笑的面具",
+      "name": "马桥心玖",
+      "display_name": "马桥心玖",
+      "image": "images/member-22.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/22/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/22",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "de0606d00bef30669ab647feb0b6fcd3204b415c0dee05ca0ff3df669b184220"
+    },
+    {
+      "key": "member:23",
+      "id": 23,
+      "kind": "member",
+      "asset_id": 23,
+      "rarity": "R",
+      "title": "怯生生的贝斯手",
+      "name": "矢仓蓬咲",
+      "display_name": "矢仓蓬咲",
+      "image": "images/member-23.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/23/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/23",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "e183f73b46955382ac828f1b9a4726b9b4bff887cde431260df4ff066cd255ac"
+    },
+    {
+      "key": "member:24",
+      "id": 24,
+      "kind": "member",
+      "asset_id": 24,
+      "rarity": "R",
+      "title": "千樱梨第一！",
+      "name": "梅里千樱梨",
+      "display_name": "梅里千樱梨",
+      "image": "images/member-24.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/24/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/24",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "49cadf4b9bc6cb29691e077a2a5607a799edfe4c11f52155e8a1b2534e1a0fad"
+    },
+    {
+      "key": "member:25",
+      "id": 25,
+      "kind": "member",
+      "asset_id": 25,
+      "rarity": "R",
+      "title": "探索世界的途中",
+      "name": "四宫宁月",
+      "display_name": "四宫宁月",
+      "image": "images/member-25.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/25/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/25",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "93719c61d9cce7d659afc1ead21403d9b8b36db427d460247ff15b9ca6c25d91"
+    },
+    {
+      "key": "member:26",
+      "id": 26,
+      "kind": "member",
+      "asset_id": 26,
+      "rarity": "SR",
+      "title": "想留下的诗歌，真诚地传达给你",
+      "name": "高松灯",
+      "display_name": "高松灯",
+      "image": "images/member-26.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/26/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/26",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "84cf1ceb1a76295fcc8c3986185327c82174a7abdbdfef3128652980ffd50f81"
+    },
+    {
+      "key": "member:27",
+      "id": 27,
+      "kind": "member",
+      "asset_id": 27,
+      "rarity": "SR",
+      "title": "闪耀舞台",
+      "name": "千早爱音",
+      "display_name": "千早爱音",
+      "image": "images/member-27.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/27/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/27",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "be2bb30cc59089aa67abf18a2000dbeca6b8233a926efd599c7c40ce060291c3"
+    },
+    {
+      "key": "member:28",
+      "id": 28,
+      "kind": "member",
+      "asset_id": 28,
+      "rarity": "SR",
+      "title": "有趣的声音",
+      "name": "要乐奈",
+      "display_name": "要乐奈",
+      "image": "images/member-28.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/28/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/28",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "e682d08c48b03c3bf6e6451893222a606173563a4bfdae58fbc715778572f1ff"
+    },
+    {
+      "key": "member:29",
+      "id": 29,
+      "kind": "member",
+      "asset_id": 29,
+      "rarity": "SR",
+      "title": "交映重叠的光彩",
+      "name": "长崎爽世",
+      "display_name": "长崎爽世",
+      "image": "images/member-29.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/29/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/29",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "c6337bce947b235f92188dcf1c09483289392cfaa1c727ba3b2fd6f1a7e1d3f2"
+    },
+    {
+      "key": "member:30",
+      "id": 30,
+      "kind": "member",
+      "asset_id": 30,
+      "rarity": "SR",
+      "title": "一心一意的律动",
+      "name": "椎名立希",
+      "display_name": "椎名立希",
+      "image": "images/member-30.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/30/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/30",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "29908cfc553b24fc629d1a96970e8e7d1e965d3d0cc29ae6a88dca2d6eb6d96f"
+    },
+    {
+      "key": "member:31",
+      "id": 31,
+      "kind": "member",
+      "asset_id": 31,
+      "rarity": "SR",
+      "title": "背负着谎言",
+      "name": "三角初华",
+      "display_name": "Doloris",
+      "image": "images/member-31.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/31/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/31",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "8f21fab577fc69f0c9b4d931ed6ad74ff97ebda5a7a4dcbd4e3464e67e1bed87"
+    },
+    {
+      "key": "member:32",
+      "id": 32,
+      "kind": "member",
+      "asset_id": 32,
+      "rarity": "SR",
+      "title": "静静演奏",
+      "name": "若叶睦",
+      "display_name": "Mortis",
+      "image": "images/member-32.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/32/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/32",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "8cf89091d333121ed2f0ea7087416e7f0eb2608375a89a37a0f34d40baf48a89"
+    },
+    {
+      "key": "member:33",
+      "id": 33,
+      "kind": "member",
+      "asset_id": 33,
+      "rarity": "SR",
+      "title": "磐石般的低音",
+      "name": "八幡海铃",
+      "display_name": "Timoris",
+      "image": "images/member-33.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/33/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/33",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "9aa05f66d517f4028714eb001bcafa9331af81ab862176e9a00c67f2e8f1b68a"
+    },
+    {
+      "key": "member:34",
+      "id": 34,
+      "kind": "member",
+      "asset_id": 34,
+      "rarity": "SR",
+      "title": "不屈的轰鸣节拍",
+      "name": "祐天寺若麦",
+      "display_name": "Amoris",
+      "image": "images/member-34.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/34/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/34",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "50c8b615f2c6890fb412fc05a300dc5714ecaa9caefa95b4c9c40a809f385c7d"
+    },
+    {
+      "key": "member:35",
+      "id": 35,
+      "kind": "member",
+      "asset_id": 35,
+      "rarity": "SR",
+      "title": "宣告福音的眼神",
+      "name": "丰川祥子",
+      "display_name": "Oblivionis",
+      "image": "images/member-35.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/35/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/35",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "4ca4c8bf5dfbc85f63ad6f746441713f4a8f946f023dbfb08f067156da96eec9"
+    },
+    {
+      "key": "member:36",
+      "id": 36,
+      "kind": "member",
+      "asset_id": 36,
+      "rarity": "SR",
+      "title": "想要传达这份喜欢！",
+      "name": "仲町阿拉蕾",
+      "display_name": "仲町阿拉蕾",
+      "image": "images/member-36.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/36/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/36",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "2be5d03dc75b1cc14a1345887032308d70aae150742d26bfdc142a4cb1dc7fe7"
+    },
+    {
+      "key": "member:37",
+      "id": 37,
+      "kind": "member",
+      "asset_id": 37,
+      "rarity": "SR",
+      "title": "一起欢笑吧～！",
+      "name": "宫永野乃花",
+      "display_name": "宫永野乃花",
+      "image": "images/member-37.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/37/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/37",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "bb7731c6c7532a2c2a2395583acb89c3a2fdb8ab7f3d6ca1209aabc0e4a38789"
+    },
+    {
+      "key": "member:38",
+      "id": 38,
+      "kind": "member",
+      "asset_id": 38,
+      "rarity": "SR",
+      "title": "让音乐无限延伸",
+      "name": "峰月律",
+      "display_name": "峰月律",
+      "image": "images/member-38.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/38/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/38",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "1d3b702c4e19ddc9802540eb1b0f6901b6b37b703a013e1661a71c69eac310c3"
+    },
+    {
+      "key": "member:39",
+      "id": 39,
+      "kind": "member",
+      "asset_id": 39,
+      "rarity": "SR",
+      "title": "描绘音色，微微一笑",
+      "name": "藤都子",
+      "display_name": "藤都子",
+      "image": "images/member-39.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/39/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/39",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "04ebe81665728a6fd93cd23b3c134f43303db5a5d91f1109df0316557f1a440d"
+    },
+    {
+      "key": "member:40",
+      "id": 40,
+      "kind": "member",
+      "asset_id": 40,
+      "rarity": "SR",
+      "title": "仰望天空的律动",
+      "name": "千石由乃",
+      "display_name": "千石由乃",
+      "image": "images/member-40.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/40/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/40",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "6b7623fe64291a0c9428a23f57912d7191a6b97a08bc8366b0b4562ac979b4d6"
+    },
+    {
+      "key": "member:41",
+      "id": 41,
+      "kind": "member",
+      "asset_id": 41,
+      "rarity": "SR",
+      "title": "指引人们迈向幸福的歌声",
+      "name": "汐见萤",
+      "display_name": "汐见萤",
+      "image": "images/member-41.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/41/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/41",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "be8334495f6a211c0294391fff9814afeaa8e931389ad5b8c925fedb828356fd"
+    },
+    {
+      "key": "member:42",
+      "id": 42,
+      "kind": "member",
+      "asset_id": 42,
+      "rarity": "SR",
+      "title": "挑战光芒的六弦",
+      "name": "伊泽枣",
+      "display_name": "伊泽枣",
+      "image": "images/member-42.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/42/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/42",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "854fb9e54e3027e1d5d8e445b5073f1037354ede1a11d63ba67b23d835c79220"
+    },
+    {
+      "key": "member:43",
+      "id": 43,
+      "kind": "member",
+      "asset_id": 43,
+      "rarity": "SR",
+      "title": "顺其自然，编织乐音",
+      "name": "琴平凪",
+      "display_name": "琴平凪",
+      "image": "images/member-43.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/43/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/43",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "2e42e5abbd981215657fa71879842fe6891d0e770cb93c86a1a9a233e1654c10"
+    },
+    {
+      "key": "member:44",
+      "id": 44,
+      "kind": "member",
+      "asset_id": 44,
+      "rarity": "SR",
+      "title": "因为想要守护这声音",
+      "name": "滨崎茉幌",
+      "display_name": "滨崎茉幌",
+      "image": "images/member-44.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/44/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/44",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "6a872e7e8814bb273530f86cb59736a4bf5b71e839491d5453fcc2fb78b5f0b2"
+    },
+    {
+      "key": "member:45",
+      "id": 45,
+      "kind": "member",
+      "asset_id": 45,
+      "rarity": "SR",
+      "title": "痴迷于那道光辉",
+      "name": "和泉朋花",
+      "display_name": "和泉朋花",
+      "image": "images/member-45.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/45/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/45",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "4f2e8332a977c2d82addf42944438565f86a839e5653f4bc961a0dce2fdb678c"
+    },
+    {
+      "key": "member:46",
+      "id": 46,
+      "kind": "member",
+      "asset_id": 46,
+      "rarity": "SR",
+      "title": "上吧，My Family！！",
+      "name": "须贺蕾叶",
+      "display_name": "须贺蕾叶",
+      "image": "images/member-46.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/46/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/46",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "42568b9e6dc6aed99bc7a6a8f1ea04a3bef664c78b7a63b9dd571a0a203b3490"
+    },
+    {
+      "key": "member:47",
+      "id": 47,
+      "kind": "member",
+      "asset_id": 47,
+      "rarity": "SR",
+      "title": "难以压抑的悸动",
+      "name": "马桥心玖",
+      "display_name": "马桥心玖",
+      "image": "images/member-47.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/47/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/47",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "ea07444161f245c70b5d08d3c82ac789ff8ac87461f33528920416646326873c"
+    },
+    {
+      "key": "member:48",
+      "id": 48,
+      "kind": "member",
+      "asset_id": 48,
+      "rarity": "SR",
+      "title": "奏响小小的勇气",
+      "name": "矢仓蓬咲",
+      "display_name": "矢仓蓬咲",
+      "image": "images/member-48.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/48/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/48",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "8b5a537c36252bbee16c68d3e40decac65c921893d7de537dbd815b2d80a8db8"
+    },
+    {
+      "key": "member:49",
+      "id": 49,
+      "kind": "member",
+      "asset_id": 49,
+      "rarity": "SR",
+      "title": "置身欢呼中央！！",
+      "name": "梅里千樱梨",
+      "display_name": "梅里千樱梨",
+      "image": "images/member-49.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/49/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/49",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "c57edc65d88dd8e8663dc8b181f6d287ee2b3f828eac6c55f7aec08f928773f4"
+    },
+    {
+      "key": "member:50",
+      "id": 50,
+      "kind": "member",
+      "asset_id": 50,
+      "rarity": "SR",
+      "title": "前往未知的世界",
+      "name": "四宫宁月",
+      "display_name": "四宫宁月",
+      "image": "images/member-50.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/50/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/50",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "7808d81a17c157b4bcf5d8a73ad07e3c7257f468ac50b22a135a1e82240b055c"
+    },
+    {
+      "key": "member:51",
+      "id": 51,
+      "kind": "member",
+      "asset_id": 51,
+      "rarity": "SSR",
+      "title": "朝着流星呐喊",
+      "name": "高松灯",
+      "display_name": "高松灯",
+      "image": "images/member-51.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/51/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/51",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "dee32d4d9e4223359011b270de618571a6abeaccea422e645cdb7a2c38632e1f"
+    },
+    {
+      "key": "member:52",
+      "id": 52,
+      "kind": "member",
+      "asset_id": 52,
+      "rarity": "SSR",
+      "title": "RESTART MELODY♪",
+      "name": "千早爱音",
+      "display_name": "千早爱音",
+      "image": "images/member-52.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/52/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/52",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "dd24d9dcf293198e7a1a37187e71bec58a89a9bd65a0c3d6025aa90f832d481a"
+    },
+    {
+      "key": "member:53",
+      "id": 53,
+      "kind": "member",
+      "asset_id": 53,
+      "rarity": "SSR",
+      "title": "雨过天晴，指动琴鸣",
+      "name": "要乐奈",
+      "display_name": "要乐奈",
+      "image": "images/member-53.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/53/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/53",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "b06d9c72f192cee201d5e825aeb3b8f5c9943c32bb30265e7266cd804abebad7"
+    },
+    {
+      "key": "member:54",
+      "id": 54,
+      "kind": "member",
+      "asset_id": 54,
+      "rarity": "SSR",
+      "title": "编织于晚霞的轨迹",
+      "name": "长崎爽世",
+      "display_name": "长崎爽世",
+      "image": "images/member-54.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/54/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/54",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "f221fd01083c7351a941010af01885e1118a4515298e1e91b0dab30342099f05"
+    },
+    {
+      "key": "member:55",
+      "id": 55,
+      "kind": "member",
+      "asset_id": 55,
+      "rarity": "SSR",
+      "title": "想要守护的心跳",
+      "name": "椎名立希",
+      "display_name": "椎名立希",
+      "image": "images/member-55.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/55/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/55",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "9ff1e6631f73d3eab63df2384c8c6abc172d4bb3583604fd3e902c2837f41a5e"
+    },
+    {
+      "key": "member:56",
+      "id": 56,
+      "kind": "member",
+      "asset_id": 56,
+      "rarity": "SSR",
+      "title": "让思念响彻这瞬间",
+      "name": "三角初华",
+      "display_name": "Doloris",
+      "image": "images/member-56.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/56/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/56",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "40c0575d4c2a8f92e1d25a8350212ecf85d33ef5cccbd8a66b7f925b5dbb10a3"
+    },
+    {
+      "key": "member:57",
+      "id": 57,
+      "kind": "member",
+      "asset_id": 57,
+      "rarity": "SSR",
+      "title": "指尖回应的旋律",
+      "name": "若叶睦",
+      "display_name": "Mortis",
+      "image": "images/member-57.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/57/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/57",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "a03794dfac34d48c0435646f8508f877d8c98af7a463545d847a9c88eda4fa6d"
+    },
+    {
+      "key": "member:58",
+      "id": 58,
+      "kind": "member",
+      "asset_id": 58,
+      "rarity": "SSR",
+      "title": "缠绕在身的祈愿",
+      "name": "八幡海铃",
+      "display_name": "Timoris",
+      "image": "images/member-58.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/58/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/58",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "243bf4e8e5fe9ea0f9e9620ad68f5d90b3089d59b6b464e57b688d9459527479"
+    },
+    {
+      "key": "member:59",
+      "id": 59,
+      "kind": "member",
+      "asset_id": 59,
+      "rarity": "SSR",
+      "title": "魅惑的闪耀节奏",
+      "name": "祐天寺若麦",
+      "display_name": "Amoris",
+      "image": "images/member-59.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/59/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/59",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "c43ae1c18be5a0634ad58adb87741b9e91d79f6ba6be0d0fce11d11f90e192d0"
+    },
+    {
+      "key": "member:60",
+      "id": 60,
+      "kind": "member",
+      "asset_id": 60,
+      "rarity": "SSR",
+      "title": "君临乐园的女神",
+      "name": "丰川祥子",
+      "display_name": "Oblivionis",
+      "image": "images/member-60.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/60/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/60",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "c5bd8956a6b4b53d2cbced455dca70e0f0dec2f0a56b23c969914b2845ca9ed5"
+    },
+    {
+      "key": "member:61",
+      "id": 61,
+      "kind": "member",
+      "asset_id": 61,
+      "rarity": "SSR",
+      "title": "Heart・Reboot",
+      "name": "千石由乃",
+      "display_name": "千石由乃",
+      "image": "images/member-61.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/61/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/61",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "6582933564ad7de76e47c8df62cff4b5cb50574b62558b4a83e417dfb7b2b073"
+    },
+    {
+      "key": "member:62",
+      "id": 62,
+      "kind": "member",
+      "asset_id": 62,
+      "rarity": "SSR",
+      "title": "Cute・Float",
+      "name": "宫永野乃花",
+      "display_name": "宫永野乃花",
+      "image": "images/member-62.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/62/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/62",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "968f47d9ac5658a83b6df50f80c8b32893970b09900e9962e0bfafb6a6183f3b"
+    },
+    {
+      "key": "member:63",
+      "id": 63,
+      "kind": "member",
+      "asset_id": 63,
+      "rarity": "SR",
+      "title": "Night・Flight",
+      "name": "峰月律",
+      "display_name": "峰月律",
+      "image": "images/member-63.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/63/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/63",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "4e19085775d26bd59136637eb27759dcbba3b0ea14de483213c6c0016cac33af"
+    },
+    {
+      "key": "member:65",
+      "id": 65,
+      "kind": "member",
+      "asset_id": 65,
+      "rarity": "SSR",
+      "title": "划破黎明",
+      "name": "琴平凪",
+      "display_name": "琴平凪",
+      "image": "images/member-65.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/65/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/65",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "b13e0cee30540e09c88f3d6f5cc9e1fd8b0e95bf19833fb49ed54038031d3e57"
+    },
+    {
+      "key": "member:66",
+      "id": 66,
+      "kind": "member",
+      "asset_id": 66,
+      "rarity": "SSR",
+      "title": "立于光芒下",
+      "name": "伊泽枣",
+      "display_name": "伊泽枣",
+      "image": "images/member-66.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/66/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/66",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "b82a792095b1816fcb51a24dd9f9b5156e2c9a61b1007c167f5be44baac85c05"
+    },
+    {
+      "key": "member:67",
+      "id": 67,
+      "kind": "member",
+      "asset_id": 67,
+      "rarity": "SR",
+      "title": "微笑，隐于幽暗",
+      "name": "和泉朋花",
+      "display_name": "和泉朋花",
+      "image": "images/member-67.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/MemberCard/67/member_thumbnail/member_thumbnail.webp",
+      "source_page": "https://bdon.moe/cards/67",
+      "image_size": [
+        384,
+        512
+      ],
+      "sha256": "7e1940ea35748fce6493f88d3eb79b592e66871b8024b88601547f048e46c8a9"
+    },
+    {
+      "key": "support:1",
+      "id": 1,
+      "kind": "support",
+      "asset_id": 1,
+      "rarity": "R",
+      "title": "好想成为人类",
+      "name": "高松灯",
+      "display_name": "高松灯",
+      "image": "images/support-1.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/1/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/1",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "8e1f4015c19a94be37ba7e5602ab4841bb2eb6405b3466fe5dad03527365d184"
+    },
+    {
+      "key": "support:2",
+      "id": 2,
+      "kind": "support",
+      "asset_id": 2,
+      "rarity": "R",
+      "title": "可爱全开♡",
+      "name": "千早爱音",
+      "display_name": "千早爱音",
+      "image": "images/support-2.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/2/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/2",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "f9d75f942acd0b854d53770b9fbbf9d4ac602c0128dd69dc2919781bbdbeb98f"
+    },
+    {
+      "key": "support:3",
+      "id": 3,
+      "kind": "support",
+      "asset_id": 3,
+      "rarity": "R",
+      "title": "猫咪，闲逛",
+      "name": "要乐奈",
+      "display_name": "要乐奈",
+      "image": "images/support-3.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/3/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/3",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "f50820689ec1440d30653df01876b2b3f5dc7f0bdba48622697ba87a957e70f4"
+    },
+    {
+      "key": "support:4",
+      "id": 4,
+      "kind": "support",
+      "asset_id": 4,
+      "rarity": "R",
+      "title": "巧妙地伪装",
+      "name": "长崎爽世",
+      "display_name": "长崎爽世",
+      "image": "images/support-4.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/4/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/4",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "61180a32fd3d4b4cb2bac5668d43c50dfe51a07daf14a128e135131a82e9192f"
+    },
+    {
+      "key": "support:5",
+      "id": 5,
+      "kind": "support",
+      "asset_id": 5,
+      "rarity": "R",
+      "title": "强势到底",
+      "name": "椎名立希",
+      "display_name": "椎名立希",
+      "image": "images/support-5.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/5/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/5",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "c1fd1e2058dce644ea73b61c19e309179a4cb13381f9a1a077f8f7a4f8c0dc76"
+    },
+    {
+      "key": "support:6",
+      "id": 6,
+      "kind": "support",
+      "asset_id": 6,
+      "rarity": "R",
+      "title": "视线的前方",
+      "name": "三角初华",
+      "display_name": "三角初华",
+      "image": "images/support-6.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/6/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/6",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "6075da0719032bda7afc6f7e01fcdb27db78eb6b97ae848c37df3af0f3beffda"
+    },
+    {
+      "key": "support:7",
+      "id": 7,
+      "kind": "support",
+      "asset_id": 7,
+      "rarity": "R",
+      "title": "静静伫立",
+      "name": "若叶睦",
+      "display_name": "若叶睦",
+      "image": "images/support-7.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/7/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/7",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "df848fc6ac5015e6bd342b109ea74bf64772300b9b46028a730f13a203573c66"
+    },
+    {
+      "key": "support:8",
+      "id": 8,
+      "kind": "support",
+      "asset_id": 8,
+      "rarity": "R",
+      "title": "商务性的距离感",
+      "name": "八幡海铃",
+      "display_name": "八幡海铃",
+      "image": "images/support-8.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/8/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/8",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "53683da4db4e2405eabf9ccb97c998e4d9464adcdf1466a1b2d3427f859efbeb"
+    },
+    {
+      "key": "support:9",
+      "id": 9,
+      "kind": "support",
+      "asset_id": 9,
+      "rarity": "R",
+      "title": "精心计算的上镜角度",
+      "name": "祐天寺若麦",
+      "display_name": "祐天寺若麦",
+      "image": "images/support-9.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/9/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/9",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "ce87b42a4c2cd28414a97b5accac5108ef4c156eba3e118434fbdaaa99f6bb5e"
+    },
+    {
+      "key": "support:10",
+      "id": 10,
+      "kind": "support",
+      "asset_id": 10,
+      "rarity": "R",
+      "title": "高尚的品格",
+      "name": "丰川祥子",
+      "display_name": "丰川祥子",
+      "image": "images/support-10.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/10/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/10",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "9adeddb5bd4d8da9b16cfafdbe17bef76b89eea2b2568326ceb96e7d0204a85d"
+    },
+    {
+      "key": "support:11",
+      "id": 11,
+      "kind": "support",
+      "asset_id": 11,
+      "rarity": "R",
+      "title": "好想聊聊天！",
+      "name": "仲町阿拉蕾",
+      "display_name": "仲町阿拉蕾",
+      "image": "images/support-11.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/11/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/11",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "6cd3110648fc6ee58d5e127403941de92a5f67e7d469a0a9f1825bbd005680cd"
+    },
+    {
+      "key": "support:12",
+      "id": 12,
+      "kind": "support",
+      "asset_id": 12,
+      "rarity": "R",
+      "title": "一路兴奋向前冲！",
+      "name": "宫永野乃花",
+      "display_name": "宫永野乃花",
+      "image": "images/support-12.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/12/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/12",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "355adb8e9181cd14ea2fd6ddaed005ef7989fd118af87b3c0134662c65b0a05c"
+    },
+    {
+      "key": "support:13",
+      "id": 13,
+      "kind": "support",
+      "asset_id": 13,
+      "rarity": "R",
+      "title": "一本正经的灵光一现",
+      "name": "峰月律",
+      "display_name": "峰月律",
+      "image": "images/support-13.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/13/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/13",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "7ec5d67d37f0247ee695b0796ee482a3c2453dd6b0c7660c8004819d620d32e2"
+    },
+    {
+      "key": "support:14",
+      "id": 14,
+      "kind": "support",
+      "asset_id": 14,
+      "rarity": "R",
+      "title": "看似文静沉稳",
+      "name": "藤都子",
+      "display_name": "藤都子",
+      "image": "images/support-14.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/14/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/14",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "09567af1c6d3edb18e29c48ffc039a44b969c344a581674acac91cb6a46b69fa"
+    },
+    {
+      "key": "support:15",
+      "id": 15,
+      "kind": "support",
+      "asset_id": 15,
+      "rarity": "R",
+      "title": "慵懒低耗能",
+      "name": "千石由乃",
+      "display_name": "千石由乃",
+      "image": "images/support-15.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/15/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/15",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "5cc9e0541f79a453bfc87adea6e6f061fb92018f4ee1bbda21d7d573a7158394"
+    },
+    {
+      "key": "support:16",
+      "id": 16,
+      "kind": "support",
+      "asset_id": 16,
+      "rarity": "R",
+      "title": "纯真无瑕的光芒",
+      "name": "汐见萤",
+      "display_name": "汐见萤",
+      "image": "images/support-16.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/16/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/16",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "8379f6eb73756847453fd963f36cf3877af7ef1d1165c9525e1733bc8dc733c7"
+    },
+    {
+      "key": "support:17",
+      "id": 17,
+      "kind": "support",
+      "asset_id": 17,
+      "rarity": "R",
+      "title": "炽烈的斗志",
+      "name": "伊泽枣",
+      "display_name": "伊泽枣",
+      "image": "images/support-17.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/17/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/17",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "c772fa0506f8c3d03cd5f8594bf772c6d68a0900a2bddaa3d4a5596542e28ed1"
+    },
+    {
+      "key": "support:18",
+      "id": 18,
+      "kind": "support",
+      "asset_id": 18,
+      "rarity": "R",
+      "title": "成熟的眼神",
+      "name": "琴平凪",
+      "display_name": "琴平凪",
+      "image": "images/support-18.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/18/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/18",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "68fda21805353b16a3f5ea418f36ae687775a364b339cff99e9a1c4ed4ac4950"
+    },
+    {
+      "key": "support:19",
+      "id": 19,
+      "kind": "support",
+      "asset_id": 19,
+      "rarity": "R",
+      "title": "面带笑容的统筹者",
+      "name": "滨崎茉幌",
+      "display_name": "滨崎茉幌",
+      "image": "images/support-19.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/19/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/19",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "bef25a4d7e7eaef23df9b58fd88b96890943f911878ee2e323d4392cfbf14fdb"
+    },
+    {
+      "key": "support:20",
+      "id": 20,
+      "kind": "support",
+      "asset_id": 20,
+      "rarity": "R",
+      "title": "掩藏于美丽外表下",
+      "name": "和泉朋花",
+      "display_name": "和泉朋花",
+      "image": "images/support-20.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/20/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/20",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "f889fa55a3819fab46ceb80636129d0e5e5b7e9a93f0aa7644c10a20f7b7d9c3"
+    },
+    {
+      "key": "support:21",
+      "id": 21,
+      "kind": "support",
+      "asset_id": 21,
+      "rarity": "R",
+      "title": "Peace开演！",
+      "name": "须贺蕾叶",
+      "display_name": "须贺蕾叶",
+      "image": "images/support-21.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/21/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/21",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "fb2cd3ec94095190c4267bca8470a3dd9d96a9bd9998b8c45fff89afd78aac0d"
+    },
+    {
+      "key": "support:22",
+      "id": 22,
+      "kind": "support",
+      "asset_id": 22,
+      "rarity": "R",
+      "title": "戴着假面的温柔",
+      "name": "马桥心玖",
+      "display_name": "马桥心玖",
+      "image": "images/support-22.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/22/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/22",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "18487315b5df2f22f094506fa2db43cc03485020b36115b651ea5a828edefb6c"
+    },
+    {
+      "key": "support:23",
+      "id": 23,
+      "kind": "support",
+      "asset_id": 23,
+      "rarity": "R",
+      "title": "胆小鬼的武装",
+      "name": "矢仓蓬咲",
+      "display_name": "矢仓蓬咲",
+      "image": "images/support-23.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/23/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/23",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "827a0d62f29d07fd6f1d804cf5ed43df32c2d238eb86f455b604829c10ac636f"
+    },
+    {
+      "key": "support:24",
+      "id": 24,
+      "kind": "support",
+      "asset_id": 24,
+      "rarity": "R",
+      "title": "千樱梨联盟头号人物！",
+      "name": "梅里千樱梨",
+      "display_name": "梅里千樱梨",
+      "image": "images/support-24.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/24/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/24",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "22d7fb461c420759901a3f1cacffd5f86b1d86abf591268c90b7becd3897315e"
+    },
+    {
+      "key": "support:25",
+      "id": 25,
+      "kind": "support",
+      "asset_id": 25,
+      "rarity": "R",
+      "title": "不谙世事的小公主",
+      "name": "四宫宁月",
+      "display_name": "四宫宁月",
+      "image": "images/support-25.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/25/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/25",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "0e41e57b08da5282c138f9af7e0534a142ecd2da2abaefcafeceba1b8dd9416b"
+    },
+    {
+      "key": "support:26",
+      "id": 26,
+      "kind": "support",
+      "asset_id": 26,
+      "rarity": "SR",
+      "title": "心爱的企鹅们",
+      "name": "高松灯",
+      "display_name": "高松灯",
+      "image": "images/support-26.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/26/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/26",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "7aaed3cdde75b2e8fe1864b0b1ee48adf15bc4a7892de8cbdcbe1041fa4afa6e"
+    },
+    {
+      "key": "support:27",
+      "id": 27,
+      "kind": "support",
+      "asset_id": 27,
+      "rarity": "SR",
+      "title": "GREAT IDEA!!!!!",
+      "name": "千早爱音",
+      "display_name": "千早爱音",
+      "image": "images/support-27.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/27/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/27",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "a5c3142d106179d7b6a5b068ebe7c5ab6a06e435c0b39d519a8010697a2f06a9"
+    },
+    {
+      "key": "support:28",
+      "id": 28,
+      "kind": "support",
+      "asset_id": 28,
+      "rarity": "SR",
+      "title": "三年级生",
+      "name": "要乐奈",
+      "display_name": "要乐奈",
+      "image": "images/support-28.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/28/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/28",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "5f70fede9c2cc15a21b747adc696f8a0eb53b79f91312708b591ba0c4484384b"
+    },
+    {
+      "key": "support:29",
+      "id": 29,
+      "kind": "support",
+      "asset_id": 29,
+      "rarity": "SR",
+      "title": "不愿放手的归宿",
+      "name": "长崎爽世",
+      "display_name": "长崎爽世",
+      "image": "images/support-29.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/29/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/29",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "92cb64896199c6c5edbbd7e3a54fedfe8fb643239be6fd6b40eda83bb31a6d43"
+    },
+    {
+      "key": "support:30",
+      "id": 30,
+      "kind": "support",
+      "asset_id": 30,
+      "rarity": "SR",
+      "title": "为了奏响这句话",
+      "name": "椎名立希",
+      "display_name": "椎名立希",
+      "image": "images/support-30.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/30/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/30",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "eccd605836f5bb4f71f5c095ca4cd06b1169d0503958c5e2449e95faf2f0ee60"
+    },
+    {
+      "key": "support:31",
+      "id": 31,
+      "kind": "support",
+      "asset_id": 31,
+      "rarity": "SR",
+      "title": "深爱星星的少女的谎言",
+      "name": "三角初华",
+      "display_name": "三角初华",
+      "image": "images/support-31.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/31/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/31",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "d3da0fe1125dae369072efe9fe4e3e2f748e27dea0d375f7f2da3fd0ae8321a0"
+    },
+    {
+      "key": "support:32",
+      "id": 32,
+      "kind": "support",
+      "asset_id": 32,
+      "rarity": "SR",
+      "title": "垂下眼睑",
+      "name": "若叶睦",
+      "display_name": "若叶睦",
+      "image": "images/support-32.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/32/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/32",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "7faa9487a48b9aa4fd10ef374f84621b834a1b95427962a0389ade657d34d9ba"
+    },
+    {
+      "key": "support:33",
+      "id": 33,
+      "kind": "support",
+      "asset_id": 33,
+      "rarity": "SR",
+      "title": "化悲愤为血拼",
+      "name": "八幡海铃",
+      "display_name": "八幡海铃",
+      "image": "images/support-33.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/33/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/33",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "da9da40feb9e40865e04b05345923fde2033badde1aeb11580d93e46cd587d68"
+    },
+    {
+      "key": "support:34",
+      "id": 34,
+      "kind": "support",
+      "asset_id": 34,
+      "rarity": "SR",
+      "title": "不为人知的软弱",
+      "name": "祐天寺若麦",
+      "display_name": "祐天寺若麦",
+      "image": "images/support-34.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/34/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/34",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "ce510b556864980a55077d9b500c4aac8b6ff0d2ad99c9947b17c65cde2471a1"
+    },
+    {
+      "key": "support:35",
+      "id": 35,
+      "kind": "support",
+      "asset_id": 35,
+      "rarity": "SR",
+      "title": "朝荒谬的世界怒吼",
+      "name": "丰川祥子",
+      "display_name": "丰川祥子",
+      "image": "images/support-35.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/35/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/35",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "7a759d15b9b279b42316e1ae2edba00a7069d17b14e7fe9d8d23263cc544083f"
+    },
+    {
+      "key": "support:36",
+      "id": 36,
+      "kind": "support",
+      "asset_id": 36,
+      "rarity": "SR",
+      "title": "成为真正的自己",
+      "name": "仲町阿拉蕾",
+      "display_name": "仲町阿拉蕾",
+      "image": "images/support-36.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/36/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/36",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "8c16e8730ae7f7ff216bd72627091aaa6825da767c98d55f013141bd0f2a3d9c"
+    },
+    {
+      "key": "support:37",
+      "id": 37,
+      "kind": "support",
+      "asset_id": 37,
+      "rarity": "SR",
+      "title": "真是的～～～～～～～～～～～～！！",
+      "name": "宫永野乃花",
+      "display_name": "宫永野乃花",
+      "image": "images/support-37.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/37/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/37",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "21aeaa038c6deb91b02e4141274e7238f34a7aa884d12b35fa9020d3b8ead4f6"
+    },
+    {
+      "key": "support:38",
+      "id": 38,
+      "kind": "support",
+      "asset_id": 38,
+      "rarity": "SR",
+      "title": "不想被听到的声音",
+      "name": "峰月律",
+      "display_name": "峰月律",
+      "image": "images/support-38.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/38/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/38",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "cca35f1b190aee12abe8fb110c94c95b404bb1858483154dba58da1a398ce09a"
+    },
+    {
+      "key": "support:39",
+      "id": 39,
+      "kind": "support",
+      "asset_id": 39,
+      "rarity": "SR",
+      "title": "藤都子在此！！！",
+      "name": "藤都子",
+      "display_name": "藤都子",
+      "image": "images/support-39.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/39/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/39",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "2b978300756d138ed0136bc0bd2333f94a44de2e113c6ec848f1880d590e8a84"
+    },
+    {
+      "key": "support:40",
+      "id": 40,
+      "kind": "support",
+      "asset_id": 40,
+      "rarity": "SR",
+      "title": "起始之音，已然可闻",
+      "name": "千石由乃",
+      "display_name": "千石由乃",
+      "image": "images/support-40.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/40/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/40",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "223e26c2f5d6a5ca04a4182a7d53b881481528c12997018e9aa1384bb1a255bb"
+    },
+    {
+      "key": "support:41",
+      "id": 41,
+      "kind": "support",
+      "asset_id": 41,
+      "rarity": "SR",
+      "title": "从未见过的景色",
+      "name": "汐见萤",
+      "display_name": "汐见萤",
+      "image": "images/support-41.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/41/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/41",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "26563818421b608d5ec2ee919f23a3e8eeb319af4cd0e7d939b20453e773748e"
+    },
+    {
+      "key": "support:42",
+      "id": 42,
+      "kind": "support",
+      "asset_id": 42,
+      "rarity": "SR",
+      "title": "胜负还未见分晓",
+      "name": "伊泽枣",
+      "display_name": "伊泽枣",
+      "image": "images/support-42.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/42/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/42",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "cdad0d887d0bf896bbedde4633840db5b2c6d859c3f75ee97b62c2d56cdb47cd"
+    },
+    {
+      "key": "support:43",
+      "id": 43,
+      "kind": "support",
+      "asset_id": 43,
+      "rarity": "SR",
+      "title": "怀揣交错的心绪",
+      "name": "琴平凪",
+      "display_name": "琴平凪",
+      "image": "images/support-43.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/43/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/43",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "6fe37c3b3a98efdde0c7c9c1d5404d01f64f81e33de6f01e2263a256d94abdbc"
+    },
+    {
+      "key": "support:44",
+      "id": 44,
+      "kind": "support",
+      "asset_id": 44,
+      "rarity": "SR",
+      "title": "为什么……为什么啊",
+      "name": "滨崎茉幌",
+      "display_name": "滨崎茉幌",
+      "image": "images/support-44.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/44/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/44",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "bd371d0b0127ae393f7d67a9d392462f4288911ec47d6fbf82df7064c35c3dcd"
+    },
+    {
+      "key": "support:45",
+      "id": 45,
+      "kind": "support",
+      "asset_id": 45,
+      "rarity": "SR",
+      "title": "渴望那足以燃尽一切的才能",
+      "name": "和泉朋花",
+      "display_name": "和泉朋花",
+      "image": "images/support-45.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/45/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/45",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "72a739afd8ecf005ebcfe672db2a9eb2077b0d91d6df5109c5383266653542f1"
+    },
+    {
+      "key": "support:46",
+      "id": 46,
+      "kind": "support",
+      "asset_id": 46,
+      "rarity": "SR",
+      "title": "非这个莫属！！",
+      "name": "须贺蕾叶",
+      "display_name": "须贺蕾叶",
+      "image": "images/support-46.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/46/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/46",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "f25f90b8ce7b621a20977fa3da8529cf8c6a1f576e857f0ca0608de980314934"
+    },
+    {
+      "key": "support:47",
+      "id": 47,
+      "kind": "support",
+      "asset_id": 47,
+      "rarity": "SR",
+      "title": "符合她们风格的曲子",
+      "name": "马桥心玖",
+      "display_name": "马桥心玖",
+      "image": "images/support-47.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/47/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/47",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "7e0dfd5a182be672bca232a97ed83af5fb1bdd362d2fa6c8096801bde06ac739"
+    },
+    {
+      "key": "support:48",
+      "id": 48,
+      "kind": "support",
+      "asset_id": 48,
+      "rarity": "SR",
+      "title": "成为那个强大的我",
+      "name": "矢仓蓬咲",
+      "display_name": "矢仓蓬咲",
+      "image": "images/support-48.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/48/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/48",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "35f1323d79a695ca9d92e0fe0dbc2718c3f12735da5eaf7554d2701b74327c2d"
+    },
+    {
+      "key": "support:49",
+      "id": 49,
+      "kind": "support",
+      "asset_id": 49,
+      "rarity": "SR",
+      "title": "千樱梨来夸你！！",
+      "name": "梅里千樱梨",
+      "display_name": "梅里千樱梨",
+      "image": "images/support-49.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/49/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/49",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "57fada37eaeb166ed24a3e085a9950eeb92e149ae53eda7d4b0dd43e82ff5701"
+    },
+    {
+      "key": "support:50",
+      "id": 50,
+      "kind": "support",
+      "asset_id": 50,
+      "rarity": "SR",
+      "title": "为了更加了解Family",
+      "name": "四宫宁月",
+      "display_name": "四宫宁月",
+      "image": "images/support-50.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/50/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/50",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "6f8706ccd063ef9dfe1646becbda22207ba763e6a45ddb0aa376bc08452f9bfb"
+    },
+    {
+      "key": "support:51",
+      "id": 51,
+      "kind": "support",
+      "asset_id": 51,
+      "rarity": "SSR",
+      "title": "在迷失中，相伴一生",
+      "name": "MyGO!!!!!",
+      "display_name": "MyGO!!!!!",
+      "image": "images/support-51.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/51/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/51",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "4d51c2468aa3a7f160e4b04394d1cc8886bcac9d087ed28ef4bbcb7e592d5373"
+    },
+    {
+      "key": "support:52",
+      "id": 52,
+      "kind": "support",
+      "asset_id": 52,
+      "rarity": "SSR",
+      "title": "牵手，向前迈进",
+      "name": "灯&爱音",
+      "display_name": "灯&爱音",
+      "image": "images/support-52.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/52/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/52",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "f3bbd256107726693c35a1241945b7981255ca7a39233908ea193e1598fddedd"
+    },
+    {
+      "key": "support:53",
+      "id": 53,
+      "kind": "support",
+      "asset_id": 53,
+      "rarity": "SSR",
+      "title": "及时行乐的盛宴",
+      "name": "Ave Mujica",
+      "display_name": "Ave Mujica",
+      "image": "images/support-53.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/53/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/53",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "38d0d4666e8f010f0a46696e7b102cf3bdbedeea5c567b54c766d2c77091a58c"
+    },
+    {
+      "key": "support:54",
+      "id": 54,
+      "kind": "support",
+      "asset_id": 54,
+      "rarity": "SSR",
+      "title": "半梦半醒之际的，我们",
+      "name": "初华&祥子",
+      "display_name": "初华&祥子",
+      "image": "images/support-54.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/54/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/54",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "1f3ff65ae3e575c985da3017ed1c5d1d9e7809ab0c5773ecc768081627d69cd0"
+    },
+    {
+      "key": "support:55",
+      "id": 55,
+      "kind": "support",
+      "asset_id": 55,
+      "rarity": "SSR",
+      "title": "梦想交叠，梦限大！",
+      "name": "梦限大MewType",
+      "display_name": "梦限大MewType",
+      "image": "images/support-55.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/55/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/55",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "52813b8cbeaa54989a41d00e40c5c460adf4494dbba3261ba7005edf14b15292"
+    },
+    {
+      "key": "support:56",
+      "id": 56,
+      "kind": "support",
+      "asset_id": 56,
+      "rarity": "SSR",
+      "title": "夜晚的海、篝火与青春",
+      "name": "野乃花&都子&由乃",
+      "display_name": "野乃花&都子&由乃",
+      "image": "images/support-56.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/56/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/56",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "182cd8c8a15060c878cab87543e67420635803d858d5fc893df1263f27a3d274"
+    },
+    {
+      "key": "support:57",
+      "id": 57,
+      "kind": "support",
+      "asset_id": 57,
+      "rarity": "SSR",
+      "title": "只为迎接圆满结局",
+      "name": "汐见萤",
+      "display_name": "汐见萤",
+      "image": "images/support-57.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/57/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/57",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "51caee2cb51273f3ee1105aa12526e7b53c92dad048217a35d2e8189709dd1e1"
+    },
+    {
+      "key": "support:58",
+      "id": 58,
+      "kind": "support",
+      "asset_id": 58,
+      "rarity": "SSR",
+      "title": "我们才是主角",
+      "name": "millsage",
+      "display_name": "millsage",
+      "image": "images/support-58.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/58/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/58",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "06e87b44744172cb4f3cc78bb1fc3d5e9bb14758e59b5b16295155d0475fd618"
+    },
+    {
+      "key": "support:59",
+      "id": 59,
+      "kind": "support",
+      "asset_id": 59,
+      "rarity": "SSR",
+      "title": "为了珍视之人，守护珍视之所",
+      "name": "须贺蕾叶",
+      "display_name": "须贺蕾叶",
+      "image": "images/support-59.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/59/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/59",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "fd41853b1ade87eb2e5cb9c5b1522678e3029132f29199569f9ab721afd4a21e"
+    },
+    {
+      "key": "support:60",
+      "id": 60,
+      "kind": "support",
+      "asset_id": 60,
+      "rarity": "SSR",
+      "title": "终于能说出口的『我回来了』",
+      "name": "一家Dumb Rock!",
+      "display_name": "一家Dumb Rock!",
+      "image": "images/support-60.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/60/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/60",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "5dc2fa5a72e74d17732a941c44300817439df1b7aa377ad85a57628b785cfce1"
+    },
+    {
+      "key": "support:62",
+      "id": 62,
+      "kind": "support",
+      "asset_id": 62,
+      "rarity": "SSR",
+      "title": "苍蓝焰心",
+      "name": "千石由乃",
+      "display_name": "千石由乃",
+      "image": "images/support-62.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/62/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/62",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "b1c12bd091c372ec97583a9f4fc0c55e39331c1f53ef368cda91c14f9fbf92a3"
+    },
+    {
+      "key": "support:63",
+      "id": 63,
+      "kind": "support",
+      "asset_id": 63,
+      "rarity": "SSR",
+      "title": "魔法露露・应援！",
+      "name": "阿拉蕾&野乃花&律&都子",
+      "display_name": "阿拉蕾&野乃花&律&都子",
+      "image": "images/support-63.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/63/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/63",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "c5ac3c42d4c6f64b885acb2097fc0afb16ef12f0e72d0c3ae34499e7c7adc724"
+    },
+    {
+      "key": "support:64",
+      "id": 64,
+      "kind": "support",
+      "asset_id": 64,
+      "rarity": "SR",
+      "title": "圆圆小憩",
+      "name": "都子＆律",
+      "display_name": "都子＆律",
+      "image": "images/support-64.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/64/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/64",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "f135cd654efe85e1419c9d74d74af702e6b92e5c2a6747ef0591f9c28b7f6cb2"
+    },
+    {
+      "key": "support:65",
+      "id": 65,
+      "kind": "support",
+      "asset_id": 65,
+      "rarity": "SSR",
+      "title": "赤橙之中",
+      "name": "琴平凪",
+      "display_name": "琴平凪",
+      "image": "images/support-65.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/65/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/65",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "2dfe2d0286fc2d1a7a331246851c1229ce37f5bd358e6e11de8a561092cc361d"
+    },
+    {
+      "key": "support:66",
+      "id": 66,
+      "kind": "support",
+      "asset_id": 66,
+      "rarity": "SSR",
+      "title": "为了你",
+      "name": "茉幌&凪",
+      "display_name": "茉幌&凪",
+      "image": "images/support-66.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/66/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/66",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "d666e1799c5e0d123bb4a0ae8159bbaf3156b8eaeb3bf3e74721241e938add19"
+    },
+    {
+      "key": "support:67",
+      "id": 67,
+      "kind": "support",
+      "asset_id": 67,
+      "rarity": "SR",
+      "title": "向那道光、伸出手",
+      "name": "汐见萤",
+      "display_name": "汐见萤",
+      "image": "images/support-67.webp",
+      "image_url": "https://assets.bdon.moe/zh-Hans/SupportCard/67/snap_thumbnail/snap_thumbnail.webp",
+      "source_page": "https://bdon.moe/support-cards/67",
+      "image_size": [
+        512,
+        288
+      ],
+      "sha256": "2fcd7f1708e4adc029332ac1158b54df371471a82d6acfa9c15d1d0b107e3033"
+    }
+  ],
+  "masterdata": {
+    "region": "hk-tw-mo",
+    "repository": "https://github.com/StarMoe-org/moenotes-masterdata",
+    "commit": "f33a44a51c8ce2b5dd122ad58824e4fc21e6fce2",
+    "version": "e85baf9fb58be66a435eeb97ead996d4",
+    "resource_version": "1.0.1.500.a3f7b2e9",
+    "client_version": "1.0.3",
+    "manifest_sha256": "2e4a62e70ce428713e45806e4b142b1c51e513f471a5e90c4785cb46ad6d646d"
+  },
+  "snapshot_purpose": "runner-only; isolated from account website assets",
+  "metadata_checked_at": 1791723841.2264903
+}

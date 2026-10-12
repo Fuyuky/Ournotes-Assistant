@@ -29,13 +29,12 @@ def app_data_dir():
 
 
 def default_mumu_root():
-    selected = os.environ.get("OURNOTES_MUMU_ROOT")
-    if selected:
-        return Path(selected).expanduser()
-    if sys.platform == "darwin":
-        candidates = (Path("/Applications/MuMuPlayer.app"), Path("/Applications/MuMuPlayer Pro.app"))
-        return next((path for path in candidates if path.is_dir()), candidates[0])
-    return Path("D:/Tools/MuMuPlayer")
+    from ournotes.paths import DATA_ROOT
+    from ournotes.platforms.mumu_config import selected
+    path = selected(DATA_ROOT)
+    if path is None:
+        raise ValueError('未唯一找到 MuMu，请在控制台保存安装目录。')
+    return path
 
 
 def process_alive(pid):

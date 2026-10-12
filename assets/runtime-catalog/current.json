@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "checked_at": 1791765036.2074223,
+  "directory": "snapshots/b8ed54acabf04f7d826333f996599601",
+  "sha256": {
+    "catalog.json": "c754f64fcd3ed622b9a7136d834ed5e1056368bc7b8f20f65054dfa4f0b1caa7",
+    "pools.json": "6d707f02b228655ec47811e002e38dab4383d604bb4a1300463089d315850874"
+  }
+}

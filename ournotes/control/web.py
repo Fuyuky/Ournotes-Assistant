@@ -66,6 +66,10 @@ class CloudSettings(StrictModel):
     credential: str = Field(min_length=16, max_length=2048)
 
 
+class MuMuSettings(StrictModel):
+    root: str = Field(min_length=1, max_length=2048)
+
+
 class Folder(StrictModel):
     target: Literal["results", "logs", "batch"]
 
@@ -220,6 +224,28 @@ def create_app(root=DATA_ROOT, service=None, *, extension=None, machine_credenti
         if name not in ("app.js", "events.js", "account-actions.js", "presets.js", "account-query.js", "maintenance.js", "style.css"):
             raise HTTPException(404)
         return FileResponse(WEB / name)
+
+    @app.get('/api/launcher/mumu-settings')
+    def mumu_settings():
+        from ournotes.platforms.mumu_config import discover, status
+        discover.cache_clear()
+        return status(root)
+
+    @app.post('/api/launcher/mumu-settings')
+    def save_mumu_settings(value: MuMuSettings):
+        from ournotes.common.secrets import SecretStore
+        from ournotes.platforms.mumu_config import save
+        with launcher.action_lock:
+            if launcher.running() or launcher.game_update.busy() or any(
+                job['status'] == 'running' for job in launcher.jobs.listing()
+            ):
+                raise ValueError('请等待运行任务结束后修改 MuMu 安装目录。')
+            try:
+                locks = SecretStore(root / 'state')
+                with locks.lock('runner'), locks.lock('email-rebind'):
+                    return save(root, value.root)
+            except RuntimeError:
+                raise ValueError('批次或换绑正在运行，不能修改 MuMu 安装目录。') from None
 
     @app.get("/api/launcher/ping")
     def ping():

@@ -4,7 +4,7 @@
 
 ## 安装与检查
 
-1. 将 `ournotes-client-<版本>-<平台>.zip` 完整解压到用户可写目录，不覆盖已有 `user-data`。已有安装通过控制台更新。
+1. 将 `ournotes-<版本>-<平台>.zip` 完整解压到用户可写目录，不覆盖已有 `user-data`。已有安装通过控制台更新。
 2. 读取 `current.json`；`version` 必须符合 `^\d+\.\d+\.\d+$`，`platform` 必须与本机一致。核对 `update-public-key.txt`、`versions/<版本>/app/scripts/webui.py` 和当前平台的运行时。
 3. Windows 使用 `versions/<版本>/runtime/python.exe` / `pythonw.exe`；Mac 使用 `versions/<版本>/runtime/bin/python3`。所有 Python 操作都使用随包运行时，不创建 venv、不重装依赖。
 4. 核对 `user-data/data/catalog/current.json` 及其实际快照；运行素材缺失应报告不完整包。不要用空目录代替素材。
@@ -26,8 +26,8 @@ Mac使用MuMu官方 `mumutool` 管理实例、官方ADB截图与输入；工具�
 
 ## 更新与数据保护
 
-- 更新匿名HTTPS读取公开仓库 `Fuyuky/Ournotes-Assistant`，不需要GitHub凭据。启动只检查，明确点击才下载；平台签名清单、ZIP大小、SHA-256与逐文件摘要都通过后才可安装。
-- 更新器等待client、runner、email-rebind与update锁交接，分平台核对运行时后原子切换current指针。失败保留旧版本与数据，禁止清锁绕过运行保护。
+- 更新匿名HTTPS读取公开仓库 `Fuyuky/Ournotes-Assistant`，不需要GitHub凭据。启动只检查，明确点击才下载；ZIP 下载完整、包内签名清单和逐文件摘要均通过后才可安装。
+- 初装和更新使用同一完整 ZIP，Release 不提供额外校验文件。更新器等待client、runner、email-rebind与update锁交接，分平台核对运行时后原子切换current指针。失败保留旧版本与数据，禁止清锁绕过运行保护。
 - `versions`是程序，`user-data`是用户配置、运行素材、成果、数据库及证据。不删库、不回退编号、不造缺失档案、不重发已提交但无结果的交易，不通过重启清除核查保护。
 - 只读查询数据库使用SQLite `mode=ro`；不要初始化RuntimeStore。批次完成须核对数据库归属、实际进程与锁，不能只看调度complete。
 - 验证新包使用隔离空数据根，不操作其他安装的活动数据。服务器后台、Google OAuth、原始账号JSON和私人连接均不得进入公开发行包。

@@ -242,3 +242,25 @@ $('debug-mode').addEventListener('change',()=>{$('debug-details').hidden=!($('de
 
 window.consoleState.subscribe(receiveState);
 window.consoleState.start();
+
+async function loadMuMuLocation() {
+  try {
+    const data = await api('mumu-settings');
+    $('mumu-root').value = data.root;
+    $('mumu-candidates').replaceChildren(...data.candidates.map(path => {
+      const option = document.createElement('option'); option.value = path; return option;
+    }));
+    $('mumu-location-status').textContent = data.available ? '安装目录有效' :
+      data.candidates.length > 1 ? '找到多个安装，请选择目录并保存。' : '未找到有效安装，请填写目录。';
+  } catch (error) { $('mumu-location-status').textContent = error.message; }
+}
+$('mumu-detect').addEventListener('click', loadMuMuLocation);
+$('mumu-settings').addEventListener('submit', async event => {
+  event.preventDefault();
+  try {
+    await api('mumu-settings', {root: $('mumu-root').value.trim()});
+    $('mumu-location-status').textContent = '安装目录已保存';
+    await refresh();
+  } catch (error) { $('mumu-location-status').textContent = error.message; }
+});
+loadMuMuLocation();
