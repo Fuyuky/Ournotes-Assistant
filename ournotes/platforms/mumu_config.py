@@ -20,16 +20,11 @@ def load(root):
 
 def valid(path):
     path = Path(path)
-    if sys.platform == 'win32':
-        return all((path / name).is_file() for name in
-                   ('nx_main/mumu-cli.exe', 'nx_main/sdk/external_renderer_ipc.dll'))
-    return path.is_dir() and path.suffix == '.app' and (path / 'Contents').is_dir()
+    return all((path / name).is_file() for name in
+               ('nx_main/mumu-cli.exe', 'nx_main/sdk/external_renderer_ipc.dll'))
 
 
 def candidates():
-    if sys.platform == 'darwin':
-        return [base / name for base in (Path('/Applications'), Path.home() / 'Applications')
-                for name in ('MuMuPlayer.app', 'MuMuPlayer Pro.app')]
     paths = [Path('D:/Tools/MuMuPlayer')]
     for name in ('ProgramFiles', 'ProgramFiles(x86)', 'LOCALAPPDATA'):
         if os.environ.get(name):
@@ -87,7 +82,7 @@ def status(root):
 def save(root, directory):
     path = Path(directory.strip()).expanduser()
     if not path.is_absolute() or not valid(path):
-        raise ValueError('请选择有效的 MuMu 安装目录（Windows 须包含 CLI 和 SDK；Mac 选择 .app）。')
+        raise ValueError('请选择有效的 MuMu 安装目录（须包含 Windows CLI 和 SDK）。')
     value = load(root)
     value['root'] = str(path.resolve())
     atomic_json(Path(root) / 'config/mumu.json', value)

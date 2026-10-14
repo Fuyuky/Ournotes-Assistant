@@ -4,11 +4,11 @@ on:
     inputs:
       version:
         description: Stable version
-        default: '0.1.0'
+        default: '0.1.1'
         required: true
         type: string
       publish:
-        description: Publish both verified ZIP files
+        description: Publish verified Windows ZIP
         default: false
         type: boolean
 permissions:
@@ -18,15 +18,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   build:
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - os: windows-2022
-            platform: windows-x64
-          - os: macos-15
-            platform: macos-arm64
-    runs-on: ${{ matrix.os }}
+    runs-on: windows-2022
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-python@v6
@@ -43,7 +35,7 @@ jobs:
         env:
           RELEASE_SIGNING_KEY: ${{ secrets.RELEASE_SIGNING_KEY }}
           RELEASE_VERSION: ${{ inputs.version }}
-          RELEASE_PLATFORM: ${{ matrix.platform }}
+          RELEASE_PLATFORM: windows-x64
         run: |
           $ErrorActionPreference = 'Stop'
           if ($env:RELEASE_VERSION -notmatch '^\d+\.\d+\.\d+$') { throw 'Invalid version' }
@@ -58,13 +50,13 @@ jobs:
         shell: pwsh
         env:
           RELEASE_VERSION: ${{ inputs.version }}
-          RELEASE_PLATFORM: ${{ matrix.platform }}
+          RELEASE_PLATFORM: windows-x64
         run: |
           uv run python scripts/verify_release.py --package "dist/ournotes-$env:RELEASE_VERSION-$env:RELEASE_PLATFORM.zip" --public-key deploy/client/update-public-key.txt --platform $env:RELEASE_PLATFORM
           if ($LASTEXITCODE -ne 0) { throw 'Portable runtime verification failed' }
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.platform }}
+          name: windows-x64
           path: dist/*.zip
           if-no-files-found: error
           retention-days: 7
@@ -81,14 +73,13 @@ jobs:
         with:
           path: release-assets
           merge-multiple: true
-      - name: Publish only the two platform ZIP files
+      - name: Publish the Windows ZIP
         env:
           GH_TOKEN: ${{ github.token }}
           RELEASE_VERSION: ${{ inputs.version }}
         run: |
           set -euo pipefail
-          test "$(find release-assets -type f | wc -l)" -eq 2
+          test "$(find release-assets -type f | wc -l)" -eq 1
           test -f "release-assets/ournotes-${RELEASE_VERSION}-windows-x64.zip"
-          test -f "release-assets/ournotes-${RELEASE_VERSION}-macos-arm64.zip"
           gh release create "v${RELEASE_VERSION}" --draft --target "$GITHUB_SHA" --title "OurNotes Assistant ${RELEASE_VERSION}" --notes-file deploy/client/RELEASE_NOTES.md release-assets/*.zip
           gh release edit "v${RELEASE_VERSION}" --draft=false --latest

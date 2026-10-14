@@ -1,12 +1,10 @@
-"""Local Mihomo controller transports: Windows pipe, Unix socket or loopback HTTP."""
+"""Local Mihomo controller transports: Windows pipe or loopback HTTP."""
 from __future__ import annotations
 
 import http.client
 import io
 import json
 import os
-import socket
-import sys
 import time
 from pathlib import Path
 from urllib.parse import urlsplit
@@ -25,8 +23,7 @@ def controller_config():
     if selected:
         paths = [Path(selected).expanduser()]
     else:
-        base = (Path.home() / 'Library/Application Support' if sys.platform == 'darwin'
-                else Path(os.environ['APPDATA']))
+        base = Path(os.environ['APPDATA'])
         folders = ('cashrev', 'io.github.clash-verge-rev.clash-verge-rev',
                    'io.github.clash-verge.clash-verge')
         paths = [base / folder / name for folder in folders
@@ -34,7 +31,7 @@ def controller_config():
     for path in paths:
         if path.is_file():
             config = yaml.safe_load(path.read_text('utf-8')) or {}
-            if any(config.get(name) for name in ('external-controller-pipe', 'external-controller-unix',
+            if any(config.get(name) for name in ('external-controller-pipe',
                                                  'external-controller')):
                 return config
     raise ValueError('未找到本机Clash控制接口配置。')
@@ -53,7 +50,7 @@ def open_pipe(path):
             time.sleep(.05)
 
 
-def request(path, body=None, *, method='GET', pipe=None, unix=None, address=None, secret=''):
+def request(path, body=None, *, method='GET', pipe=None, address=None, secret=''):
     if not path.startswith('/') or any(char in path for char in '\r\n'):
         raise ValueError('Clash控制路径无效。')
     if any(char in secret for char in '\r\n'):
@@ -62,40 +59,23 @@ def request(path, body=None, *, method='GET', pipe=None, unix=None, address=None
         raise ValueError('Clash控制方法无效。')
     headers = {'Authorization': 'Bearer ' + secret, 'Content-Type': 'application/json'}
     data = json.dumps(body, ensure_ascii=False).encode() if body is not None else b''
-    if pipe or unix:
+    if pipe:
         wire = (f'{method} {path} HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n'
                 + ''.join(f'{key}: {value}\r\n' for key, value in headers.items())
                 + f'Content-Length: {len(data)}\r\n\r\n').encode() + data
-        if unix:
-            if sys.platform != 'darwin' or not Path(unix).is_absolute():
-                raise ValueError('Clash Unix控制接口只接受macOS本机绝对路径。')
-            channel = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-            channel.settimeout(5)
-            try:
-                channel.connect(unix)
-                channel.sendall(wire)
-                response = http.client.HTTPResponse(channel)
-                response.begin()
-                raw = response.read(4 * 1024 * 1024 + 1)
-                status = response.status
-            finally:
-                channel.close()
-        else:
-            if os.name != 'nt' or not str(pipe).startswith('\\\\.\\pipe\\'):
-                raise ValueError('Clash命名管道只接受Windows本机管道。')
-            class PipeSocket:
-                def __init__(self, stream):
-                    self.stream = stream
-
-                def makefile(self, *_):
-                    return io.BufferedReader(self.stream)
-
-            with open_pipe(pipe) as stream:
-                stream.write(wire)
-                response = http.client.HTTPResponse(PipeSocket(stream))
-                response.begin()
-                raw = response.read(4 * 1024 * 1024 + 1)
-                status = response.status
+        if os.name != 'nt' or not str(pipe).startswith('\\\\.\\pipe\\'):
+            raise ValueError('Clash命名管道只接受Windows本机管道。')
+        class PipeSocket:
+            def __init__(self, stream):
+                self.stream = stream
+            def makefile(self, *_):
+                return io.BufferedReader(self.stream)
+        with open_pipe(pipe) as stream:
+            stream.write(wire)
+            response = http.client.HTTPResponse(PipeSocket(stream))
+            response.begin()
+            raw = response.read(4 * 1024 * 1024 + 1)
+            status = response.status
         if not 200 <= status < 300:
             raise ValueError('Clash拒绝控制请求，请核对本机控制配置。')
     else:

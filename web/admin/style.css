@@ -37,3 +37,7 @@ button:focus-visible,.admin-nav a:focus-visible,header .brand:focus-visible{outl
 #activity-form{display:flex;align-items:end;gap:12px;margin:20px 0}#activity-form label{flex:1;min-width:0}#activity-form select{display:block;width:100%;margin-top:6px}
 
 .statistics .actions{flex-wrap:wrap;justify-content:flex-end}
+
+.account-preview {margin: 20px 0;}
+.account-preview img {display: block; width: 100%; height: auto; margin-top: 12px;}
+.preview-download {display: inline-block; padding: 8px 0;}

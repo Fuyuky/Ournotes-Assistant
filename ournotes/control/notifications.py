@@ -5,7 +5,6 @@ import hashlib
 import json
 import os
 import queue
-import subprocess
 import sys
 import threading
 import time
@@ -16,28 +15,7 @@ from ournotes.common.files import atomic_json
 from ournotes.platforms.system import current_platform
 
 
-class MacNotifier:
-    """Apple's notification bridge; delivery follows macOS notification permissions."""
-    def __init__(self, url):
-        self.url = url
-
-    def send(self, title, body):
-        # User text is argv data, never AppleScript source or shell code.
-        script = 'on run argv\ndisplay notification (item 2 of argv) with title (item 1 of argv)\nend run'
-        body = body.replace('点击打开控制台', '打开控制台')
-        subprocess.run(['/usr/bin/osascript', '-e', script, title[:60], body[:240]],
-                       capture_output=True, check=True, timeout=10)
-
-    def pump(self):
-        pass
-
-    def close(self):
-        pass
-
-
 def native_notifier(url):
-    if sys.platform == 'darwin':
-        return MacNotifier(url)
     return WindowsNotifier(url)
 
 
@@ -119,7 +97,7 @@ class Notifications:
         self.runtime, self.rebind, self.factory = runtime, rebind, factory
         self.lock, self.stop = threading.RLock(), threading.Event()
         self.tests, self.thread = queue.Queue(maxsize=1), None
-        self.available = sys.platform in ('win32', 'darwin')
+        self.available = sys.platform == 'win32'
         self.platform = current_platform() if self.available else 'unsupported'
         self.error, self.last_sent = '', None
         try:

@@ -7,7 +7,7 @@ import platform as host_platform
 import sys
 from pathlib import Path
 
-SUPPORTED_PLATFORMS = ("windows-x64", "macos-arm64")
+SUPPORTED_PLATFORMS = ("windows-x64",)
 
 
 def current_platform(system=None, machine=None):
@@ -15,16 +15,12 @@ def current_platform(system=None, machine=None):
     machine = (host_platform.machine() if machine is None else machine).lower()
     if system == "win32" and machine in ("amd64", "x86_64"):
         return "windows-x64"
-    if system == "darwin" and machine in ("arm64", "aarch64"):
-        return "macos-arm64"
-    raise RuntimeError("客户端仅支持 Windows x64 与 Apple Silicon macOS；不支持 Intel Mac。")
+    raise RuntimeError("客户端仅支持 Windows x64。")
 
 
 def app_data_dir():
     if sys.platform == "win32":
         return Path(os.environ["LOCALAPPDATA"]) / "OurNotesAssistant"
-    if sys.platform == "darwin":
-        return Path.home() / "Library/Application Support/OurNotesAssistant"
     raise RuntimeError("此系统没有受支持的客户端凭据存储。")
 
 

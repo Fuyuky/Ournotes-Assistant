@@ -2,7 +2,6 @@ import base64
 import hashlib
 import io
 import json
-import os
 import zipfile
 from contextlib import nullcontext
 
@@ -22,7 +21,7 @@ def release(tmp_path, platform='windows-x64', extra=None):
         serialization.Encoding.Raw, serialization.PublicFormat.Raw)).decode()
     version = '0.2.0'
     prefix = f'versions/{version}/'
-    runtime = 'runtime/python.exe' if platform == 'windows-x64' else 'runtime/bin/python3'
+    runtime = 'runtime/python.exe'
     digest = hashlib.sha256(b'{}').hexdigest()
     snapshot = 'snapshots/' + 'a' * 32
     files = {prefix + runtime: b'fake runtime', prefix + 'app/scripts/webui.py': b'pass',
@@ -33,14 +32,13 @@ def release(tmp_path, platform='windows-x64', extra=None):
                  'sha256': {'catalog.json': digest, 'pools.json': digest}}).encode(),
              f'user-data/data/catalog/{snapshot}/catalog.json': b'{}',
              f'user-data/data/catalog/{snapshot}/pools.json': b'{}'}
-    files.update({'boot.ps1': b'new boot', '启动控制台.cmd': b'new cmd'} if platform == 'windows-x64'
-                 else {'boot.command': b'new boot', '启动控制台.command': b'new command'})
+    files.update({'boot.ps1': b'new boot', '启动控制台.cmd': b'new cmd'})
     files.update(extra or {})
     package = tmp_path / f'ournotes-{version}-{platform}.zip'
     manifest = {'schema': 3, 'product': 'ournotes-assistant', 'platform': platform,
                 'version': version, 'channel': 'stable', 'artifact': {'name': package.name},
                 'files': {name: hashlib.sha256(raw).hexdigest() for name, raw in files.items()},
-                'executables': [prefix + runtime] if platform == 'macos-arm64' else []}
+                'executables': []}
     envelope = {'manifest': manifest, 'signature': base64.b64encode(key.sign(canonical(manifest))).decode()}
     with zipfile.ZipFile(package, 'w') as archive:
         for name, raw in files.items():
@@ -61,7 +59,7 @@ def installation(tmp_path, platform='windows-x64'):
     return root, data
 
 
-@pytest.mark.parametrize('platform', ['windows-x64', 'macos-arm64'])
+@pytest.mark.parametrize('platform', ['windows-x64'])
 def test_complete_zip_upgrades_launchers_and_materials_without_touching_state(tmp_path, platform):
     package, envelope, public = release(tmp_path, platform)
     root, data = installation(tmp_path, platform)
@@ -72,9 +70,6 @@ def test_complete_zip_upgrades_launchers_and_materials_without_touching_state(tm
     assert (data / 'config/mumu.json').read_bytes() == b'user config'
     assert (data / 'state/runtime.sqlite3').read_bytes() == b'pending transaction'
     assert (data / 'data/catalog/current.json').is_file()
-    if platform == 'macos-arm64' and os.name != 'nt':
-        assert (root / 'versions/0.2.0/runtime/bin/python3').stat().st_mode & 0o111
-        assert (root / 'boot.command').stat().st_mode & 0o111
 
 
 @pytest.mark.parametrize('name', ['user-data/state/runtime.sqlite3', 'user-data/config/mumu.json',

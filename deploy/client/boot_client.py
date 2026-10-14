@@ -55,7 +55,7 @@ def boot(root):
                        env=env, check=True)
     url = 'http://127.0.0.1:8766'
     if not ready(url):
-        options = {'creationflags': subprocess.CREATE_NO_WINDOW} if os.name == 'nt' else {'start_new_session': True}
+        options = {'creationflags': subprocess.CREATE_NO_WINDOW}
         # Keep only the latest bootstrap's early import/launch errors.
         with (logs / 'boot.log').open('wb') as output:
             process = subprocess.Popen([sys.executable, '-X', 'utf8', str(entry), '--no-browser'],

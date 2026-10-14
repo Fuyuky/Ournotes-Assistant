@@ -55,7 +55,7 @@ class GitHubReleases:
     def package(self, version, name):
         from ournotes.updates.manifest import version_tuple
         version_tuple(version)
-        if name not in (f'ournotes-{version}-windows-x64.zip', f'ournotes-{version}-macos-arm64.zip'):
+        if name != f'ournotes-{version}-windows-x64.zip':
             raise ValueError('发行包名称无效。')
         url = f'https://github.com/{self.repository}/releases/download/v{version}/{name}'
         headers = {'User-Agent': 'OurNotes-Updater'}

@@ -11,7 +11,7 @@ import numpy as np
 
 from ournotes.integrations.cloud_client import CloudError
 from ournotes.integrations.mumu import MuMuSdk, ensure_game
-from ournotes.rebind.vision import field_text, input_focused, registered_email, scene
+from ournotes.rebind.vision import field_text, input_focused, scene
 from ournotes.runtime.input_policy import InputPolicy
 from ournotes.runtime.mail import (
     MAIL_REQUEST_ATTEMPTS,
@@ -37,7 +37,6 @@ class Flow:
         self.last_step = "初始化"
         self.last_scene = "unknown"
         self.proxy_permit = None
-        self.waiting_target = False
 
     def read(self):
         self.service.check()
@@ -48,9 +47,6 @@ class Flow:
             self.observer.last_loading_at = time.monotonic()
             self.observation = Observation(self.image, [], 'loading', 'sdk_loading')
             return 'loading'
-        if page == 'bind_form' and getattr(self, 'waiting_target', False) and registered_email(self.fields, self.image):
-            self.observation = Observation(self.image, [], 'registered_email', 'registered_email')
-            return 'registered_email'
         self.observation = self.observer.read(self.image, phase='logout', account_id=self.task['id'])
         if self.observation.scene == 'network_error':
             raise ValueError('游戏网络连接失败；未重发邮件或登录，请核查后停止任务。')
@@ -358,22 +354,23 @@ class Flow:
     def target_confirmation(self):
         revision = 0
         while True:
-            self.last_step = '提交目标邮箱并等待验证页面或已注册提示'
+            self.last_step = '提交目标邮箱并等待验证页面'
             self.send_mail('b_send_intent', '发送目标邮箱验证邮件…', 'bind_form', 800, 628, revision=revision)
-            self.waiting_target = True
             try:
-                result = self.until(lambda page: page in ('confirm_b', 'registered_email'))
-            finally:
-                self.waiting_target = False
-            if result == 'confirm_b':
+                self.until(lambda page: page == 'confirm_b')
+            except ValueError:
+                # Any failed target-send outcome uses the explicit replacement flow.
+                # Cancellation and failures before submission still propagate.
+                self.service.check()
+            else:
                 return
             folder = self.service.root / 'results/maintenance/diagnostics/email-rebind' / self.task['id']
             folder.mkdir(parents=True, exist_ok=True)
-            self.image.save(folder / f'registered-{revision}.png')
+            self.image.save(folder / f'target-send-failed-{revision}.png')
             previous = self.task['email'].split('@')[0]
             email, revision = self.service.wait_target_email()
             self.task['email'] = email
-            self.until(lambda page: page == 'bind_form' and not registered_email(self.fields, self.image), 10)
+            self.until(lambda page: page == 'bind_form', 10)
             local = self.domain('bind_form', email, binding=True)
             self.replace_target(previous, local)
             self.proxy_permit.reserve_rebind_mail()

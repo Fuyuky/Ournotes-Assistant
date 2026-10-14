@@ -39,7 +39,9 @@ def test_client_source_excludes_server_admin_and_user_data(tmp_path):
     assert (target / "ournotes/control/operations.py").is_file()
     assert (target / "scripts/webui.py").is_file()
     for forbidden in ("ournotes_dev", "devtools", "ournotes/cloud", "state", "results", "data", ".venv",
-                      "ournotes/dev_capture.py", "ournotes/runner_ui.py"):
+                      "ournotes/dev_capture.py", "ournotes/runner_ui.py",
+                      "ournotes/platforms/keychain.py", "ournotes/platforms/memory.py",
+                      "ournotes/platforms/mumu_macos.py"):
         assert not (target / forbidden).exists()
     assert {path.name for path in (target / "config").iterdir()} == {"presets.json", "input.json", "storage-policy.json"}
     assert (target / 'scripts/maintain_storage.py').is_file()
@@ -109,51 +111,6 @@ def test_initial_resources_refuse_site_or_parent_pointer(tmp_path, monkeypatch):
         assert not (tmp_path / 'client').exists()
 
 
-def test_macos_runtime_flattens_internal_links_and_rejects_intel(tmp_path):
-    import io
-    import struct
-    import tarfile
-
-    import pytest
-
-    from scripts.build_release import extract_runtime
-    path = tmp_path / 'python.tar.gz'
-    def archive(cpu):
-        with tarfile.open(path, 'w:gz') as output:
-            raw = struct.pack('<II', 0xFEEDFACF, cpu) + b'fake runtime'
-            item = tarfile.TarInfo('python/bin/python3.12')
-            item.size, item.mode = len(raw), 0o755
-            output.addfile(item, io.BytesIO(raw))
-            link = tarfile.TarInfo('python/bin/python3')
-            link.type, link.linkname = tarfile.SYMTYPE, 'python3.12'
-            output.addfile(link)
-    archive(0x0100000C)
-    target = tmp_path / 'mac'
-    target.mkdir()
-    assert extract_runtime(path, target, 'macos-arm64') == {'runtime/bin/python3', 'runtime/bin/python3.12'}
-    assert not (target / 'bin/python3').is_symlink()
-    archive(0x01000007)
-    with pytest.raises(ValueError, match='Apple Silicon'):
-        extract_runtime(path, tmp_path / 'intel', 'macos-arm64')
-
-
-def test_mac_initial_zip_preserves_executable_boot_and_runtime(tmp_path):
-    import zipfile
-
-    from scripts.build_release import pack_tree
-    source = tmp_path / 'initial'
-    (source / 'runtime/bin').mkdir(parents=True)
-    (source / 'boot.command').write_text('#!/bin/bash\n')
-    (source / 'runtime/bin/python3').write_bytes(b'fake')
-    package = tmp_path / 'client.zip'
-    pack_tree(source, package, {'runtime/bin/python3'})
-    with zipfile.ZipFile(package) as archive:
-        for name in ('boot.command', 'runtime/bin/python3'):
-            assert archive.getinfo(name).external_attr >> 16 & 0o111
-            assert archive.getinfo(name).compress_type == zipfile.ZIP_DEFLATED
-
-
-
 def test_release_zip_excludes_runtime_generated_bytecode(tmp_path):
     import zipfile
 
@@ -185,3 +142,13 @@ def test_build_cleanup_keeps_packages_and_refuses_output_root(tmp_path):
     assert artifact.is_file() and stage.is_dir()
     remove_build_workspace(output, stage)
     assert not stage.exists() and artifact.read_bytes() == b'preserved-package'
+
+
+def test_removed_platform_cannot_build_or_extract(tmp_path):
+    import pytest
+
+    from scripts.build_release import build, extract_runtime
+    with pytest.raises(ValueError, match='Windows x64'):
+        build(tmp_path, '0.1.1', tmp_path / 'missing', tmp_path / 'key', platform='macos-arm64')
+    with pytest.raises(ValueError, match='Windows x64'):
+        extract_runtime(tmp_path / 'missing', tmp_path, 'macos-arm64')

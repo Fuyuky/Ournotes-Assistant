@@ -1,4 +1,4 @@
-"""Whole-operation leases using Windows CRT locks or BSD flock on macOS."""
+"""Whole-operation leases using Windows client CRT locks or Linux server flock."""
 from __future__ import annotations
 
 import errno

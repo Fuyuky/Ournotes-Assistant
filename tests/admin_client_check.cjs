@@ -46,12 +46,13 @@ function fixture() {
   nodes['preset-form'].append(nodes['preset-fields']); nodes['preset-fields'].append(save);
   const requests = [];
   const context = vm.createContext({URLSearchParams, Date, Number, Object, Promise,
+    URL: {createObjectURL:() => 'blob:synthetic-preview', revokeObjectURL() {}},
     Option: function(text, value) {const option = new Element('option'); option.textContent = text; option.value = value; return option;},
     document: {getElementById:id => nodes[id], createElement:tag => new Element(tag), createDocumentFragment:() => new Element('fragment'), querySelectorAll:() => []},
     window: {addEventListener() {}, confirm:() => true}, location: {hash:'',protocol:'http:',host:'fixture.test'},
     fetch: (url, options) => {
       if (url === '/admin/api/session') return Promise.resolve({ok:false,status:401,json:async () => ({detail:'合成会话尚未登录'})});
-      return new Promise(resolve => requests.push({url,options,reply(value, status = 200) {resolve({ok:status < 400,status,json:async () => value});}}));
+      return new Promise(resolve => requests.push({url,options,reply(value, status = 200) {resolve({ok:status < 400,status,json:async () => value,blob:async () => value});}}));
     }, setTimeout() {}, crypto: {randomUUID:() => 'synthetic-request'}});
   vm.runInContext(fs.readFileSync(path.join(__dirname, '../web/admin/app.js'), 'utf8'), context);
   return {nodes,requests,context,run:source => vm.runInContext(source, context)};
@@ -130,6 +131,21 @@ const page = offset => ({total:45,offset,limit:20,preset_options:options,account
   const text = history.children.map(value => value.textContent).join(' ');
   assert.doesNotMatch(text, /预设 #0|pool-12/, 'A server-resolved unknown historical identity must not be inferred from a numeric name');
   assert.match(text, /合成梦限卡池/);
+  const generate = nodes['account-detail'].children[0].children.find(value => value.textContent === '生成预览图');
+  const preview = nodes['account-detail'].children.find(value => value.className === 'account-preview');
+  const failedPreview = generate.emit('click');
+  assert.equal(generate.disabled, true); assert.equal(generate.textContent, '生成中…');
+  assert.equal(requests.at(-1).url, '/admin/api/accounts/8/preview.png');
+  requests.at(-1).reply({detail:'预览图暂时不可用'}, 503); await failedPreview;
+  assert.equal(preview.hidden, true); assert.equal(generate.disabled, false);
+  assert.equal(nodes.notice.textContent, '预览图暂时不可用');
+  const generated = generate.emit('click'); requests.at(-1).reply('png-data'); await generated;
+  assert.equal(preview.hidden, false);
+  assert.equal(preview.children[1].download, '账号-8-预览图.png');
+  assert.equal(preview.children[2].src, 'blob:synthetic-preview');
+  const late = generate.emit('click'); run('detailRequest++');
+  preview.replaceChildren(); requests.at(-1).reply('late-png'); await late;
+  assert.equal(preview.children.length, 0, 'A late response must not replace another account preview');
   nodes['scope'].value = 'unused'; nodes['statistics-preset'].value = '0';
   const stats = run('statistics()');
   const req = requests.at(-1);

@@ -41,7 +41,9 @@ Fuyuki可增删管理员，无注册。所有管理员均可操作全部完整�
 
 手动邮件只面向完整账号，默认十分钟、可选二十四小时，每种用途只显示最新邮件和北京时间收件时间。服务器验证最新十分钟链接后执行，独立幂等回执；读取不执行，不消费自动收码票据。手工与自动不互查，标记已使用独立。Gmail授权只由项目外私有本机工具配合服务器维护凭据操作，网站只看健康。
 
-统一发行无业务variant，平台分Windows x64和macOS Apple Silicon。GitHub Actions 分平台构建；每个平台一个完整 ZIP，初装与更新共用，签名清单内置，Release 不另发更新或校验附件。公开仓库Fuyuky/Ournotes-Assistant匿名检查稳定Release，固定公钥验证签名及平台，不自动安装。Mac适配代码和构建不等于Mac MuMu实机执行验收。
+自 v0.1.1 起客户端仅支持 Windows x64，无业务variant。GitHub Actions 在 Windows 构建；每版一个完整 ZIP，初装与更新共用，签名清单内置，Release 不另发更新或校验附件。公开仓库Fuyuky/Ournotes-Assistant匿名检查稳定Release，固定公钥验证签名及平台，不自动安装。
+
+发布接手先读 [客户端构建与更新](docs/客户端构建与更新.md) 的“发布操作与接手”：包含公开 checkout、Actions、签名凭据定位、同版本替换限制和已发布基线。Mac 平台适配、启动器及构建分支已移除；Linux 服务器共用能力保留。
 
 ## 恢复和维护
 

@@ -29,7 +29,6 @@ class ClashController:
         from ournotes.platforms.proxy import controller_config
         config = controller_config()
         self.pipe = config.get('external-controller-pipe')
-        self.unix = config.get('external-controller-unix')
         self.address = config.get('external-controller')
         self.secret = config.get('secret', '')
 
@@ -48,7 +47,7 @@ class ClashController:
     def _request_once(self, path, body=None, *, method):
         from ournotes.platforms.proxy import request
         return request(path, body, method=method, pipe=getattr(self, 'pipe', None),
-                       unix=getattr(self, 'unix', None), address=getattr(self, 'address', None),
+                       address=getattr(self, 'address', None),
                        secret=self.secret)
 
     def selection(self):

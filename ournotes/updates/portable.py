@@ -35,12 +35,11 @@ def validate_package(package, public_key, platform=None, destination=None):
         if set(names) != set(files) | {'release.json'}:
             raise ValueError('发布包包含清单外文件或缺少文件。')
         prefix = f"versions/{manifest['version']}/"
-        entry = 'runtime/python.exe' if manifest['platform'] == 'windows-x64' else 'runtime/bin/python3'
+        entry = 'runtime/python.exe'
         required = {'current.json', 'update-public-key.txt', 'boot_client.py',
                     prefix + entry, prefix + 'app/scripts/webui.py',
                     prefix + 'app/ournotes/control/web.py', 'user-data/data/catalog/current.json'}
-        required.update({'boot.ps1', '启动控制台.cmd'} if manifest['platform'] == 'windows-x64'
-                        else {'boot.command', '启动控制台.command'})
+        required.update({'boot.ps1', '启动控制台.cmd'})
         if not required <= files.keys():
             raise ValueError('发布包缺少启动必需文件。')
         for item in items:
@@ -61,8 +60,6 @@ def validate_package(package, public_key, platform=None, destination=None):
                 target.parent.mkdir(parents=True, exist_ok=True)
                 with archive.open(item) as source, target.open('xb') as output:
                     shutil.copyfileobj(source, output)
-                if item.filename in manifest.get('executables', []) or item.filename.endswith('.command'):
-                    target.chmod(0o755)
         pointer = json.loads(archive.read('current.json'))
         if pointer != {'version': manifest['version'], 'platform': manifest['platform']}:
             raise ValueError('版本指针与签名不一致。')
@@ -87,8 +84,6 @@ def replace_file(path, content):
             output.flush()
             os.fsync(output.fileno())
         os.replace(name, path)
-        if path.suffix == '.command':
-            path.chmod(0o755)
     finally:
         Path(name).unlink(missing_ok=True)
 

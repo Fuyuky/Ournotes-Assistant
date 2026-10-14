@@ -12,6 +12,11 @@ let presetDocument = null, activityDocument = null, announcementVersion = null;
 let reportRequest = 0, accountsRequest = 0, detailRequest = 0;
 let accountsLoading = false, presetKey = null, presetsBusy = false;
 const accountPageSize = 20;
+let previewUrl = null;
+function clearPreview() {
+  if (previewUrl) URL.revokeObjectURL(previewUrl);
+  previewUrl = null;
+}
 
 async function api(path, body, method = body === undefined ? 'GET' : 'POST') {
   const response = await fetch('/admin/api/' + path, {method, credentials: 'same-origin', cache: 'no-store',
@@ -33,6 +38,7 @@ function loggedIn(value) {
   $('admins-tab').hidden = !value?.is_superadmin;
   $('identity').textContent = value ? value.username + (value.is_superadmin ? ' · 超级管理员' : ' · 管理员') : '';
   if (!value) {
+    clearPreview();
     accountsRequest++; detailRequest++; offset = total = 0; accountsBusy(false);
     socket?.close(); socket = null; selected = credential = null;
     $('credential').textContent = ''; $('credential').hidden = true; $('credential-copy').hidden = true;
@@ -127,9 +133,30 @@ async function detail(index) {
   if (catalog && !presetDocument) presetDocument = catalog;
   selected = source.accounts[0];
   if (!selected) throw new Error('没有找到完整成功的账号。');
+  clearPreview();
   const value = selected.result, box = $('account-detail'); box.hidden = false; box.replaceChildren();
   const heading = node('div', undefined, 'heading'); heading.append(node('h2', '账号 #' + value.index),
     button('打印展示', () => window.print())); box.append(heading);
+  const previewBox = node('section', undefined, 'account-preview'); previewBox.hidden = true;
+  const generate = button('生成预览图', async () => {
+    generate.textContent = '生成中…';
+    try {
+      const response = await fetch(`/admin/api/accounts/${value.index}/preview.png`, {credentials: 'same-origin', cache: 'no-store'});
+      if (!response.ok) {
+        if (response.status === 401) {loggedIn(null); throw new Error('请重新登录后生成预览图。');}
+        const error = await response.json().catch(() => ({}));
+        throw new Error(error.detail || '预览图生成失败，请稍后重试。');
+      }
+      const blob = await response.blob();
+      if (request !== detailRequest || !session) return;
+      clearPreview(); previewUrl = URL.createObjectURL(blob);
+      const image = node('img'); image.src = previewUrl; image.alt = `账号 #${value.index} 卡牌预览图`;
+      const download = node('a', '下载 PNG', 'preview-download'); download.href = previewUrl;
+      download.download = `账号-${value.index}-预览图.png`;
+      previewBox.replaceChildren(node('h3', '账号预览图'), download, image); previewBox.hidden = false;
+    } finally {generate.textContent = '生成预览图';}
+  });
+  heading.append(generate); box.append(previewBox);
   box.append(node('p', `上传用户：${selected.owner_username} · ${value.pull_count} 抽 · ${selected.projection.ssr_total} SSR`, 'muted'),
     node('p', value.email, 'private-email'));
   if (selected.projection.activity) box.append(node('p', `${selected.projection.activity.label} UP ${selected.projection.activity.up_count}/${selected.projection.activity.up_total}`, 'activity-tag'));
@@ -295,8 +322,8 @@ async function route() {
   try {
     if (view === 'accounts') {
       if (match) {if (!$('account-list').children.length) await accounts(); await detail(Number(match[1]));}
-      else {selected = null; detailRequest++; $('account-detail').hidden = true; await accounts();}
-    } else {detailRequest++;}
+      else {clearPreview(); selected = null; detailRequest++; $('account-detail').hidden = true; await accounts();}
+    } else {clearPreview(); detailRequest++;}
     if (view === 'statistics') await statistics();
     if (view === 'presets') await presets();
     if (view === 'activities') await activities();

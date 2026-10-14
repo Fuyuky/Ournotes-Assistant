@@ -1,9 +1,7 @@
 from __future__ import annotations
 
-import hashlib
 import json
 import os
-import sys
 import tempfile
 import time
 from contextlib import contextmanager
@@ -20,7 +18,7 @@ def data_dir() -> Path:
 
 
 class SecretStore:
-    """Current-user DPAPI or login Keychain; file leases are shared on both OSes."""
+    """Current-user DPAPI credentials and shared file leases."""
 
     def __init__(self, root: Path | None = None):
         self.root = root or data_dir()
@@ -31,16 +29,9 @@ class SecretStore:
         if not name or any(c not in 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_' for c in name):
             raise ValueError('凭据或资源锁名称无效。')
 
-    def keychain(self):
-        from ournotes.platforms.keychain import Keychain
-        identity = hashlib.sha256(str(self.root.resolve()).encode()).hexdigest()[:24]
-        return Keychain('OurNotesAssistant:' + identity)
 
     def load(self, name: str) -> dict | None:
         self.validate_name(name)
-        if sys.platform == 'darwin':
-            raw = self.keychain().load(name)
-            return json.loads(raw.decode('utf-8')) if raw is not None else None
         import win32crypt
 
         path = self.root / f"{name}.dpapi"
@@ -52,9 +43,6 @@ class SecretStore:
     def save(self, name: str, value: dict):
         self.validate_name(name)
         raw = json.dumps(value, ensure_ascii=False).encode("utf-8")
-        if sys.platform == 'darwin':
-            self.keychain().save(name, raw)
-            return
         import win32crypt
         encrypted = win32crypt.CryptProtectData(raw, "OurNotes Assistant", None, None, None, 1)
         fd, temporary = tempfile.mkstemp(dir=self.root, suffix=".dpapi")
@@ -69,9 +57,6 @@ class SecretStore:
 
     def delete(self, name: str):
         self.validate_name(name)
-        if sys.platform == 'darwin':
-            self.keychain().delete(name)
-            return
         (self.root / f'{name}.dpapi').unlink(missing_ok=True)
 
     @contextmanager

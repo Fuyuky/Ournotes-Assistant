@@ -6,12 +6,12 @@ import argparse
 import hashlib
 import json
 import math
+import os
 import re
 from collections import Counter
 from functools import lru_cache
 from pathlib import Path
 
-import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
 from ournotes.paths import DATA_ROOT as ROOT
@@ -25,25 +25,41 @@ PURPLE = "#9671bc"
 @lru_cache(maxsize=128)
 def font(size, bold=False):
     name = "msyhbd.ttc" if bold else "msyh.ttc"
-    candidates = [Path("C:/Windows/Fonts") / name,
+    candidates = ([Path("C:/Windows/Fonts") / name] if os.name == "nt" else []) + [
+                  Path("/usr/local/share/fonts/microsoft-yahei") / name,
                   Path('/usr/share/fonts/opentype/noto') / ('NotoSansCJK-Bold.ttc' if bold else 'NotoSansCJK-Regular.ttc')]
     for candidate in candidates:
         if candidate.is_file():
             return ImageFont.truetype(str(candidate), size)
-    raise ValueError('卡牌展示图缺少中文字体，请安装 Noto Sans CJK。')
+    raise ValueError('卡牌展示图缺少中文字体，请配置微软雅黑或安装 Noto Sans CJK。')
 
 
 def gradient(size, stops):
     w, h = size
-    t = (np.linspace(0, 1, w)[None, :] + np.linspace(0, 1, h)[:, None]) / 2
-    colors = np.array([tuple(bytes.fromhex(c.lstrip("#"))) for c in stops])
-    array = np.stack([np.interp(t, np.linspace(0, 1, len(colors)), colors[:, k]) for k in range(3)], axis=2)
-    return Image.fromarray(array.astype("uint8"))
+    ramp = Image.linear_gradient('L')
+    vertical = ramp.resize((w, h))
+    horizontal = ramp.rotate(90).resize((w, h))
+    field = Image.blend(horizontal, vertical, .5)
+    colors = [tuple(bytes.fromhex(c.lstrip('#'))) for c in stops]
+    palette = []
+    for value in range(256):
+        position = value / 255 * (len(colors) - 1)
+        left = min(int(position), len(colors) - 2)
+        weight = position - left
+        palette.extend(round(a * (1 - weight) + b * weight) for a, b in zip(colors[left], colors[left + 1]))
+    field.putpalette(palette)
+    return field.convert('RGB')
 
 
 def render(account_path: Path, output: Path, catalog_root=ROOT / "data/catalog/site"):
     raw = account_path.read_bytes()
     account = json.loads(raw)
+    manifest = render_account(account, output, catalog_root)
+    return {**manifest, 'source': str(account_path), 'source_sha256': hashlib.sha256(raw).hexdigest()}
+
+
+def render_account(account, output, catalog_root=ROOT / 'data/catalog/site'):
+    """Render validated account data to a path or binary stream, without private fields."""
     if account["status"] != "complete" or account.get("unknown_slots", 0):
         raise ValueError("预览要求完整且无未知结果的账号档案。")
     catalog = json.loads((catalog_root / "catalog.json").read_text("utf-8"))
@@ -59,7 +75,7 @@ def render(account_path: Path, output: Path, catalog_root=ROOT / "data/catalog/s
         ref = artwork[key]
         if ref["rarity"] != card["rarity"]:
             raise ValueError(f"卡牌稀有度与素材目录不一致：{key}")
-        owned.setdefault(key, dict(card, count=0, image=ref["image"]))["count"] += count
+        owned.setdefault(key, dict(card, title=ref["title"], name=ref["name"], count=0, image=ref["image"]))["count"] += count
     cards = sorted(owned.values(), key=lambda c: (c["kind"], c["rarity"] != "SSR", c["id"]))
     for kind in ("member", "support"):
         for rarity in ("SSR", "SR"):
@@ -130,7 +146,7 @@ def render(account_path: Path, output: Path, catalog_root=ROOT / "data/catalog/s
         )
         pill((x + 13, y + 13, x + 77, y + 47), c["rarity"], "#f9f8ff", "#755ba6" if is_ssr else "#957139", 17)
         pill((x + w - 76, y + 13, x + w - 13, y + 49), f"×{c['count']}", "#27344e", "#ffffff", 20)
-        # Names remain in the JSON's terminology; full titles wrap without clipping.
+        # Catalog names are canonical; full titles wrap without clipping.
         label_font = font(18, True)
         title_lines = []
         line = ""
@@ -211,12 +227,11 @@ def render(account_path: Path, output: Path, catalog_root=ROOT / "data/catalog/s
         y += math.ceil(len(cs) / 6) * (support_h + gap) + 15
     y += 14
     canvas = canvas.crop((0, 0, width, y + 72))
-    output.parent.mkdir(parents=True, exist_ok=True)
-    canvas.save(output)
+    if isinstance(output, Path):
+        output.parent.mkdir(parents=True, exist_ok=True)
+    canvas.save(output, format='PNG')
     manifest = {
         "index": account["alias_index"],
-        "source": str(account_path),
-        "source_sha256": hashlib.sha256(raw).hexdigest(),
         "size": list(canvas.size),
         "totals": dict(totals),
         "unique_cards": len(cards),

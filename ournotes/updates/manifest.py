@@ -37,7 +37,6 @@ def safe_member(name, version=None):
         if len(path.parts) == 1 and name in (
             'current.json', 'update-public-key.txt', 'AGENTS.md', 'README.txt',
             '启动控制台.cmd', 'boot.ps1', 'boot_client.py', 'configure_client.py',
-            '启动控制台.command', 'boot.command',
         ):
             return path
         if path.parts[:3] == ('user-data', 'data', 'catalog'):

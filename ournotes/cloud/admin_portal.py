@@ -6,12 +6,13 @@ import secrets
 import statistics
 import threading
 from collections import Counter
+from io import BytesIO
 from pathlib import Path
 from typing import Literal
 from urllib.parse import urlsplit
 
 from fastapi import Depends, HTTPException, Query, Request, WebSocket
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse, JSONResponse, Response
 from pydantic import BaseModel, ConfigDict, Field
 
 from ournotes.accounts.index import AccountIndex
@@ -58,6 +59,7 @@ def mount(app, store, credential, catalog, publisher=None, *, presets=None, acti
     index = AccountIndex(Path(catalog) / 'unused-admin-source', catalog)
     store.prepare_admin_results(index)
     attempts, lock = {}, threading.Lock()
+    preview_slot = threading.BoundedSemaphore(1)
 
     @app.middleware('http')
     async def headers(request, call_next):
@@ -66,7 +68,7 @@ def mount(app, store, credential, catalog, publisher=None, *, presets=None, acti
             response.headers.update({'Cache-Control': 'no-store', 'Referrer-Policy': 'no-referrer',
                 'X-Content-Type-Options': 'nosniff', 'Content-Security-Policy':
                 "default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self'; "
-                "object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'"})
+                "img-src 'self' blob:; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'"})
         return response
 
     def same_origin(request):
@@ -179,6 +181,23 @@ def mount(app, store, credential, catalog, publisher=None, *, presets=None, acti
         if path is None:
             raise KeyError(identifier)
         return FileResponse(path)
+
+    @app.get('/admin/api/accounts/{index_no}/preview.png')
+    def preview(index_no: int, username=authenticated_dependency):
+        from ournotes.accounts.preview import render_account
+
+        value = store.result_by_index(index_no)['result']
+        if not preview_slot.acquire(blocking=False):
+            raise HTTPException(503, '正在生成其他预览图，请稍后重试。')
+        try:
+            output = BytesIO()
+            render_account({**value, 'status': 'complete', 'alias_index': value['index']}, output, Path(catalog))
+            return Response(output.getvalue(), media_type='image/png', headers={
+                'Content-Disposition': f'attachment; filename="account-{index_no}-preview.png"'})
+        except (OSError, ValueError, KeyError):
+            raise HTTPException(503, '预览图生成失败，请检查服务器卡图素材和中文字体后重试。') from None
+        finally:
+            preview_slot.release()
 
     @app.post('/admin/api/accounts/{index_no}/usage')
     def usage(index_no: int, body: Usage, request: Request, username=authenticated_dependency):

@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import ctypes
 import os
-import sys
 from ctypes import wintypes
 from dataclasses import dataclass
 
@@ -46,9 +45,6 @@ class CommitMemory:
 
 
 def read_commit_memory():
-    if sys.platform == 'darwin':
-        from ournotes.platforms.memory import read_macos_memory
-        return read_macos_memory()
     if os.name != 'nt':
         return None
     api = ctypes.WinDLL('psapi', use_last_error=True).GetPerformanceInfo

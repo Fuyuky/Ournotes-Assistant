@@ -1,6 +1,6 @@
 [project]
 name = "ournotes-assistant"
-version = "0.1.0"
+version = "0.1.1"
 description = "Independent desktop workers with cloud account and mail services"
 requires-python = ">=3.12"
 dependencies = [

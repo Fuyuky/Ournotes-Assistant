@@ -35,7 +35,7 @@ Gmail 日常读取和刷新在服务器。首次授权由 Fuyuki 使用项目之
 
 公开仓库：[Fuyuky/Ournotes-Assistant](https://github.com/Fuyuky/Ournotes-Assistant)。客户端匿名检查稳定 Release，用户点击后下载、验签、安装。不会索取 GitHub 私库凭据，不自动安装。
 
-只区分 Windows x64 和 macOS Apple Silicon 两个平台，不再区分开发版与部署版的业务。Mac 设备适配使用 MuMu `mumutool` 和显式配置的 ADB 端口；Mac 实机执行、签名公证以及干净 Windows 验收需要分别完成，不能由另一个平台的单元测试代替。
+自 v0.1.1 起客户端仅支持 Windows x64，不区分开发版与部署版业务。设备操作使用 MuMu Windows SDK；发行包验收包括签名、依赖、离线 OCR 和控制台启动。
 
 ## 目录与文档
 
@@ -45,7 +45,7 @@ Gmail 日常读取和刷新在服务器。首次授权由 Fuyuki 使用项目之
 - `devtools`：离线诊断、历史导入准备与证据复核，不进入发行包。
 - [接手指南](HANDOFF.md)、[长期维护要求](AGENTS.md)、[架构](docs/架构与部署.md)、[云端账号与管理员](docs/云端账号与管理员.md)、[发行构建](docs/客户端构建与更新.md)、[迁移维护](docs/迁移与维护.md)。
 
-`state/runtime.sqlite3` 保留恢复和未决信息，`state/cloud-sync.sqlite3` 保留待上传成果及已确认哈希回执。服务器保存永久完整成果。本机凭据由 Windows DPAPI 或 macOS Keychain 保护，凭据、已有状态、账号、日志与个人配置不得进入公开仓库或发行包。
+`state/runtime.sqlite3` 保留恢复和未决信息，`state/cloud-sync.sqlite3` 保留待上传成果及已确认哈希回执。服务器保存永久完整成果。本机凭据由 Windows DPAPI 保护，凭据、已有状态、账号、日志与个人配置不得进入公开仓库或发行包。
 
 公开源码所含内容、合成测试命令和私有视觉素材要求见[公开源码与测试素材](docs/公开源码与测试素材.md)。
 

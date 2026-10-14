@@ -1,16 +1,14 @@
-"""Build the unified client for Windows x64 or Apple Silicon from locked wheels."""
+"""Build the unified client for Windows x64 from locked wheels."""
 from __future__ import annotations
 
 import argparse
 import base64
 import json
 import os
-import posixpath
 import shutil
 import struct
 import subprocess
 import sys
-import tarfile
 import urllib.request
 import zipfile
 from pathlib import Path, PurePosixPath
@@ -23,20 +21,16 @@ from ournotes.updates.manifest import canonical, file_hash, verify, version_tupl
 PYTHON_VERSION = "3.12.10"
 RUNTIME_SHA256 = {
     'windows-x64': '4acbed6dd1c744b0376e3b1cf57ce906f9dc9e95e68824584c8099a63025a3c3',
-    'macos-arm64': '2579c9ffcbb0a745f1de3d645612c7466269eb9a23316a54ece49d50c1c9122f',
 }
 RUNTIMES = {
     "windows-x64": (f"python-{PYTHON_VERSION}-embed-amd64.zip",
                     f"https://www.python.org/ftp/python/{PYTHON_VERSION}/python-{PYTHON_VERSION}-embed-amd64.zip"),
-    "macos-arm64": (f"cpython-{PYTHON_VERSION}+20250529-aarch64-apple-darwin-install_only_stripped.tar.gz",
-                    f"https://github.com/astral-sh/python-build-standalone/releases/download/20250529/cpython-{PYTHON_VERSION}%2B20250529-aarch64-apple-darwin-install_only_stripped.tar.gz"),
 }
 SCRIPT_NAMES = {"webui.py", "maintain_storage.py"}
 LOGIN_HISTORY_ASSETS = ("expand.png", "remove.png")
 CLIENT_PACKAGES = {"accounts", "catalogs", "common", "control", "integrations", "platforms",
                    "proxy", "rebind", "reports", "runtime", "ui", "updates", "vision"}
-BOOT_FILES = {"windows-x64": ("AGENTS.md", "启动控制台.cmd", "boot.ps1", "boot_client.py", "configure_client.py"),
-              "macos-arm64": ("AGENTS.md", "启动控制台.command", "boot.command", "boot_client.py", "configure_client.py")}
+BOOT_FILES = {"windows-x64": ("AGENTS.md", "启动控制台.cmd", "boot.ps1", "boot_client.py", "configure_client.py")}
 
 
 def native_imports(path):
@@ -132,71 +126,22 @@ def stage_source(destination):
 
 
 def extract_runtime(source, destination, platform):
-    """Flatten only internal runtime links; never extract archive links to the host."""
-    executables = set()
-    if platform == "windows-x64":
-        with zipfile.ZipFile(source) as archive:
-            for item in archive.infolist():
-                path = PurePosixPath(item.filename)
-                if (path.is_absolute() or "\\" in item.filename or ":" in item.filename
-                        or ".." in path.parts or item.external_attr >> 16 & 0o170000 == 0o120000):
-                    raise ValueError("Python运行时包路径无效。")
-            archive.extractall(destination)
-        binary = destination / "python.exe"
-        raw = binary.read_bytes()
-        if raw[:2] != b'MZ' or struct.unpack_from('<H', raw, struct.unpack_from('<I', raw, 60)[0] + 4)[0] != 0x8664:
-            raise ValueError('Windows运行时必须为x64 Python。')
-        pth = next(destination.glob("python*._pth"))
-        pth.write_text("python312.zip\n.\n../app\nLib/site-packages\nLib/site-packages/win32\nLib/site-packages/win32/lib\nLib/site-packages/Pythonwin\nimport site\n", "utf-8")
-        return executables
-    with tarfile.open(source, "r:gz") as archive:
-        members = {}
-        for item in archive.getmembers():
-            path = PurePosixPath(item.name)
-            if (path.is_absolute() or "\\" in item.name or ":" in item.name
-                    or ".." in path.parts or not path.parts or path.parts[0] != 'python'):
-                raise ValueError("macOS Python运行时包路径无效。")
-            if not (item.isdir() or item.isfile() or item.issym() or item.islnk()):
-                raise ValueError("macOS运行时包含非普通文件。")
-            if item.name in members:
-                raise ValueError("macOS运行时包含重复路径。")
-            members[item.name] = item
-
-        def read_member(name, visited=()):
-            item = members.get(name)
-            if item is None or name in visited:
-                raise ValueError('macOS运行时包含缺失或循环链接。')
-            if item.issym() or item.islnk():
-                if PurePosixPath(item.linkname).is_absolute():
-                    raise ValueError('macOS运行时链接越界。')
-                target = posixpath.normpath(posixpath.join(posixpath.dirname(name), item.linkname)
-                                           if item.issym() else item.linkname)
-                if not target.startswith('python/'):
-                    raise ValueError('macOS运行时链接越界。')
-                return read_member(target, (*visited, name))
-            if not item.isfile():
-                raise ValueError('macOS运行时链接不是普通文件。')
-            return archive.extractfile(item), item.mode
-
-        for name, item in members.items():
-            relative = PurePosixPath(name).parts[1:]
-            if not relative:
-                continue
-            target = destination.joinpath(*relative)
-            if item.isdir():
-                target.mkdir(parents=True, exist_ok=True)
-                continue
-            stream, mode = read_member(name)
-            target.parent.mkdir(parents=True, exist_ok=True)
-            with stream, target.open('xb') as output:
-                shutil.copyfileobj(stream, output)
-            if mode & 0o111:
-                target.chmod(0o755)
-                executables.add('runtime/' + '/'.join(relative))
-    raw = (destination / 'bin/python3').read_bytes()[:8]
-    if len(raw) != 8 or struct.unpack('<II', raw) != (0xFEEDFACF, 0x0100000C):
-        raise ValueError('macOS运行时必须为Apple Silicon arm64 Python。')
-    return executables
+    """Extract only the verified Windows x64 embedded runtime."""
+    if platform not in SUPPORTED_PLATFORMS:
+        raise ValueError("只构建 Windows x64 客户端。")
+    with zipfile.ZipFile(source) as archive:
+        for item in archive.infolist():
+            path = PurePosixPath(item.filename)
+            if (path.is_absolute() or "\\" in item.filename or ":" in item.filename
+                    or ".." in path.parts or item.external_attr >> 16 & 0o170000 == 0o120000):
+                raise ValueError("Python运行时包路径无效。")
+        archive.extractall(destination)
+    binary = destination / "python.exe"
+    raw = binary.read_bytes()
+    if raw[:2] != b'MZ' or struct.unpack_from('<H', raw, struct.unpack_from('<I', raw, 60)[0] + 4)[0] != 0x8664:
+        raise ValueError('Windows运行时必须为x64 Python。')
+    pth = next(destination.glob("python*._pth"))
+    pth.write_text("python312.zip\n.\n../app\nLib/site-packages\nLib/site-packages/win32\nLib/site-packages/win32/lib\nLib/site-packages/Pythonwin\nimport site\n", "utf-8")
 
 
 def stage_resources(destination):
@@ -242,7 +187,7 @@ def trim_runtime(runtime):
             shutil.rmtree(target)
 
 
-def pack_tree(folder, target, executables=()):
+def pack_tree(folder, target):
     files = {}
     with zipfile.ZipFile(target, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=6) as archive:
         for path in sorted(folder.rglob("*")):
@@ -252,9 +197,6 @@ def pack_tree(folder, target, executables=()):
                 name = path.relative_to(folder).as_posix()
                 info = zipfile.ZipInfo.from_file(path, name)
                 info.compress_type = zipfile.ZIP_DEFLATED
-                if name in executables or name.endswith('.command'):
-                    info.create_system = 3
-                    info.external_attr = (0o100755 << 16)
                 with path.open('rb') as source, archive.open(info, 'w') as output:
                     shutil.copyfileobj(source, output)
                 files[name] = file_hash(path)
@@ -276,7 +218,7 @@ def build(output, version, runtime_zip, signing_key, *, install_dependencies=Tru
     version_tuple(version)
     platform = platform or current_platform()
     if platform not in SUPPORTED_PLATFORMS:
-        raise ValueError('只构建Windows x64或Apple Silicon macOS客户端。')
+        raise ValueError('只构建 Windows x64 客户端。')
     if runtime_sha256 and file_hash(Path(runtime_zip)) != runtime_sha256:
         raise ValueError('Python运行时SHA-256与固定摘要不一致。')
     from cryptography.hazmat.primitives import serialization
@@ -296,14 +238,14 @@ def build(output, version, runtime_zip, signing_key, *, install_dependencies=Tru
         app, runtime = stage / "app", stage / "runtime"
         stage_source(app)
         runtime.mkdir()
-        executables = extract_runtime(runtime_zip, runtime, platform)
-        site = runtime / ("Lib/site-packages" if platform == 'windows-x64' else 'lib/python3.12/site-packages')
+        extract_runtime(runtime_zip, runtime, platform)
+        site = runtime / "Lib/site-packages"
         if install_dependencies:
             command = ["uv", "export", "--locked", "--no-dev", "--no-emit-project", "--group", "client"]
             requirements = output / (platform + "-requirements.txt")
             with requirements.open("wb") as stream:
                 subprocess.run(command, cwd=ROOT, stdout=stream, check=True)
-            target_triple = 'x86_64-pc-windows-msvc' if platform == 'windows-x64' else 'aarch64-apple-darwin'
+            target_triple = 'x86_64-pc-windows-msvc'
             subprocess.run(["uv", "pip", "install", "--python", sys.executable, "--python-version", '3.12',
                             "--python-platform", target_triple, "--target", str(site), "--requirement",
                             str(requirements), "--only-binary", ":all:", "--require-hashes"], cwd=ROOT, check=True)
@@ -327,17 +269,16 @@ def build(output, version, runtime_zip, signing_key, *, install_dependencies=Tru
             raise ValueError('统一免安装包必须包含运行素材。')
         stage_resources(initial)
         artifact = output / f"ournotes-{version}-{platform}.zip"
-        executable_files = {f'versions/{version}/' + name for name in executables}
         files = {path.relative_to(initial).as_posix(): file_hash(path)
                  for path in sorted(initial.rglob('*')) if path.is_file()}
         manifest = {"schema": 3, "product": "ournotes-assistant", "version": version, "channel": "stable",
                     "platform": platform, "python": PYTHON_VERSION,
                     "artifact": {"name": artifact.name}, "files": files,
-                    "executables": sorted(executable_files.intersection(files))}
+                    "executables": []}
         envelope = {"manifest": manifest, "signature": base64.b64encode(key.sign(canonical(manifest))).decode()}
         verify(envelope, public, platform)
         (initial / 'release.json').write_text(json.dumps(envelope, ensure_ascii=False), 'utf-8')
-        pack_tree(initial, artifact, executable_files)
+        pack_tree(initial, artifact)
         from ournotes.updates.portable import validate_package
         validate_package(artifact, public, platform)
         return {"artifact": str(artifact), "platform": platform}

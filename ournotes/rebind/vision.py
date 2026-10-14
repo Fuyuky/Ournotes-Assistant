@@ -1,6 +1,5 @@
 """Native ROI assets; no OCR in the ordinary rebind page classifier."""
 import json
-import re
 from functools import lru_cache
 from pathlib import Path
 
@@ -51,15 +50,6 @@ def scene(image):
 
 def field_text(fields, image, name, box):
     return ''.join(t.text for t in fields.read(Frame(image, 0), name, [box], 0, scale=2))
-
-
-def registered_email(fields, image):
-    """Recognize the observed SDK toast, without inferring rejection from a timeout."""
-    texts = fields.read(Frame(image, 0), 'registered-email', [(590, 425, 1010, 510)],
-                        0, scale=2, single_line=False)
-    # Only the message identifies the failure. Parenthesized error codes are dynamic.
-    return any(re.split(r'[（(]', re.sub(r'\s+', '', text.text), maxsplit=1)[0]
-               in {'邮箱已被注册', '郵箱已被註冊'} for text in texts)
 
 
 def input_focused(image, field, binding=False):

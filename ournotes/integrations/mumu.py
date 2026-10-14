@@ -6,7 +6,6 @@ import math
 import os
 import re
 import subprocess
-import sys
 import threading
 import time
 from dataclasses import dataclass
@@ -15,7 +14,7 @@ from typing import Protocol
 
 from PIL import Image
 
-from ournotes.platforms.system import current_platform, default_mumu_root
+from ournotes.platforms.system import default_mumu_root
 
 DEFAULT_ROOT = None
 GAME_PACKAGE = 'com.bilibili.sirius.official'
@@ -35,11 +34,6 @@ def launch_instance(instance, root=DEFAULT_ROOT):
     root = Path(root) if root is not None else default_mumu_root()
     if type(instance) is not int or instance < 0:
         raise ValueError('MuMu实例编号无效。')
-    if sys.platform == 'darwin':
-        from ournotes.platforms.mumu_macos import MacMuMu
-        current_platform()
-        MacMuMu(root).command('open', instance)
-        return
     _control(instance, 'launch', root=root)
 
 
@@ -47,18 +41,6 @@ def app_info(instance, package=GAME_PACKAGE, root=DEFAULT_ROOT):
     root = Path(root) if root is not None else default_mumu_root()
     if not re.fullmatch(r'[A-Za-z0-9_.]+', package):
         raise ValueError('应用包名无效。')
-    if sys.platform == 'darwin':
-        from ournotes.platforms.mumu_macos import MacMuMu
-        adapter = MacMuMu(root)
-        adapter.connect(instance)
-        raw = adapter.adb_command(instance, 'shell', 'dumpsys', 'package', package).decode('utf-8', 'replace')
-        code = re.findall(r'\bversionCode=(\d+)\b', raw)
-        name = re.findall(r'\bversionName=([^\s]+)', raw)
-        if not code and not name:
-            return None
-        if len(set(code)) != 1 or len(set(name)) != 1:
-            raise RuntimeError('ADB安装版本信息不明确，未猜测覆盖更新结果。')
-        return {'version': name[0], 'version_code': int(code[0])}
     return _control(instance, 'app', 'info', '--installed', root=root).get(package)
 
 
@@ -66,9 +48,6 @@ def close_app(instance, package=GAME_PACKAGE, root=DEFAULT_ROOT):
     root = Path(root) if root is not None else default_mumu_root()
     if not re.fullmatch(r'[A-Za-z0-9_.]+', package):
         raise ValueError('应用包名无效。')
-    if sys.platform == 'darwin':
-        from ournotes.platforms.mumu_macos import MacMuMu
-        return MacMuMu(root).app_control(instance, 'close_app', package)
     return _control(instance, 'app', 'close', '-pkg', package, root=root)
 
 
@@ -77,9 +56,6 @@ def install_apk(instance, path, root=DEFAULT_ROOT):
     path = Path(path).resolve()
     if not path.is_file() or path.suffix.lower() != '.apk':
         raise ValueError('APK路径无效。')
-    if sys.platform == 'darwin':
-        from ournotes.platforms.mumu_macos import MacMuMu
-        return MacMuMu(root).app_control(instance, 'install_apk', path=path, timeout=240)
     return _control(instance, 'app', 'install', '-apk', str(path), root=root, timeout=240)
 
 
@@ -103,9 +79,6 @@ class Device(Protocol):
 
 def instance_info(root: Path = DEFAULT_ROOT, instance: int = 0) -> dict:
     root = Path(root) if root is not None else default_mumu_root()
-    if sys.platform == 'darwin':
-        from ournotes.platforms.mumu_macos import instance_info as mac_info
-        return mac_info(root, instance)
     result = subprocess.run(
         [str(root / "nx_main/mumu-cli.exe"), "info", "-v", str(instance)],
         capture_output=True, check=True, timeout=15,
@@ -118,9 +91,6 @@ def instance_info(root: Path = DEFAULT_ROOT, instance: int = 0) -> dict:
 def ensure_game(instance, stop, root=DEFAULT_ROOT, timeout=120):
     """CLI starts the emulator/app; readiness is polled, never assumed after a delay."""
     root = Path(root) if root is not None else default_mumu_root()
-    if sys.platform == 'darwin':
-        from ournotes.platforms.mumu_macos import ensure_game as mac_ensure
-        return mac_ensure(instance, stop, root, timeout)
     cli = str(root / "nx_main/mumu-cli.exe")
     def command(*args):
         result = subprocess.run([cli, "control", "-v", str(instance), *args], capture_output=True,
@@ -169,9 +139,6 @@ def ensure_game(instance, stop, root=DEFAULT_ROOT, timeout=120):
 def restart_game(instance, stop, root=DEFAULT_ROOT, timeout=45):
     """Restart only Our Notes inside an already running Android instance."""
     root = Path(root) if root is not None else default_mumu_root()
-    if sys.platform == 'darwin':
-        from ournotes.platforms.mumu_macos import restart_game as mac_restart
-        return mac_restart(instance, stop, root, timeout)
     package = "com.bilibili.sirius.official"
     cli = str(root / "nx_main/mumu-cli.exe")
 
@@ -214,9 +181,6 @@ def shutdown_instances(instances, root=DEFAULT_ROOT, timeout=45):
     instances = sorted(set(instances))
     if not instances:
         return {'status': 'kept_open', 'reason': 'no_device_started', 'instances': []}
-    if sys.platform == 'darwin':
-        from ournotes.platforms.mumu_macos import shutdown_instances as mac_shutdown
-        return mac_shutdown(instances, root, timeout)
     start = time.monotonic()
     cli = str(root / "nx_main/mumu-cli.exe")
     def invoke(*args):
@@ -271,13 +235,6 @@ class MuMuSdk:
     scheduler should isolate this adapter in a per-instance worker process.
     """
 
-    def __new__(cls, root=DEFAULT_ROOT, instance=0, package='default'):
-        root = Path(root) if root is not None else default_mumu_root()
-        if cls is MuMuSdk and sys.platform == 'darwin':
-            current_platform()  # Reject Intel Mac rather than silently using Rosetta.
-            from ournotes.platforms.mumu_macos import MacAdbDevice
-            return MacAdbDevice(root, instance, package)
-        return super().__new__(cls)
 
     def __init__(self, root: Path = DEFAULT_ROOT, instance: int = 0, package: str = "default"):
         root = Path(root) if root is not None else default_mumu_root()

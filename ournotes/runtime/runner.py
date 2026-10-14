@@ -241,7 +241,7 @@ class Runner:
             self.log.event('system_memory', **memory.report())
             self.last_memory_log_at = now
         if memory.low:
-            label = '系统可用内存' if getattr(memory, 'source', '') == 'macos-memory' else '系统提交内存'
+            label = '系统提交内存'
             raise PauseRun(
                 f'{label}不足：剩余 {memory.available / GIB:.1f} GiB，'
                 f'保护阈值 {memory.reserve / GIB:.1f} GiB；'

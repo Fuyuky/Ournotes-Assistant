@@ -221,3 +221,62 @@ def test_statistics_saved_up_and_combined_preset_usage_filters(portal):
     assert client.get('/admin/api/statistics?preset_id=0&owner_username=Other').json()['n'] == 0
     assert client.get('/admin/api/statistics?preset_id=bad').status_code == 422
     assert {x['id'] for x in all_rows['preset_options']} == {'0', '1', '__unknown__'}
+
+
+def test_account_preview_authenticated_png_and_no_state_change(portal, monkeypatch):
+    from io import BytesIO
+
+    from PIL import Image, ImageDraw
+    from test_cloud_service import result
+
+    store, client, _, _, catalog, node = portal
+    allocation = store.allocate('node', {'account_id': 'preview-account', 'request_id': 'preview-allocation',
+                                        'channel': 'test'})
+    path = f"/admin/api/accounts/{allocation['index']}/preview.png"
+    assert client.get(path).status_code == 401
+    assert client.get(path, headers={'Authorization': 'Bearer ' + node['token']}).status_code == 401
+    login(client)
+    assert client.get(path).status_code == 404  # Allocation alone is not a completed account.
+    store.upload('node', allocation['account_id'], {'event_id': 'preview-result', 'version': 1,
+                                                  'result': result(allocation)})
+    before = store.result_by_index(allocation['index'])
+    Image.new('RGB', (180, 240), '#abcdee').save(catalog / 'images/member-1.png')
+    texts = []
+    original = ImageDraw.ImageDraw.text
+    def capture(self, xy, text, *args, **kwargs):
+        texts.append(str(text))
+        return original(self, xy, text, *args, **kwargs)
+    monkeypatch.setattr(ImageDraw.ImageDraw, 'text', capture)
+    response = client.get(path)
+    assert response.status_code == 200
+    assert response.headers['content-type'] == 'image/png'
+    assert response.headers['cache-control'] == 'no-store'
+    assert 'attachment' in response.headers['content-disposition']
+    image = Image.open(BytesIO(response.content))
+    assert image.width == 1920 and image.height > 600
+    assert not image.info
+    assert allocation['alias'] not in ' '.join(texts)
+    assert str(catalog) not in ' '.join(texts)
+    assert store.result_by_index(allocation['index']) == before
+    assert client.get('/admin/api/accounts/99999999/preview.png').status_code == 404
+
+
+def test_preview_failure_is_sanitized_and_allows_retry(portal, monkeypatch):
+    from test_cloud_service import result
+
+    from ournotes.accounts import preview
+
+    store, client, _, _, _, _ = portal
+    allocation = store.allocate('node', {'account_id': 'preview-error', 'request_id': 'preview-error-allocation',
+                                        'channel': 'test'})
+    store.upload('node', allocation['account_id'], {'event_id': 'preview-error-result', 'version': 1,
+                                                  'result': result(allocation)})
+    login(client)
+    path = f"/admin/api/accounts/{allocation['index']}/preview.png"
+    def failure(*args):
+        raise OSError('private-path-secret')
+    monkeypatch.setattr(preview, 'render_account', failure)
+    response = client.get(path)
+    assert response.status_code == 503 and 'private-path-secret' not in response.text
+    monkeypatch.setattr(preview, 'render_account', lambda account, output, catalog: output.write(b'png-fixture'))
+    assert client.get(path).content == b'png-fixture'

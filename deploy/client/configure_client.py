@@ -1,4 +1,4 @@
-"""Import an explicitly supplied private connection into DPAPI or macOS Keychain."""
+"""Import an explicitly supplied private connection into Windows DPAPI."""
 from __future__ import annotations
 
 import json

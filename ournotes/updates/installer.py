@@ -87,11 +87,9 @@ def install(install_root, data_root, package, envelope, public_key, lock_factory
                         shutil.copyfileobj(source, output)
                     if file_hash(destination) != manifest["files"][item.filename]:
                         raise ValueError("文件摘要与签名清单不一致。")
-                    if manifest['platform'] == 'macos-arm64' and item.filename in manifest.get('executables', []):
-                        destination.chmod(0o755)
             if seen != {name.casefold() for name in manifest["files"]}:
                 raise ValueError("发布包缺少清单文件。")
-            runtime_entry = "runtime/pythonw.exe" if manifest['platform'] == 'windows-x64' else "runtime/bin/python3"
+            runtime_entry = "runtime/pythonw.exe"
             for essential in (runtime_entry, "app/scripts/webui.py", "app/ournotes/control/web.py"):
                 if essential not in manifest["files"]:
                     raise ValueError("发布包缺少启动必需文件。")

@@ -24,7 +24,7 @@ def smoke(package, public_key, platform):
         version = envelope['manifest']['version']
         version_root = root / 'versions' / version
         app = version_root / 'app'
-        python = version_root / ('runtime/python.exe' if platform == 'windows-x64' else 'runtime/bin/python3')
+        python = version_root / 'runtime/python.exe'
         env = dict(os.environ, OURNOTES_DATA_ROOT=str(root / 'user-data'), PYTHONDONTWRITEBYTECODE='1')
         env.pop('OURNOTES_INSTALL_ROOT', None)
         code = (
@@ -74,6 +74,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--package', type=Path, required=True)
     parser.add_argument('--public-key', type=Path, required=True)
-    parser.add_argument('--platform', required=True)
+    parser.add_argument('--platform', choices=['windows-x64'], required=True)
     args = parser.parse_args()
     smoke(args.package, args.public_key.read_text('utf-8').strip(), args.platform)

@@ -7,7 +7,7 @@
 
 ## 安装与权限
 
-将服务端程序、`web/account-browser`、`data/catalog/site` 放入 `/opt/ournotes-cloud`，创建独立 `ournotes-cloud` 用户。在 Linux Python 3.12+ 环境安装项目 `server` extra或依赖组（FastAPI、uvicorn、requests、PyYAML）。`python -m ournotes.cloud --config /etc/ournotes-cloud/config.json` 为唯一服务入口，绑定 `127.0.0.1:8770`，单进程单 worker，并使用OS独占进程锁。不得把 SQLite 放在网络挂载目录。
+将服务端程序、`web/account-browser`、`data/catalog/site` 放入 `/opt/ournotes-cloud`，创建独立 `ournotes-cloud` 用户。在 Linux Python 3.12+ 环境安装项目 `server` extra或依赖组（FastAPI、uvicorn、requests、PyYAML）。`python -m ournotes.cloud --config /etc/ournotes-cloud/config.json` 为唯一服务入口，绑定 `127.0.0.1:8770`，单进程单 worker，并使用OS独占进程锁。不得把 SQLite 放在网络挂载目录。后台预览图需要中文字体，Debian/Ubuntu 安装 `fonts-noto-cjk`；绘图只使用基础 Pillow，不加载客户端设备或 OCR 依赖。
 
 复制示例配置并填写既有 Gmail 的无点号规范地址。使用系统随机源生成至少 32 字符的管理员 token，写入 `admin_token_file`；管理员 token、Google 私有文件及订阅地址必须仅部署用户/root可读，私有目录 0700、文件 0600，不填入项目模板或客户端包。节点从 `/api/cloud/v1/admin/nodes` 分别建立，收到一次性凭据后保存于对应机器 DPAPI。撤销和轮换不影响其他节点。管理员凭据不当作普通节点凭据使用。
 
@@ -71,3 +71,5 @@ Nginx必须为 `/api/cloud/v1/events` 配置HTTP/1.1 Upgrade、Connection与足�
 ## 管理员与活动迁移
 
 旧admin引导为Fuyuki，历史节点和成果归属Fuyuki但不改原ID。管理员固定凭据加密密钥在数据库旁，必须备份；共享预设与活动库在首次启动从配置/主数据导入。升级前保留一致性备份，先检查新服务与公开资源，再切换客户端凭据。网站只有Gmail健康查询，维护授权接口不得赋给浏览器会话。详见[云端账号与管理员](../../docs/云端账号与管理员.md)。
+
+预览图优先使用微软雅黑：Windows 读取 `C:/Windows/Fonts/msyh.ttc` 和 `msyhbd.ttc`，Linux 读取 `/usr/local/share/fonts/microsoft-yahei/` 下的同名文件，正文和粗体分别加载。字体只部署到服务器系统目录，不进入仓库、公开网页资源或客户端发行包；没有微软雅黑时回退至 Noto Sans CJK。

@@ -17,7 +17,7 @@ from ournotes.updates.service import UpdateService
 
 @pytest.fixture(autouse=True)
 def windows_release_fixture_platform(monkeypatch):
-    # These synthetic releases target Windows; dedicated cases pass macOS explicitly.
+    # Synthetic releases target Windows.
     monkeypatch.setattr('ournotes.updates.manifest.current_platform', lambda: 'windows-x64')
     monkeypatch.setattr('ournotes.updates.service.current_platform', lambda: 'windows-x64')
 
@@ -25,7 +25,7 @@ def windows_release_fixture_platform(monkeypatch):
 def release(tmp_path, extra=None, version="0.2.0", platform='windows-x64'):
     key = Ed25519PrivateKey.generate()
     public = base64.b64encode(key.public_key().public_bytes(serialization.Encoding.Raw, serialization.PublicFormat.Raw)).decode()
-    executable = 'runtime/pythonw.exe' if platform == 'windows-x64' else 'runtime/bin/python3'
+    executable = 'runtime/pythonw.exe'
     files = {executable: b"fake runtime", "app/scripts/webui.py": b"fake script", "app/ournotes/control/web.py": b"fake app"}
     files.update(extra or {})
     package = tmp_path / "client.zip"
@@ -33,7 +33,7 @@ def release(tmp_path, extra=None, version="0.2.0", platform='windows-x64'):
         for name, value in files.items():
             archive.writestr(name, value)
     manifest = {"schema": 2, "product": "ournotes-assistant", "platform": platform,
-                "version": version, "channel": "stable", "executables": [executable] if platform == 'macos-arm64' else [],
+                "version": version, "channel": "stable", "executables": [],
                 "artifact": {"name": "client.zip", "sha256": hashlib.sha256(package.read_bytes()).hexdigest(), "bytes": package.stat().st_size}, "files": {name: hashlib.sha256(value).hexdigest() for name, value in files.items()}}
     envelope = {"manifest": manifest, "signature": base64.b64encode(key.sign(canonical(manifest))).decode()}
     return package, envelope, public, key
@@ -129,7 +129,6 @@ def test_prerelease_and_downgrade_rejected(tmp_path):
         install(root, data, package, envelope, public, unlocked)
 
 
-
 def test_public_service_outage_does_not_change_running_state(tmp_path):
     root, data = installation(tmp_path)
     class Unavailable:
@@ -180,7 +179,7 @@ def test_public_requests_never_require_or_transmit_credentials():
         GitHubReleases('owner/private')
 
 
-def test_platform_bound_updates_reject_windows_package_on_mac(tmp_path):
+def test_platform_bound_updates_reject_unsupported_target(tmp_path):
     package, envelope, public, _ = release(tmp_path)
     with pytest.raises(ValueError, match='平台'):
         verify(envelope, public, 'macos-arm64')
@@ -190,18 +189,19 @@ def test_platform_bound_updates_reject_windows_package_on_mac(tmp_path):
     assert json.loads((root / 'current.json').read_text())['version'] == '0.1.0'
 
 
-def test_mac_install_checks_mac_runtime_and_keeps_user_data(tmp_path):
-    package, envelope, public, _ = release(tmp_path, platform='macos-arm64')
-    root, data = installation(tmp_path)
-    result = install(root, data, package, envelope, public, unlocked, platform='macos-arm64')
-    assert result['installed_version'] == '0.2.0'
-    assert json.loads((root / 'current.json').read_text())['platform'] == 'macos-arm64'
-    assert (root / 'versions/0.2.0/runtime/bin/python3').is_file()
-    assert (data / 'counter.db').read_bytes() == b'counter and unresolved evidence'
-
-
 def test_source_checkout_does_not_attempt_binary_update(tmp_path):
     calls = []
     service = UpdateService(tmp_path, client_factory=lambda *_: calls.append(True))
     assert service.check()['status'] == 'source'
     assert not calls
+
+
+def test_signed_removed_platform_is_rejected_before_install(tmp_path):
+    package, envelope, public, _ = release(tmp_path, platform='macos-arm64')
+    root, data = installation(tmp_path)
+    with pytest.raises(ValueError, match='平台'):
+        verify(envelope, public, 'macos-arm64')
+    with pytest.raises(ValueError, match='平台'):
+        install(root, data, package, envelope, public, unlocked, platform='macos-arm64')
+    assert not (root / 'versions').exists()
+    assert (data / 'counter.db').read_bytes() == b'counter and unresolved evidence'
